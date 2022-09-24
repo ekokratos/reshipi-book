@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/ui/screens/login_screen.dart';
-import 'package:recipe_book/ui/theme/app_theme.dart';
+import 'package:recipe_book/features/auth/view/login_screen.dart';
+import 'package:recipe_book/shared/theme/app_theme.dart';
 
 void main() {
   runApp(const MyApp());

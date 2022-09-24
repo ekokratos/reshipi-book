@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:recipe_book/ui/theme/style.dart';
+import 'package:recipe_book/shared/theme/style.dart';
 
 class CustomTextField extends StatelessWidget {
   final String? prefixText;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_book/ui/theme/style.dart';
+import 'package:recipe_book/shared/theme/style.dart';
 
 ThemeData appTheme() {
   return ThemeData().copyWith(
@@ -9,7 +9,7 @@ ThemeData appTheme() {
       /// Weight : Bold
       /// Size   : 16
       headline1: TextStyle(
-        fontFamily: "OpenSans",
+        fontFamily: 'OpenSans',
         fontSize: 16,
         fontWeight: FontWeight.w700,
         color: kPrimaryTextColor,
@@ -18,7 +18,7 @@ ThemeData appTheme() {
       /// Weight : Regular
       /// Size   : 14
       bodyText1: TextStyle(
-        fontFamily: "OpenSans",
+        fontFamily: 'OpenSans',
         fontSize: 14,
         fontWeight: FontWeight.w400,
         color: kPrimaryTextColor,
@@ -27,7 +27,7 @@ ThemeData appTheme() {
       /// Weight : Regular
       /// Size   : 12
       bodyText2: TextStyle(
-        fontFamily: "OpenSans",
+        fontFamily: 'OpenSans',
         fontSize: 12,
         fontWeight: FontWeight.w400,
         color: kPrimaryTextColor,
@@ -37,7 +37,7 @@ ThemeData appTheme() {
       /// Weight : Bold
       /// Size   : 14
       button: TextStyle(
-        fontFamily: "OpenSans",
+        fontFamily: 'OpenSans',
         fontSize: 14,
         fontWeight: FontWeight.w600,
         color: Colors.white,

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/ui/screens/sign_up_screen.dart';
-import 'package:recipe_book/ui/theme/style.dart';
-import 'package:recipe_book/ui/widgets/clickable_text.dart';
-import 'package:recipe_book/ui/widgets/custom_text_field.dart';
-import 'package:recipe_book/ui/widgets/solid_button.dart';
-import 'package:recipe_book/utility/validation.dart';
+import 'package:recipe_book/features/auth/view/sign_up_screen.dart';
+import 'package:recipe_book/shared/theme/style.dart';
+import 'package:recipe_book/shared/widgets/clickable_text.dart';
+import 'package:recipe_book/shared/widgets/custom_text_field.dart';
+import 'package:recipe_book/shared/widgets/solid_button.dart';
+import 'package:recipe_book/shared/utility/validation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginScreen extends StatefulWidget {
