@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
 import 'package:recipe_book/features/auth/view/sign_up_screen.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/widgets/clickable_text.dart';
@@ -7,6 +10,7 @@ import 'package:recipe_book/shared/widgets/custom_text_field.dart';
 import 'package:recipe_book/shared/widgets/solid_button.dart';
 import 'package:recipe_book/shared/utility/validation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -96,7 +100,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: SolidButton(
                     onPressed: () {
                       if (_formKey.currentState?.validate() ?? false) {
-                        //Go to category screen
+                        context.read<AuthBloc>().add(
+                              AuthEventLogIn(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              ),
+                            );
                       }
                     },
                     text: 'Login',

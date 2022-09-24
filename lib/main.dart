@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
+import 'package:recipe_book/features/auth/repository/auth_reppository.dart';
 import 'package:recipe_book/features/auth/view/login_screen.dart';
+import 'package:recipe_book/features/recipe/views/category_screen.dart';
 import 'package:recipe_book/shared/theme/app_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:recipe_book/shared/widgets/dialogs/show_auth_error.dart';
+import 'package:recipe_book/shared/widgets/loading/loading_screen.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -12,19 +24,57 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Reshipi Book',
-      theme: appTheme(),
-      home: const LoginScreen(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => AuthBloc(authRepository: AuthRepository())
+            ..add(const AuthEventInitialize()),
+        ),
+      ],
+      child: GetMaterialApp(
+        title: 'Reshipi Book',
+        theme: appTheme(),
+        // debugShowCheckedModeBanner: false,
+        home: const BaseScreen(),
+      ),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class BaseScreen extends StatelessWidget {
+  const BaseScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, appState) {
+        if (appState.isLoading) {
+          LoadingScreen.instance().show(
+            context: context,
+            text: 'Loading...',
+          );
+        } else {
+          LoadingScreen.instance().hide();
+        }
+
+        final authError = appState.authException;
+        if (authError != null) {
+          showAuthError(
+            authException: authError,
+            context: context,
+          );
+        }
+      },
+      builder: (context, appState) {
+        switch (appState.status) {
+          case AuthStatus.authenticated:
+            return const CategoryScreen();
+          case AuthStatus.unauthenticated:
+            return const LoginScreen();
+          default:
+            return const SizedBox.shrink();
+        }
+      },
+    );
   }
 }

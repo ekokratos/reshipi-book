@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/widgets/custom_text_field.dart';
 import 'package:recipe_book/shared/widgets/solid_button.dart';
 import 'package:recipe_book/shared/utility/validation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -46,6 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 30),
                 CustomTextField(
+                  controller: nameController,
                   label: 'Name',
                   hintText: 'John Doe',
                   keyboardType: TextInputType.name,
@@ -55,6 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Hero(
                   tag: 'email',
                   child: CustomTextField(
+                    controller: emailController,
                     label: 'Email',
                     hintText: 'abcd@gmail.com',
                     keyboardType: TextInputType.emailAddress,
@@ -66,6 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Hero(
                   tag: 'password',
                   child: CustomTextField(
+                    controller: passwordController,
                     label: 'Password',
                     obscureText: _isPasswordVisible,
                     suffixIcon: GestureDetector(
@@ -107,9 +112,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Text(
                   'Your password must be 8 or more characters long and contain a mix of upper and lower case letters, numbers and symbols.',
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      color: kSecondaryTextColor,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600),
+                        color: kSecondaryTextColor,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
                 const SizedBox(height: 30),
                 SizedBox(
@@ -117,7 +123,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: SolidButton(
                     onPressed: () {
                       if (_formKey.currentState?.validate() ?? false) {
-                        // To category screen
+                        context.read<AuthBloc>().add(
+                              AuthEventSignUp(
+                                name: nameController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
+                              ),
+                            );
                       }
                     },
                     text: 'Sign Up',

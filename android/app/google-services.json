@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "967402384679",
+    "project_id": "reshipi-cookbook",
+    "storage_bucket": "reshipi-cookbook.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:967402384679:android:756ae4e2aa09368918cd02",
+        "android_client_info": {
+          "package_name": "com.ekokratos.recipe_book"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "967402384679-4o1p7u4eor0u6nl4q8f9vj41imherkg0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyzmFmn-EL2ul_Kjxxzaa13Hlj5rg7KEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "967402384679-4o1p7u4eor0u6nl4q8f9vj41imherkg0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
