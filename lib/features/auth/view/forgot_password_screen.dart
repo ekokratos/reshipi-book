@@ -1,0 +1,82 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
+import 'package:recipe_book/features/auth/models/auth_exception.dart';
+import 'package:recipe_book/shared/models/dialog_message.dart';
+import 'package:recipe_book/shared/theme/style.dart';
+import 'package:recipe_book/shared/utility/validation.dart';
+import 'package:recipe_book/shared/widgets/custom_text_field.dart';
+import 'package:recipe_book/shared/widgets/dialogs/show_auth_error.dart';
+import 'package:recipe_book/shared/widgets/dialogs/show_message.dart';
+import 'package:recipe_book/shared/widgets/solid_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class ForgotPasswordScreen extends StatelessWidget {
+  ForgotPasswordScreen({super.key});
+  final emailController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        foregroundColor: kPrimaryColor,
+        backgroundColor: Colors.white,
+        // centerTitle: true,
+        title: Text(
+          'Forgot Password',
+          style: Theme.of(context).textTheme.headline1,
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SvgPicture.asset(
+                  'assets/svgs/forgot_password.svg',
+                  height: Get.height * 0.25,
+                ),
+                const SizedBox(height: 35),
+                Text(
+                  'Please enter your email to recover your password:',
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+                const SizedBox(height: 10),
+                Hero(
+                  tag: 'email',
+                  child: CustomTextField(
+                    controller: emailController,
+                    label: 'Email',
+                    hintText: 'abcd@gmail.com',
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) =>
+                        Validation.validateEmail(value: value),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                SolidButton(
+                  onPressed: () {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      context.read<AuthBloc>().add(
+                            AuthEventPasswordReset(email: emailController.text),
+                          );
+                    }
+                  },
+                  text: 'Reset Password',
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -2,7 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/foundation.dart' show immutable;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:recipe_book/features/auth/repository/auth_exception.dart';
+import 'package:recipe_book/features/auth/models/auth_exception.dart';
+import 'package:recipe_book/shared/models/dialog_message.dart';
 import 'package:recipe_book/features/auth/repository/auth_reppository.dart';
 
 part 'auth_event.dart';
@@ -21,6 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEventSignUp>(_onSignUp);
     on<AuthEventLogIn>(_onLogIn);
     on<AuthEventLogOut>(_onLogOut);
+    on<AuthEventPasswordReset>(_onPasswordReset);
   }
 
   void _onAuthInitialize(
@@ -117,6 +119,37 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       await _authRepository.logOut();
       emit(const AuthStateUnauthenticated(isLoading: false));
+    } on AuthException catch (e) {
+      emit(
+        AuthStateUnauthenticated(
+          isLoading: false,
+          authException: e,
+        ),
+      );
+    }
+  }
+
+  void _onPasswordReset(
+    AuthEventPasswordReset event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(
+      const AuthStateUnauthenticated(
+        isLoading: true,
+      ),
+    );
+    try {
+      await _authRepository.resetPassword(email: event.email);
+      emit(
+        const AuthStateUnauthenticated(
+          isLoading: false,
+          dialogMessage: DialogMessage(
+            title: 'Password Reset',
+            message:
+                'Password reset link has been sent to your email. Please check the spam folder.',
+          ),
+        ),
+      );
     } on AuthException catch (e) {
       emit(
         AuthStateUnauthenticated(

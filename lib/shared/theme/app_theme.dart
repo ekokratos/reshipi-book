@@ -5,10 +5,27 @@ ThemeData appTheme() {
   return ThemeData().copyWith(
     scaffoldBackgroundColor: Colors.white,
     textTheme: const TextTheme(
-      /// Heading 1
+      /// Weight : Bold
+      /// Size   : 20
+      headline1: TextStyle(
+        fontFamily: 'OpenSans',
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+        color: kPrimaryTextColor,
+      ),
+
+      /// Weight : Bold
+      /// Size   : 18
+      headline2: TextStyle(
+        fontFamily: 'OpenSans',
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
+        color: kPrimaryTextColor,
+      ),
+
       /// Weight : Bold
       /// Size   : 16
-      headline1: TextStyle(
+      headline3: TextStyle(
         fontFamily: 'OpenSans',
         fontSize: 16,
         fontWeight: FontWeight.w700,

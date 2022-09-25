@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_book/shared/models/dialog_message.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/widgets/dialogs/custom_dialog.dart';
-import 'package:recipe_book/features/auth/models/auth_exception.dart';
 
-showAuthError({
-  required AuthException authException,
+showMessage({
   required BuildContext context,
+  required DialogMessage dialogMessage,
 }) {
   return showCustomDialog(
     context: context,
-    title: authException.title,
-    content: authException.message,
-    icon: Icons.error_outline,
-    iconColor: Colors.red,
+    title: dialogMessage.title,
+    content: dialogMessage.message,
+    icon: Icons.info_outline,
+    iconColor: kPrimaryColor,
     actions: [
       TextButton(
         onPressed: () => Get.back(),

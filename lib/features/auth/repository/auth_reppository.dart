@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:recipe_book/features/auth/repository/auth_exception.dart';
+import 'package:recipe_book/features/auth/models/auth_exception.dart';
 
 class AuthRepository {
   AuthRepository() : _firebaseAuth = FirebaseAuth.instance;
@@ -55,6 +55,17 @@ class AuthRepository {
       await _firebaseAuth.signOut();
     } catch (_) {
       throw LogOutFailure();
+    }
+  }
+
+  /// Sends a password reset link to the provided email
+  ///
+  /// Throws a [AuthException] if an exception occurs.
+  Future<void> resetPassword({required String email}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw AuthException.from(e);
     }
   }
 }

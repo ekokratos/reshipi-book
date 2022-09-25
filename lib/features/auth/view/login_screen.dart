@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
+import 'package:recipe_book/features/auth/view/forgot_password_screen.dart';
 import 'package:recipe_book/features/auth/view/sign_up_screen.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/widgets/clickable_text.dart';
@@ -23,13 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
 
   bool _isPasswordVisible = true;
-
-  // @override
-  // void dispose() {
-  //   emailController.dispose();
-  //   passwordController.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   alignment: Alignment.topRight,
                   child: ClickableText(
                     text: 'Forgot password?',
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => ForgotPasswordScreen());
+                    },
                   ),
                 ),
                 const SizedBox(height: 30),
