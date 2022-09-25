@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart' show BuildContext;
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/widgets/dialogs/generic_dialog.dart';
 import 'package:recipe_book/features/auth/repository/auth_exception.dart';
 
@@ -6,12 +8,21 @@ Future<void> showAuthError({
   required AuthException authException,
   required BuildContext context,
 }) {
-  return showGenericDialog<void>(
+  return showGenericDialog(
     context: context,
     title: authException.title,
     content: authException.message,
-    optionsBuilder: () => {
-      'OK': true,
-    },
+    actions: [
+      TextButton(
+        onPressed: () => Get.back(),
+        child: Text(
+          'Ok',
+          style: Theme.of(context)
+              .textTheme
+              .button!
+              .copyWith(color: kPrimaryColor),
+        ),
+      )
+    ],
   );
 }

@@ -4,7 +4,7 @@ import 'package:recipe_book/shared/widgets/loading/loading_screen_controller.dar
 
 class LoadingScreen {
   LoadingScreen._sharedInstance();
-  static late final LoadingScreen _shared = LoadingScreen._sharedInstance();
+  static final LoadingScreen _shared = LoadingScreen._sharedInstance();
   factory LoadingScreen.instance() => _shared;
 
   LoadingScreenController? controller;
@@ -18,7 +18,7 @@ class LoadingScreen {
     } else {
       controller = showOverlay(
         context: context,
-        text: text,
+        msg: text,
       );
     }
   }
@@ -30,10 +30,10 @@ class LoadingScreen {
 
   LoadingScreenController showOverlay({
     required BuildContext context,
-    required String text,
+    required String msg,
   }) {
-    final _text = StreamController<String>();
-    _text.add(text);
+    final text = StreamController<String>();
+    text.add(msg);
 
     final state = Overlay.of(context);
     final renderBox = context.findRenderObject() as RenderBox;
@@ -65,7 +65,7 @@ class LoadingScreen {
                       const CircularProgressIndicator(),
                       const SizedBox(height: 20),
                       StreamBuilder(
-                        stream: _text.stream,
+                        stream: text.stream,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             return Text(
@@ -91,12 +91,12 @@ class LoadingScreen {
 
     return LoadingScreenController(
       close: () {
-        _text.close();
+        text.close();
         overlay.remove();
         return true;
       },
-      update: (text) {
-        _text.add(text);
+      update: (msg) {
+        text.add(msg);
         return true;
       },
     );

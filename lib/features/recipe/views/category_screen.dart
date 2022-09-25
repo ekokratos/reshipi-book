@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
 import 'package:recipe_book/shared/theme/style.dart';
+import 'package:recipe_book/shared/widgets/dialogs/logout_dialog.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({super.key});
@@ -17,7 +18,7 @@ class CategoryScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              context.read<AuthBloc>().add(const AuthEventLogOut());
+              showLogOutDialog(context);
             },
             icon: const Icon(
               Icons.logout,

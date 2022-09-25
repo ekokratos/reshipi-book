@@ -37,8 +37,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               children: [
                 const SizedBox(height: 15),
                 const Align(
-                    alignment: Alignment.topLeft,
-                    child: BackButton(color: kPrimaryColor)),
+                  alignment: Alignment.topLeft,
+                  child: BackButton(color: kPrimaryColor),
+                ),
                 Hero(
                   tag: 'chef_image',
                   child: SvgPicture.asset(

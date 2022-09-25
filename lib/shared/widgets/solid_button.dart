@@ -6,13 +6,15 @@ class SolidButton extends StatelessWidget {
   final String text;
   final Color? textColor;
   final Color? buttonColor;
-  const SolidButton(
-      {Key? key,
-      required this.onPressed,
-      required this.text,
-      this.textColor,
-      this.buttonColor})
-      : super(key: key);
+  final EdgeInsetsGeometry? padding;
+  const SolidButton({
+    Key? key,
+    required this.onPressed,
+    required this.text,
+    this.textColor,
+    this.buttonColor,
+    this.padding,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class SolidButton extends StatelessWidget {
       onPressed: onPressed,
       elevation: 0,
       highlightColor: Colors.transparent,
-      height: 44,
+      padding: padding ?? const EdgeInsets.symmetric(vertical: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
       color: buttonColor ?? kPrimaryColor,
       child: Text(
