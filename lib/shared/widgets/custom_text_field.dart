@@ -58,7 +58,7 @@ class CustomTextField extends StatelessWidget {
         style: Theme.of(context)
             .textTheme
             .bodyText1!
-            .copyWith(fontWeight: FontWeight.w700),
+            .copyWith(fontWeight: FontWeight.w600),
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
         obscureText: obscureText,

@@ -81,11 +81,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 15),
                 Align(
                   alignment: Alignment.topRight,
-                  child: ClickableText(
-                    text: 'Forgot password?',
-                    onTap: () {
-                      Get.to(() => ForgotPasswordScreen());
-                    },
+                  child: Hero(
+                    tag: 'forgot_password',
+                    child: ClickableText(
+                      text: 'Forgot password?',
+                      onTap: () {
+                        Get.to(() => ForgotPasswordScreen());
+                      },
+                    ),
                   ),
                 ),
                 const SizedBox(height: 30),

@@ -1,15 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
-import 'package:recipe_book/features/auth/models/auth_exception.dart';
-import 'package:recipe_book/shared/models/dialog_message.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/validation.dart';
 import 'package:recipe_book/shared/widgets/custom_text_field.dart';
-import 'package:recipe_book/shared/widgets/dialogs/show_auth_error.dart';
-import 'package:recipe_book/shared/widgets/dialogs/show_message.dart';
 import 'package:recipe_book/shared/widgets/solid_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,10 +21,12 @@ class ForgotPasswordScreen extends StatelessWidget {
         elevation: 0,
         foregroundColor: kPrimaryColor,
         backgroundColor: Colors.white,
-        // centerTitle: true,
-        title: Text(
-          'Forgot Password',
-          style: Theme.of(context).textTheme.headline1,
+        title: Hero(
+          tag: 'forgot_password',
+          child: Text(
+            'Forgot Password',
+            style: Theme.of(context).textTheme.headline1,
+          ),
         ),
       ),
       body: SingleChildScrollView(

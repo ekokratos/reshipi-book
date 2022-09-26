@@ -20,6 +20,9 @@ dependencies:
   firebase_core: ^1.23.0
   firebase_auth: ^3.10.0
   equatable: ^2.0.5
+  shimmer: ^2.0.0
+  uuid: ^3.0.6
+  cached_network_image: ^3.2.2
 
 dev_dependencies:
   flutter_test:
@@ -37,6 +40,8 @@ flutter:
 
   assets:
     - assets/svgs/
+    - assets/images/
+
 
 
   fonts:

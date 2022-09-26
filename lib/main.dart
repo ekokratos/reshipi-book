@@ -7,7 +7,6 @@ import 'package:recipe_book/features/auth/view/login_screen.dart';
 import 'package:recipe_book/features/recipe/views/category_screen.dart';
 import 'package:recipe_book/shared/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:recipe_book/shared/widgets/dialogs/custom_dialog.dart';
 import 'package:recipe_book/shared/widgets/dialogs/show_auth_error.dart';
 import 'package:recipe_book/shared/widgets/dialogs/show_message.dart';
 import 'package:recipe_book/shared/widgets/loading/loading_screen.dart';

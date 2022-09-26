@@ -15,14 +15,18 @@ class ClickableText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: kPrimaryColor.withOpacity(0.2),
-      onTap: onTap,
-      child: Text(
-        text,
-        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-              color: color ?? kPrimaryColor,
-            ),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        splashColor: kPrimaryColor.withOpacity(0.2),
+        highlightColor: kPrimaryColor.withOpacity(0.1),
+        onTap: onTap,
+        child: Text(
+          text,
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                color: color ?? kPrimaryColor,
+              ),
+        ),
       ),
     );
   }
