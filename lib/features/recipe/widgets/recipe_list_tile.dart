@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recipe_book/features/recipe/models/recipe.dart';
+import 'package:recipe_book/features/recipe/views/recipe_screen.dart';
+import 'package:recipe_book/features/recipe/widgets/cooking_time_widget.dart';
+import 'package:recipe_book/features/recipe/widgets/food_indicator_widget.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 
 class RecipeListTile extends StatelessWidget {
@@ -23,7 +27,9 @@ class RecipeListTile extends StatelessWidget {
     return InkWell(
       splashColor: kPrimaryColor.withOpacity(0.2),
       highlightColor: kPrimaryColor.withOpacity(0.1),
-      onTap: () {},
+      onTap: () {
+        Get.to(() => const RecipeScreen());
+      },
       child: Container(
         height: 100,
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -87,34 +93,8 @@ class RecipeListTile extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.timer_outlined,
-                              color: kPrimaryColor,
-                              size: 20,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              '$time min',
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            FoodIndicatorIcon(
-                              color: recipeType == RecipeType.nonveg
-                                  ? Colors.red
-                                  : Colors.green,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              recipeType.value,
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                          ],
-                        ),
+                        CookingTimeWidget(time: time),
+                        FoodIndicatorWidget(recipeType: recipeType),
                       ],
                     )
                   ],
@@ -124,30 +104,6 @@ class RecipeListTile extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class FoodIndicatorIcon extends StatelessWidget {
-  const FoodIndicatorIcon({
-    Key? key,
-    required this.color,
-  }) : super(key: key);
-
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Icon(
-          Icons.crop_square_sharp,
-          color: color,
-          size: 22,
-        ),
-        Icon(Icons.circle, color: color, size: 8),
-      ],
     );
   }
 }
