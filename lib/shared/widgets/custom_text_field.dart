@@ -18,7 +18,7 @@ class CustomTextField extends StatelessWidget {
   final bool enabled;
   final bool obscureText;
   final ValueChanged<String>? onChanged;
-  final String? initialValue;
+  final int? maxLines;
 
   const CustomTextField({
     Key? key,
@@ -36,15 +36,15 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon,
     this.obscureText = false,
     this.onChanged,
-    this.initialValue,
     this.suffixIconColor,
+    this.maxLines = 1,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.transparent,
       child: TextFormField(
-        initialValue: initialValue,
         onChanged: onChanged,
         onTap: onTap,
         textCapitalization: keyboardType == TextInputType.emailAddress
@@ -55,17 +55,18 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         textAlign: textAlign,
         readOnly: isReadOnly,
+        maxLines: maxLines,
         style: Theme.of(context)
             .textTheme
             .bodyText1!
-            .copyWith(fontWeight: FontWeight.w600),
+            .copyWith(fontWeight: FontWeight.w500),
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
         obscureText: obscureText,
         decoration: InputDecoration(
           fillColor: kTextFieldColor,
-          isDense: true,
           filled: true,
+          isDense: true,
           hintText: hintText,
           hintStyle: Theme.of(context)
               .textTheme
@@ -76,48 +77,57 @@ class CustomTextField extends StatelessWidget {
               .textTheme
               .bodyText1!
               .copyWith(color: kTextFieldPrefixColor),
-          prefixIcon: SizedBox(
-            width: 120,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    label,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(color: kTextFieldPrefixColor),
-                  ),
-                ],
-              ),
-            ),
-          ),
           suffixIcon: suffixIcon,
           suffixIconColor: suffixIconColor ?? kTextFieldPrefixColor,
+          floatingLabelAlignment: FloatingLabelAlignment.start,
+          floatingLabelStyle: Theme.of(context).textTheme.headline3,
+          labelText: label,
+          labelStyle: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(color: kPrimaryTextColor, fontWeight: FontWeight.w600),
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.transparent),
-            borderRadius: BorderRadius.circular(6),
+            borderSide: BorderSide(color: Colors.grey.shade200, width: 0.5),
+            borderRadius: BorderRadius.circular(20),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.transparent),
-            borderRadius: BorderRadius.circular(6),
+            borderSide: BorderSide(color: Colors.grey.shade200, width: 0.8),
+            borderRadius: BorderRadius.circular(20),
           ),
           errorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.red, width: 0.5),
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(20),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.red, width: 0.8),
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(20),
           ),
           disabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.transparent),
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(20),
           ),
         ),
       ),
     );
   }
 }
+
+
+          // prefixIcon: SizedBox(
+          //   width: 110,
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(left: 15),
+          //     child: Row(
+          //       mainAxisSize: MainAxisSize.min,
+          //       children: [
+          //         Text(
+          //           label,
+          //           style: Theme.of(context)
+          //               .textTheme
+          //               .bodyText1!
+          //               .copyWith(color: kPrimaryTextColor),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),

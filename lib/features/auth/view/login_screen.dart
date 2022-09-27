@@ -20,9 +20,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
+  final _emailController =
+      TextEditingController(text: 'adithyams.adi@gmail.com');
+  final _passwordController = TextEditingController(text: 'Adithya@98');
   bool _isPasswordVisible = true;
 
   @override
@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Hero(
                   tag: 'email',
                   child: CustomTextField(
-                    controller: emailController,
+                    controller: _emailController,
                     label: 'Email',
                     hintText: 'abcd@gmail.com',
                     keyboardType: TextInputType.emailAddress,
@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Hero(
                   tag: 'password',
                   child: CustomTextField(
-                    controller: passwordController,
+                    controller: _passwordController,
                     label: 'Password',
                     obscureText: _isPasswordVisible,
                     suffixIcon: GestureDetector(
@@ -99,8 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (_formKey.currentState?.validate() ?? false) {
                         context.read<AuthBloc>().add(
                               AuthEventLogIn(
-                                email: emailController.text,
-                                password: passwordController.text,
+                                email: _emailController.text,
+                                password: _passwordController.text,
                               ),
                             );
                       }

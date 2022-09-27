@@ -1,8 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recipe_book/features/recipe/models/recipe.dart';
+import 'package:recipe_book/features/recipe/views/recipe_edit_screen.dart';
 import 'package:recipe_book/features/recipe/widgets/cooking_time_widget.dart';
 import 'package:recipe_book/features/recipe/widgets/food_indicator_widget.dart';
+import 'package:recipe_book/features/recipe/widgets/recipe_image_widget.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 
 class RecipeScreen extends StatelessWidget {
@@ -25,7 +27,9 @@ class RecipeScreen extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => RecipeEditScreen());
+                  },
                   tooltip: 'Edit',
                   icon: const Icon(
                     Icons.edit,
@@ -44,7 +48,11 @@ class RecipeScreen extends StatelessWidget {
                     .headline2!
                     .copyWith(color: Colors.white),
               ),
-              background: const RecipeImageWidget(),
+              background: const RecipeImageWidget(
+                imageUrl:
+                    'https://www.licious.in/blog/wp-content/uploads/2020/12/Fried-Chicken-Wing.jpg',
+                placeholderColor: Colors.black45,
+              ),
             ),
           ),
           SliverToBoxAdapter(
@@ -87,7 +95,6 @@ class RecipeScreen extends StatelessWidget {
                   const IngredientsWidget(),
                   const SizedBox(height: 20),
                   const CookingInstructionsWidget(),
-                  const SizedBox(height: 30),
                 ],
               ),
             ),
@@ -199,46 +206,11 @@ class IngridientRow extends StatelessWidget {
           ),
           Flexible(
             child: Text(
-              'Lorem ipsum dolor sit amet, consectetur elits.',
+              'Lorem ipsum dolor sit amet, consec tetur elits.',
               style: Theme.of(context).textTheme.bodyText1,
             ),
           )
         ],
-      ),
-    );
-  }
-}
-
-class RecipeImageWidget extends StatelessWidget {
-  const RecipeImageWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      imageUrl:
-          'https://www.licious.in/blog/wp-content/uploads/2020/12/Fried-Chicken-Wing.jpg',
-      imageBuilder: (_, imageProvider) {
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.cover,
-            ),
-          ),
-        );
-      },
-      placeholder: (_, __) => Image.asset(
-        'assets/images/default_recipe.png',
-        color: Colors.black45,
-        fit: BoxFit.contain,
-      ),
-      errorWidget: (_, __, ___) => Image.asset(
-        'assets/images/broken_image.png',
-        fit: BoxFit.contain,
-        color: Colors.black45,
       ),
     );
   }

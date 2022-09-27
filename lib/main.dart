@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
@@ -7,7 +8,7 @@ import 'package:recipe_book/features/auth/view/login_screen.dart';
 import 'package:recipe_book/features/recipe/views/category_screen.dart';
 import 'package:recipe_book/shared/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:recipe_book/shared/widgets/dialogs/show_auth_error.dart';
+import 'package:recipe_book/features/auth/widgets/show_auth_error.dart';
 import 'package:recipe_book/shared/widgets/dialogs/show_message.dart';
 import 'package:recipe_book/shared/widgets/loading/loading_screen.dart';
 import 'firebase_options.dart';
@@ -34,8 +35,8 @@ class MyApp extends StatelessWidget {
       ],
       child: GetMaterialApp(
         title: 'Reshipi Book',
-        theme: appTheme(),
-        // debugShowCheckedModeBanner: false,
+        theme: appTheme(context),
+        debugShowCheckedModeBanner: false,
         home: const BaseScreen(),
       ),
     );

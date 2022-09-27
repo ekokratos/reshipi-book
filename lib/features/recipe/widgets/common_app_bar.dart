@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_book/shared/theme/style.dart';
-import 'package:recipe_book/shared/widgets/dialogs/logout_dialog.dart';
+import 'package:recipe_book/features/auth/widgets/logout_dialog.dart';
 
 AppBar commonAppBar({required BuildContext context, required String title}) {
   return AppBar(

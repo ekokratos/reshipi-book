@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 
-ThemeData appTheme() {
+ThemeData appTheme(BuildContext context) {
   return ThemeData().copyWith(
+    appBarTheme: Theme.of(context).appBarTheme.copyWith(
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarIconBrightness: Brightness.light,
+          ),
+        ),
     scaffoldBackgroundColor: Colors.white,
     textTheme: const TextTheme(
       /// Weight : Bold
@@ -56,7 +62,7 @@ ThemeData appTheme() {
       button: TextStyle(
         fontFamily: 'OpenSans',
         fontSize: 14,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w700,
         color: Colors.white,
       ),
 

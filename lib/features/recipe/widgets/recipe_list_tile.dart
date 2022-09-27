@@ -1,10 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/features/recipe/models/recipe.dart';
 import 'package:recipe_book/features/recipe/views/recipe_screen.dart';
 import 'package:recipe_book/features/recipe/widgets/cooking_time_widget.dart';
 import 'package:recipe_book/features/recipe/widgets/food_indicator_widget.dart';
+import 'package:recipe_book/features/recipe/widgets/recipe_image_widget.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 
 class RecipeListTile extends StatelessWidget {
@@ -54,30 +54,7 @@ class RecipeListTile extends StatelessWidget {
                 color: kPrimaryColor.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: CachedNetworkImage(
-                imageUrl: imageUrl,
-                imageBuilder: (_, imageProvider) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  );
-                },
-                placeholder: (_, __) => Image.asset(
-                  'assets/images/default_recipe.png',
-                  color: Colors.white,
-                  fit: BoxFit.contain,
-                ),
-                errorWidget: (_, __, ___) => Image.asset(
-                  'assets/images/broken_image.png',
-                  fit: BoxFit.contain,
-                  color: Colors.white,
-                ),
-              ),
+              child: RecipeImageWidget(imageUrl: imageUrl),
             ),
             Flexible(
               child: Padding(
