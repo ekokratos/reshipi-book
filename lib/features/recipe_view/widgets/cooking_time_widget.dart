@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_book/shared/theme/style.dart';
+import 'package:recipe_book/shared/utility/util.dart';
 
 class CookingTimeWidget extends StatelessWidget {
   const CookingTimeWidget({
@@ -20,7 +21,7 @@ class CookingTimeWidget extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         Text(
-          '$time min',
+          Util.formatCookingTime(time),
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ],

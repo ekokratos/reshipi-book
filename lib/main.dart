@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
-import 'package:recipe_book/features/auth/repository/auth_reppository.dart';
+import 'package:recipe_book/shared/repository/auth_reppository.dart';
 import 'package:recipe_book/features/auth/view/login_screen.dart';
-import 'package:recipe_book/features/recipe/views/category_screen.dart';
+import 'package:recipe_book/features/recipe_view/views/category_screen.dart';
+import 'package:recipe_book/shared/repository/recipe_repository.dart';
 import 'package:recipe_book/shared/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:recipe_book/features/auth/widgets/show_auth_error.dart';
@@ -18,33 +18,53 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+          create: (context) => AuthRepository(),
+        ),
+        RepositoryProvider(
+          create: (context) => RecipeRepository(),
+        ),
+      ],
+      child: const AppView(),
+    );
+  }
+}
+
+class AppView extends StatelessWidget {
+  const AppView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => AuthBloc(authRepository: AuthRepository())
-            ..add(const AuthEventInitialize()),
+          create: (_) => AuthBloc(
+            authRepository: context.read<AuthRepository>(),
+          )..add(const AuthEventInitialize()),
         ),
       ],
       child: GetMaterialApp(
         title: 'Reshipi Book',
         theme: appTheme(context),
         debugShowCheckedModeBanner: false,
-        home: const BaseScreen(),
+        home: const BaseNavScreen(),
       ),
     );
   }
 }
 
-class BaseScreen extends StatelessWidget {
-  const BaseScreen({Key? key}) : super(key: key);
+class BaseNavScreen extends StatelessWidget {
+  const BaseNavScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

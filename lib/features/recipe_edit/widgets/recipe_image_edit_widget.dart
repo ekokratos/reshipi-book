@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:recipe_book/features/recipe/widgets/recipe_edit_screen/image_delete_dialog.dart';
-import 'package:recipe_book/features/recipe/widgets/recipe_edit_screen/image_picker_dialog.dart';
-import 'package:recipe_book/features/recipe/widgets/recipe_image_widget.dart';
+import 'package:recipe_book/features/recipe_edit/widgets/image_delete_dialog.dart';
+import 'package:recipe_book/features/recipe_edit/widgets/image_picker_dialog.dart';
+import 'package:recipe_book/features/recipe_view/widgets/recipe_image_widget.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 
 class RecipeImageEditWidget extends StatefulWidget {

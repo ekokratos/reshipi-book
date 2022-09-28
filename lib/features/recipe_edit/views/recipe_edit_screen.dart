@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_book/features/recipe/models/recipe.dart';
-import 'package:recipe_book/features/recipe/widgets/recipe_edit_screen/custom_dropdown_field.dart';
-import 'package:recipe_book/features/recipe/widgets/recipe_edit_screen/edit_cooking_instructions_widget.dart';
-import 'package:recipe_book/features/recipe/widgets/recipe_edit_screen/edit_ingredients_widget.dart';
-import 'package:recipe_book/features/recipe/widgets/recipe_edit_screen/recipe_image_edit_widget.dart';
+import 'package:recipe_book/features/recipe_edit/models/enums.dart';
+import 'package:recipe_book/features/recipe_edit/widgets/custom_dropdown_field.dart';
+import 'package:recipe_book/features/recipe_edit/widgets/edit_cooking_instructions_widget.dart';
+import 'package:recipe_book/features/recipe_edit/widgets/edit_ingredients_widget.dart';
+import 'package:recipe_book/features/recipe_edit/widgets/recipe_image_edit_widget.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/time_formatter.dart';
 import 'package:recipe_book/shared/utility/validation.dart';
@@ -131,7 +131,7 @@ class DescriptionField extends StatelessWidget {
     return CustomTextField(
       controller: _descriptionController,
       label: 'Description',
-      hintText: 'Type something about the recipe',
+      hintText: 'Type something about the recipe_view',
       maxLines: 4,
     );
   }

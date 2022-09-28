@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:recipe_book/features/auth/models/auth_exception.dart';
 import 'package:recipe_book/main.dart';
 import 'package:recipe_book/shared/models/dialog_message.dart';
-import 'package:recipe_book/features/auth/repository/auth_reppository.dart';
+import 'package:recipe_book/shared/repository/auth_reppository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -120,7 +120,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       await _authRepository.logOut();
-      Get.offAll(const BaseScreen());
+      Get.offAll(const BaseNavScreen());
       emit(const AuthStateUnauthenticated(isLoading: false));
     } on AuthException catch (e) {
       emit(

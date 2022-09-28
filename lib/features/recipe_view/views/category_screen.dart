@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
-import 'package:recipe_book/features/recipe/models/recipe.dart';
-import 'package:recipe_book/features/recipe/widgets/common_app_bar.dart';
-import 'package:recipe_book/features/recipe/widgets/recipe_category.dart';
+import 'package:recipe_book/features/recipe_edit/models/enums.dart';
+import 'package:recipe_book/features/recipe_view/widgets/common_app_bar.dart';
+import 'package:recipe_book/features/recipe_view/widgets/recipe_category.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 
 class CategoryScreen extends StatelessWidget {

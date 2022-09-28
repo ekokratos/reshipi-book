@@ -8,8 +8,6 @@ enum RecipeCategory {
 
   const RecipeCategory(this.value);
   final String value;
-
-  // List<String> get names => RecipeCategory.values.map((e) => e.value).toList();
 }
 
 enum RecipeType {
@@ -19,5 +17,3 @@ enum RecipeType {
   const RecipeType(this.value);
   final String value;
 }
-
-class Recipe {}

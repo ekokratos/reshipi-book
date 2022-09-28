@@ -21,7 +21,6 @@ class AuthRepository {
         email: email,
         password: password,
       );
-      // ..user?.updateDisplayName(name);
       if (credentials.user != null) {
         await credentials.user?.updateDisplayName(name);
       }

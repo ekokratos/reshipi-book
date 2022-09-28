@@ -1,26 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/recipe/models/recipe.dart';
-import 'package:recipe_book/features/recipe/views/recipe_screen.dart';
-import 'package:recipe_book/features/recipe/widgets/cooking_time_widget.dart';
-import 'package:recipe_book/features/recipe/widgets/food_indicator_widget.dart';
-import 'package:recipe_book/features/recipe/widgets/recipe_image_widget.dart';
+import 'package:recipe_book/features/recipe_edit/models/recipe.dart';
+import 'package:recipe_book/features/recipe_view/views/recipe_screen.dart';
+import 'package:recipe_book/features/recipe_view/widgets/cooking_time_widget.dart';
+import 'package:recipe_book/features/recipe_view/widgets/food_indicator_widget.dart';
+import 'package:recipe_book/features/recipe_view/widgets/recipe_image_widget.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 
 class RecipeListTile extends StatelessWidget {
   const RecipeListTile({
     Key? key,
-    required this.imageUrl,
-    required this.recipeName,
-    required this.time,
-    required this.recipeType,
+    required this.recipe,
   }) : super(key: key);
 
-  final String imageUrl;
-  final String recipeName;
-  final String time;
-  final RecipeType recipeType;
-  // final Recipe recipe;
+  final Recipe recipe;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +47,7 @@ class RecipeListTile extends StatelessWidget {
                 color: kPrimaryColor.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: RecipeImageWidget(imageUrl: imageUrl),
+              child: RecipeImageWidget(imageUrl: recipe.imageUrl),
             ),
             Flexible(
               child: Padding(
@@ -64,14 +57,14 @@ class RecipeListTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      recipeName,
+                      recipe.title,
                       style: Theme.of(context).textTheme.headline3,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CookingTimeWidget(time: time),
-                        FoodIndicatorWidget(recipeType: recipeType),
+                        CookingTimeWidget(time: recipe.cookingTime),
+                        FoodIndicatorWidget(recipeType: recipe.type),
                       ],
                     )
                   ],

@@ -1,45 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/recipe/views/recipe_screen.dart';
-import 'package:recipe_book/features/recipe/widgets/recipe_edit_screen/edit_item_row.dart';
-import 'package:recipe_book/features/recipe/widgets/recipe_edit_screen/recipe_bottom_sheet.dart';
-import 'package:recipe_book/features/recipe/widgets/remove_Item_dialog.dart';
+import 'package:recipe_book/features/recipe_view/views/recipe_screen.dart';
+import 'package:recipe_book/features/recipe_edit/widgets/edit_item_row.dart';
+import 'package:recipe_book/features/recipe_edit/widgets/recipe_bottom_sheet.dart';
+import 'package:recipe_book/features/recipe_edit/widgets/remove_item_dialog.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 
-class EditCookingInstructionsWidget extends StatelessWidget {
-  const EditCookingInstructionsWidget({
+class EditIngredientsWidget extends StatelessWidget {
+  const EditIngredientsWidget({
     Key? key,
-    required TextEditingController instructionController,
-  })  : _instructionController = instructionController,
+    required TextEditingController ingredientController,
+  })  : _ingredientController = ingredientController,
         super(key: key);
 
-  final TextEditingController _instructionController;
+  final TextEditingController _ingredientController;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Cooking Instructions:',
+          'Ingredients:',
           style: Theme.of(context).textTheme.headline1,
         ),
         const SizedBox(height: 10),
         ...List.generate(
           2,
           (index) => EditItemRow(
-            item: CookingInstructionRow(
-              step: (index + 1).toString(),
-            ),
+            item: const IngridientRow(),
             onEdit: () {
-              _instructionController.text =
-                  'Lorem ipsum dolor sit amet, consectetur adipng elit, sed do eiusmod.';
-
-              showInstructionBottomSheet();
+              _ingredientController.text =
+                  'Lorem ipsum dolor sit amet, consec tetur elits';
+              showIngredientBottomSheet();
             },
             onRemove: () {
               showRemoveItemDialog(
                 context: context,
-                item: 'Instruction',
+                item: 'Ingredient',
                 onRemove: () {
                   Get.back();
                 },
@@ -50,11 +48,10 @@ class EditCookingInstructionsWidget extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: FloatingActionButton.small(
-            heroTag: 'ingredient_add',
             backgroundColor: Colors.white,
             onPressed: () {
-              _instructionController.clear();
-              showInstructionBottomSheet();
+              _ingredientController.clear();
+              showIngredientBottomSheet();
             },
             child: const Icon(
               Icons.add,
@@ -66,11 +63,11 @@ class EditCookingInstructionsWidget extends StatelessWidget {
     );
   }
 
-  showInstructionBottomSheet() {
+  showIngredientBottomSheet() {
     Get.bottomSheet(
       RecipeBottomSheet(
-        textController: _instructionController,
-        label: 'Instruction',
+        textController: _ingredientController,
+        label: 'Ingredient',
         onPressed: () {
           /// Add to Bloc
           Get.back();

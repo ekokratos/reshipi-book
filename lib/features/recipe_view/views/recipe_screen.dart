@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/recipe/models/recipe.dart';
-import 'package:recipe_book/features/recipe/views/recipe_edit_screen.dart';
-import 'package:recipe_book/features/recipe/widgets/cooking_time_widget.dart';
-import 'package:recipe_book/features/recipe/widgets/food_indicator_widget.dart';
-import 'package:recipe_book/features/recipe/widgets/recipe_image_widget.dart';
+import 'package:recipe_book/features/recipe_edit/models/enums.dart';
+import 'package:recipe_book/features/recipe_edit/views/recipe_edit_screen.dart';
+import 'package:recipe_book/features/recipe_view/widgets/cooking_time_widget.dart';
+import 'package:recipe_book/features/recipe_view/widgets/food_indicator_widget.dart';
+import 'package:recipe_book/features/recipe_view/widgets/recipe_image_widget.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 
 class RecipeScreen extends StatelessWidget {
@@ -28,7 +28,9 @@ class RecipeScreen extends StatelessWidget {
                 ),
                 child: IconButton(
                   onPressed: () {
-                    Get.to(() => RecipeEditScreen());
+                    // final r = context.read<RecipeViewBloc>().state.recipies;
+                    // log(r.toString());
+                    Get.to(() => const RecipeEditScreen());
                   },
                   tooltip: 'Edit',
                   icon: const Icon(
