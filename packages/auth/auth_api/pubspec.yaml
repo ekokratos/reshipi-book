@@ -1,0 +1,15 @@
+name: auth_api
+description: Interface and models for an API providing authorization/authentication.
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: '>=2.18.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_auth: ^3.10.0
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
