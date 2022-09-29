@@ -1,0 +1,17 @@
+name: recipes_repository
+description: Repository that habdles recipe related requests.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: '>=2.18.0 <3.0.0'
+
+dependencies:
+  recipes_api:
+    path: ../recipes_api
+  
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+
+

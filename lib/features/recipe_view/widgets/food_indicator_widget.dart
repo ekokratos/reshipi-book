@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_book/features/recipe_edit/models/enums.dart';
+import 'package:recipes_api/recipes_api.dart';
 
 class FoodIndicatorWidget extends StatelessWidget {
   const FoodIndicatorWidget({

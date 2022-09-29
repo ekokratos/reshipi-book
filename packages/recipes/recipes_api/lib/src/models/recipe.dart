@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:recipe_book/features/recipe_edit/models/enums.dart';
+import 'package:recipes_api/src/models/enums.dart';
+
 import 'package:uuid/uuid.dart';
 
 part 'recipe.g.dart';

@@ -14,7 +14,3 @@ class RecipeViewRecipesRequested extends RecipeViewEvent {
 
   final RecipeCategory category;
 }
-
-// class RecipeViewSubscriptionRequested extends RecipeViewEvent {
-//   const RecipeViewSubscriptionRequested();
-// }

@@ -1,16 +1,18 @@
+import 'package:auth_api/auth_api.dart';
+import 'package:auth_repository/auth_repository.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_recipes_api/firebase_recipes_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
-import 'package:recipe_book/shared/repository/auth_reppository.dart';
 import 'package:recipe_book/features/auth/view/login_screen.dart';
 import 'package:recipe_book/features/recipe_view/views/category_screen.dart';
-import 'package:recipe_book/shared/repository/recipe_repository.dart';
 import 'package:recipe_book/shared/theme/app_theme.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:recipe_book/features/auth/widgets/show_auth_error.dart';
 import 'package:recipe_book/shared/widgets/dialogs/show_message.dart';
 import 'package:recipe_book/shared/widgets/loading/loading_screen.dart';
+import 'package:recipes_repository/recipes_repository.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -29,10 +31,11 @@ class App extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
-          create: (context) => AuthRepository(),
+          create: (context) => AuthRepository(authApi: AuthApi()),
         ),
         RepositoryProvider(
-          create: (context) => RecipeRepository(),
+          create: (context) =>
+              RecipesRepository(recipesApi: FirebaseRecipesApi()),
         ),
       ],
       child: const AppView(),

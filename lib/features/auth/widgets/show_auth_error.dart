@@ -1,8 +1,8 @@
+import 'package:auth_api/auth_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/widgets/dialogs/custom_dialog.dart';
-import 'package:recipe_book/features/auth/models/auth_exception.dart';
 
 showAuthError({
   required AuthException authException,

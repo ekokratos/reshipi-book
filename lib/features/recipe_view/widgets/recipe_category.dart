@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/recipe_edit/models/enums.dart';
 import 'package:recipe_book/features/recipe_view/views/recipe_list_screen.dart';
 import 'package:recipe_book/shared/theme/style.dart';
+import 'package:recipes_api/recipes_api.dart';
 
 class RecipeCategoryWidget extends StatelessWidget {
   const RecipeCategoryWidget({

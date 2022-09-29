@@ -1,22 +1,20 @@
+import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:recipe_book/features/recipe_edit/models/enums.dart';
-import 'package:recipe_book/features/recipe_edit/models/recipe.dart';
-import 'package:recipe_book/shared/repository/auth_reppository.dart';
-import 'package:recipe_book/shared/repository/recipe_repository.dart';
+import 'package:recipes_api/recipes_api.dart';
+import 'package:recipes_repository/recipes_repository.dart';
 
 part 'recipe_view_event.dart';
 part 'recipe_view_state.dart';
 
 class RecipeViewBloc extends Bloc<RecipeViewEvent, RecipeViewState> {
   RecipeViewBloc({
-    required RecipeRepository recipeRepository,
+    required RecipesRepository recipesRepository,
     required AuthRepository authRepository,
-  })  : _recipeRepository = recipeRepository,
+  })  : _recipesRepository = recipesRepository,
         _authRepository = authRepository,
         super(const RecipeViewState()) {
     on<RecipeViewRecipesRequested>(_onRecipesRequested);
-    // on<RecipeViewSubscriptionRequested>(_onSubscriptionRequested);
   }
 
   void _onRecipesRequested(
@@ -26,7 +24,7 @@ class RecipeViewBloc extends Bloc<RecipeViewEvent, RecipeViewState> {
     emit(state.copyWith(status: RecipeViewStatus.loading));
 
     try {
-      await _recipeRepository.getRecipies(
+      await _recipesRepository.getRecipies(
         userId: _authRepository.currentUser!.uid,
         category: event.category,
       );
@@ -39,7 +37,7 @@ class RecipeViewBloc extends Bloc<RecipeViewEvent, RecipeViewState> {
     }
 
     await emit.forEach<List<Recipe>>(
-      _recipeRepository.recipes,
+      _recipesRepository.recipes,
       onData: (recipes) => state.copyWith(
         status: RecipeViewStatus.success,
         recipes: recipes,
@@ -50,6 +48,6 @@ class RecipeViewBloc extends Bloc<RecipeViewEvent, RecipeViewState> {
     );
   }
 
-  final RecipeRepository _recipeRepository;
+  final RecipesRepository _recipesRepository;
   final AuthRepository _authRepository;
 }

@@ -1,12 +1,12 @@
+import 'package:auth_api/auth_api.dart';
+import 'package:auth_repository/auth_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/foundation.dart' show immutable;
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/auth/models/auth_exception.dart';
 import 'package:recipe_book/main.dart';
 import 'package:recipe_book/shared/models/dialog_message.dart';
-import 'package:recipe_book/shared/repository/auth_reppository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

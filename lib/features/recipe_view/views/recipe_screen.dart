@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/recipe_edit/models/enums.dart';
 import 'package:recipe_book/features/recipe_edit/views/recipe_edit_screen.dart';
 import 'package:recipe_book/features/recipe_view/widgets/cooking_time_widget.dart';
 import 'package:recipe_book/features/recipe_view/widgets/food_indicator_widget.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_image_widget.dart';
 import 'package:recipe_book/shared/theme/style.dart';
+import 'package:recipes_api/recipes_api.dart';
 
 class RecipeScreen extends StatelessWidget {
   const RecipeScreen({super.key});

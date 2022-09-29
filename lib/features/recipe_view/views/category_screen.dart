@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
-import 'package:recipe_book/features/recipe_edit/models/enums.dart';
 import 'package:recipe_book/features/recipe_view/widgets/common_app_bar.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_category.dart';
 import 'package:recipe_book/shared/theme/style.dart';
+import 'package:recipes_api/recipes_api.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({super.key});

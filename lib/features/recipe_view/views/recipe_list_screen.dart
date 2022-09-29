@@ -1,14 +1,13 @@
+import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recipe_book/features/recipe_edit/models/enums.dart';
 import 'package:recipe_book/features/recipe_view/bloc/recipe_view_bloc.dart';
 import 'package:recipe_book/features/recipe_view/widgets/common_app_bar.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_list_tile.dart';
-import 'package:recipe_book/shared/repository/auth_reppository.dart';
-
-import 'package:recipe_book/shared/repository/recipe_repository.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/util.dart';
+import 'package:recipes_api/recipes_api.dart';
+import 'package:recipes_repository/recipes_repository.dart';
 import 'package:shimmer/shimmer.dart';
 
 class RecipeListScreen extends StatelessWidget {
@@ -19,7 +18,7 @@ class RecipeListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => RecipeViewBloc(
-        recipeRepository: context.read<RecipeRepository>(),
+        recipesRepository: context.read<RecipesRepository>(),
         authRepository: context.read<AuthRepository>(),
       )..add(
           RecipeViewRecipesRequested(

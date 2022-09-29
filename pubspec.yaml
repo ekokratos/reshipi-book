@@ -1,7 +1,7 @@
 name: recipe_book
 description: A personal recipe cookbook.
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
 version: 1.0.0+1
 
@@ -20,39 +20,39 @@ dependencies:
   flutter_svg: ^1.1.5
   cupertino_icons: ^1.0.2
   get: ^4.6.5
-
+    
+  #Local packages
+  firebase_recipes_api:
+    path: packages/recipes/firebase_recipes_api
+  recipes_api:
+    path: packages/recipes/recipes_api
+  recipes_repository:
+    path: packages/recipes/recipes_repository
+  auth_api:
+    path: packages/auth/auth_api
+  auth_repository:
+    path: packages/auth/auth_repository
+  
   #Firebase
   firebase_core: ^1.23.0
   firebase_auth: ^3.10.0
-  cloud_firestore: ^3.4.9
-  
+
+  #BLoC
   flutter_bloc: ^8.1.1
   equatable: ^2.0.5
-  uuid: ^3.0.6
-  json_annotation: ^4.7.0
-  rxdart: ^0.27.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
-  json_serializable: ^6.4.0
-  build_runner: ^2.2.1
 
 flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
-
 
   assets:
     - assets/svgs/
     - assets/images/
-
-
 
   fonts:
     - family: OpenSans
