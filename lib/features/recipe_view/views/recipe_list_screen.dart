@@ -1,7 +1,9 @@
 import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:recipe_book/features/recipe_view/bloc/recipe_view_bloc.dart';
+import 'package:recipe_book/features/recipe_view/views/recipe_screen.dart';
 import 'package:recipe_book/features/recipe_view/widgets/common_app_bar.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_list_tile.dart';
 import 'package:recipe_book/shared/theme/style.dart';
@@ -42,8 +44,11 @@ class RecipeListView extends StatelessWidget {
         title: category.value,
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'create_new_recipe',
         backgroundColor: kPrimaryColor,
-        onPressed: () {},
+        onPressed: () {
+          Get.to(() => const RecipeScreen());
+        },
         child: const Icon(
           Icons.add,
           size: 28,

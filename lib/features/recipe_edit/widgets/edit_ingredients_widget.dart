@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/recipe_view/views/recipe_screen.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/edit_item_row.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/recipe_bottom_sheet.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/remove_item_dialog.dart';
+import 'package:recipe_book/features/recipe_view/widgets/ingredients_widget.dart';
 import 'package:recipe_book/shared/theme/style.dart';
+import 'package:recipes_api/recipes_api.dart';
 
 class EditIngredientsWidget extends StatelessWidget {
   const EditIngredientsWidget({
@@ -28,7 +29,9 @@ class EditIngredientsWidget extends StatelessWidget {
         ...List.generate(
           2,
           (index) => EditItemRow(
-            item: const IngridientRow(),
+            item: IngridientRow(
+                ingredient: Ingredient(
+                    name: 'Lorem ipsum dolor sit amet, consec tetur elits')),
             onEdit: () {
               _ingredientController.text =
                   'Lorem ipsum dolor sit amet, consec tetur elits';

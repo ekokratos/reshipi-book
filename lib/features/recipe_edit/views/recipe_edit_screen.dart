@@ -30,7 +30,7 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-        heroTag: 'save_btn',
+        heroTag: 'create_new_recipe',
         onPressed: () {},
         backgroundColor: kPrimaryColor,
         label: Row(

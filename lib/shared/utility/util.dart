@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_book/shared/theme/style.dart';
@@ -31,7 +33,8 @@ class Util {
         formattedTime += '${minute.toString()} min';
       }
       return formattedTime.isNotEmpty ? formattedTime : '-';
-    } catch (_) {
+    } catch (e) {
+      log(e.toString());
       return '-';
     }
   }

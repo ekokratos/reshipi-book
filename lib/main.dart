@@ -48,14 +48,10 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (_) => AuthBloc(
-            authRepository: context.read<AuthRepository>(),
-          )..add(const AuthEventInitialize()),
-        ),
-      ],
+    return BlocProvider(
+      create: (_) => AuthBloc(
+        authRepository: context.read<AuthRepository>(),
+      )..add(const AuthEventInitialize()),
       child: GetMaterialApp(
         title: 'Reshipi Book',
         theme: appTheme(context),

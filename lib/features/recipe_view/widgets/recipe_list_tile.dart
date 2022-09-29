@@ -21,7 +21,7 @@ class RecipeListTile extends StatelessWidget {
       splashColor: kPrimaryColor.withOpacity(0.2),
       highlightColor: kPrimaryColor.withOpacity(0.1),
       onTap: () {
-        Get.to(() => const RecipeScreen());
+        Get.to(() => RecipeScreen(recipe: recipe));
       },
       child: Container(
         height: 100,

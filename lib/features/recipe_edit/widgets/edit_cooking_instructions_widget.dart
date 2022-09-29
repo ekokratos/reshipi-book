@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/recipe_view/views/recipe_screen.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/edit_item_row.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/recipe_bottom_sheet.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/remove_item_dialog.dart';
+import 'package:recipe_book/features/recipe_view/widgets/cooking_instructions_widget.dart';
 import 'package:recipe_book/shared/theme/style.dart';
+import 'package:recipes_api/recipes_api.dart';
 
 class EditCookingInstructionsWidget extends StatelessWidget {
   const EditCookingInstructionsWidget({
@@ -28,7 +29,11 @@ class EditCookingInstructionsWidget extends StatelessWidget {
           2,
           (index) => EditItemRow(
             item: CookingInstructionRow(
-              step: (index + 1).toString(),
+              instruction: Instruction(
+                name:
+                    'Lorem ipsum dolor sit amet, consectetur adipng elit, sed do eiusmod.',
+                stepNumber: 0,
+              ),
             ),
             onEdit: () {
               _instructionController.text =

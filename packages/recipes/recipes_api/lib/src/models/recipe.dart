@@ -7,6 +7,13 @@ import 'package:uuid/uuid.dart';
 
 part 'recipe.g.dart';
 
+extension SortInstructions on List<Instruction>? {
+  List<Instruction> sortOnStep() {
+    this?.sort(((a, b) => a.stepNumber.compareTo(b.stepNumber)));
+    return this ?? [];
+  }
+}
+
 @immutable
 @JsonSerializable()
 class Recipe extends Equatable {
