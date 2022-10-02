@@ -68,4 +68,22 @@ class FirebaseRecipesApi extends RecipesApi {
       rethrow;
     }
   }
+
+  @override
+  Future<void> deleteRecipe({required Recipe recipe}) async {
+    try {
+      await _db.collection(kRecipesCollection).doc(recipe.id).delete();
+
+      ///Remove the recipe from recipe stream
+      final recipes = [..._recipeStreamController.value];
+      final recipeIndex = recipes.indexWhere((r) => r.id == recipe.id);
+      if (recipeIndex >= 0) {
+        recipes.removeAt(recipeIndex);
+      }
+      _recipeStreamController.add(recipes);
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
 }

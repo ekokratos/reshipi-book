@@ -96,15 +96,8 @@ class RecipeListView extends StatelessWidget {
           return Column(
             children: [
               const SizedBox(height: 5),
-              Text(
-                'Pull down to refresh',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2!
-                    .copyWith(color: Colors.grey),
-              ),
-              const SizedBox(height: 5),
               ListView.builder(
+                physics: const BouncingScrollPhysics(),
                 itemCount: recipies.length,
                 shrinkWrap: true,
                 itemBuilder: ((context, index) {

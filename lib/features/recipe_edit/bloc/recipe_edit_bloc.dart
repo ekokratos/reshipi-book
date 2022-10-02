@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:get/get.dart';
 import 'package:recipes_api/recipes_api.dart';
 import 'package:recipes_repository/recipes_repository.dart';
 import 'package:collection/collection.dart';
@@ -34,6 +33,7 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
     on<RecipeEditInstructionSaved>(_onInstructionSaved);
     on<RecipeEditInstructionDeleted>(_onInstructionDeleted);
     on<RecipeEditSaved>(_onRecipeSaved);
+    on<RecipeEditDeleted>(_onRecipeDeleted);
   }
 
   final RecipesRepository _recipesRepository;
@@ -124,7 +124,6 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
   ) async {
     emit(state.copyWith(status: RecipeEditStatus.loading));
     try {
-      log(event.recipe.toString());
       await _recipesRepository.saveRecipe(
         recipe: event.recipe.copyWith(
           ingredients: state.ingredients,
@@ -139,7 +138,22 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
           recipe: event.recipe,
         ),
       );
-    } catch (e) {
+    } catch (_) {
+      emit(state.copyWith(status: RecipeEditStatus.failure));
+    }
+  }
+
+  _onRecipeDeleted(
+    RecipeEditDeleted event,
+    Emitter<RecipeEditState> emit,
+  ) async {
+    emit(state.copyWith(status: RecipeEditStatus.loading));
+    try {
+      await _recipesRepository.deleteRecipe(recipe: event.recipe);
+
+      emit(state.copyWith(status: RecipeEditStatus.success));
+      Get.back();
+    } catch (_) {
       emit(state.copyWith(status: RecipeEditStatus.failure));
     }
   }

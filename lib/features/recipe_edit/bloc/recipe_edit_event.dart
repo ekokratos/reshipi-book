@@ -7,8 +7,16 @@ abstract class RecipeEditEvent extends Equatable {
   List<Object> get props => [];
 }
 
+///Recipe related events
+///
+///Events: [RecipeEditSaved], [RecipeEditDeleted]
 class RecipeEditSaved extends RecipeEditEvent {
   const RecipeEditSaved({required this.recipe});
+  final Recipe recipe;
+}
+
+class RecipeEditDeleted extends RecipeEditEvent {
+  const RecipeEditDeleted({required this.recipe});
   final Recipe recipe;
 }
 

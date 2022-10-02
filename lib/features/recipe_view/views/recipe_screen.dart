@@ -10,6 +10,9 @@ import 'package:recipe_book/features/recipe_view/widgets/food_indicator_widget.d
 import 'package:recipe_book/features/recipe_view/widgets/ingredients_widget.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_image_widget.dart';
 import 'package:recipe_book/shared/theme/style.dart';
+import 'package:recipe_book/shared/utility/util.dart';
+import 'package:recipe_book/shared/widgets/expandable_fab.dart';
+import 'package:recipe_book/shared/widgets/loading/loading_screen.dart';
 import 'package:recipes_api/recipes_api.dart';
 import 'package:recipes_repository/recipes_repository.dart';
 
@@ -47,56 +50,76 @@ class RecipeReadScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocSelector<RecipeEditBloc, RecipeEditState, Recipe>(
-        selector: (state) {
-          return state.recipe;
-        },
-        builder: (context, recipe) {
-          return CustomScrollView(
+    return BlocConsumer<RecipeEditBloc, RecipeEditState>(
+      listener: (context, state) {
+        if (state.status == RecipeEditStatus.loading) {
+          LoadingScreen.instance().show(
+            context: context,
+            text: 'Deleting Recipe',
+          );
+        } else {
+          LoadingScreen.instance().hide();
+        }
+
+        if (state.status == RecipeEditStatus.failure) {
+          Util.showSnackbar(
+            msg:
+                'An error occurred while deleting the recipe. Please try again.',
+            isError: true,
+          );
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          floatingActionButton: ExpandableFab(
+            children: <ActionButton>[
+              ActionButton(
+                onPressed: () {
+                  Get.to(
+                    () => BlocProvider.value(
+                      value: context.read<RecipeEditBloc>(),
+                      child: RecipeEditScreen(
+                        recipe: state.recipe,
+                      ),
+                    ),
+                  );
+                },
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.blueAccent,
+                ),
+              ),
+              ActionButton(
+                onPressed: () {
+                  context
+                      .read<RecipeEditBloc>()
+                      .add(RecipeEditDeleted(recipe: state.recipe));
+                },
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                ),
+              ),
+            ],
+          ),
+          body: CustomScrollView(
             slivers: [
               SliverAppBar(
                 expandedHeight: 180,
                 pinned: true,
                 leading: const BackButton(color: Colors.white),
                 backgroundColor: kPrimaryColor,
-                actions: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: kPrimaryColor,
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        Get.to(
-                          () => BlocProvider.value(
-                            value: context.read<RecipeEditBloc>(),
-                            child: RecipeEditScreen(
-                              recipe: recipe,
-                            ),
-                          ),
-                        );
-                      },
-                      tooltip: 'Edit',
-                      icon: const Icon(
-                        Icons.edit,
-                        size: 28,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10)
-                ],
                 flexibleSpace: FlexibleSpaceBar(
                   expandedTitleScale: 1.2,
                   title: Text(
-                    recipe.title,
+                    state.recipe.title,
                     style: Theme.of(context)
                         .textTheme
                         .headline2!
                         .copyWith(color: Colors.white),
                   ),
                   background: RecipeImageWidget(
-                    imageUrl: recipe.imageUrl,
+                    imageUrl: state.recipe.imageUrl,
                   ),
                 ),
               ),
@@ -110,10 +133,10 @@ class RecipeReadScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CookingTimeWidget(
-                            time: recipe.cookingTime,
+                            time: state.recipe.cookingTime,
                           ),
                           FoodIndicatorWidget(
-                            recipeType: recipe.type,
+                            recipeType: state.recipe.type,
                           ),
                           Row(
                             children: [
@@ -124,7 +147,7 @@ class RecipeReadScreen extends StatelessWidget {
                               ),
                               const SizedBox(width: 5),
                               Text(
-                                recipe.category.value,
+                                state.recipe.category.value,
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                             ],
@@ -133,7 +156,7 @@ class RecipeReadScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        recipe.description ?? 'No description',
+                        state.recipe.description ?? 'No description',
                         textAlign: TextAlign.justify,
                         style: Theme.of(context)
                             .textTheme
@@ -149,9 +172,9 @@ class RecipeReadScreen extends StatelessWidget {
                 ),
               ),
             ],
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

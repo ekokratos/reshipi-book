@@ -5,7 +5,7 @@ abstract class RecipesApi {
 
   Stream<List<Recipe>> get recipes;
 
-  /// Fetches all recipes for a given [userId] and [category]
+  /// Fetches all recipes for a given [userId] and [category].
   Future<List<Recipe>> getRecipies({
     required String userId,
     required RecipeCategory category,
@@ -15,4 +15,7 @@ abstract class RecipesApi {
   ///
   /// If a [recipe] with the same id already exists, it will be replaced.
   Future<void> saveRecipe({required Recipe recipe});
+
+  /// Deletes a [recipe] and its stored image.
+  Future<void> deleteRecipe({required Recipe recipe});
 }
