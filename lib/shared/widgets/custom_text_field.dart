@@ -19,6 +19,7 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final ValueChanged<String>? onChanged;
   final int? maxLines;
+  final String? initialValue;
 
   const CustomTextField({
     Key? key,
@@ -38,6 +39,7 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.suffixIconColor,
     this.maxLines = 1,
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -45,6 +47,7 @@ class CustomTextField extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: TextFormField(
+        initialValue: initialValue,
         onChanged: onChanged,
         onTap: onTap,
         textCapitalization: keyboardType == TextInputType.emailAddress

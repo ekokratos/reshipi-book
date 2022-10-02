@@ -11,6 +11,8 @@ class FirebaseRecipesApi extends RecipesApi {
   final _recipeStreamController =
       BehaviorSubject<List<Recipe>>.seeded(const []);
 
+  final kRecipesCollection = 'recipies';
+
   @override
   Stream<List<Recipe>> get recipes =>
       _recipeStreamController.asBroadcastStream();
@@ -24,7 +26,7 @@ class FirebaseRecipesApi extends RecipesApi {
 
     try {
       await _db
-          .collection('recipies')
+          .collection(kRecipesCollection)
           .where('userId', isEqualTo: userId)
           .where('category', isEqualTo: category.name)
           .get()
@@ -36,6 +38,31 @@ class FirebaseRecipesApi extends RecipesApi {
       });
       _recipeStreamController.add(fetchedRecipes);
       return fetchedRecipes;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> saveRecipe({required Recipe recipe}) async {
+    try {
+      ///Save recipe to Firestore
+      log(recipe.toJson().toString());
+      await _db
+          .collection(kRecipesCollection)
+          .doc(recipe.id)
+          .set(recipe.toJson(), SetOptions(merge: true));
+
+      ///Update recipe stream with new/edited recipe
+      final recipes = [..._recipeStreamController.value];
+      final recipeIndex = recipes.indexWhere((r) => r.id == recipe.id);
+      if (recipeIndex >= 0) {
+        recipes[recipeIndex] = recipe;
+      } else {
+        recipes.add(recipe);
+      }
+      _recipeStreamController.add(recipes);
     } catch (e) {
       log(e.toString());
       rethrow;

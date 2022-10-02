@@ -15,11 +15,11 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) => Recipe(
       cookingTime: json['cookingTime'] as String,
       type: $enumDecode(_$RecipeTypeEnumMap, json['type']),
       category: $enumDecode(_$RecipeCategoryEnumMap, json['category']),
-      ingredients: (json['ingredients'] as List<dynamic>?)
-          ?.map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
+      ingredients: (json['ingredients'] as List<dynamic>)
+          .map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
           .toList(),
-      instructions: (json['instructions'] as List<dynamic>?)
-          ?.map((e) => Instruction.fromJson(e as Map<String, dynamic>))
+      instructions: (json['instructions'] as List<dynamic>)
+          .map((e) => Instruction.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -32,8 +32,8 @@ Map<String, dynamic> _$RecipeToJson(Recipe instance) => <String, dynamic>{
       'cookingTime': instance.cookingTime,
       'type': _$RecipeTypeEnumMap[instance.type]!,
       'category': _$RecipeCategoryEnumMap[instance.category]!,
-      'ingredients': instance.ingredients,
-      'instructions': instance.instructions,
+      'ingredients': instance.ingredients.map((e) => e.toJson()).toList(),
+      'instructions': instance.instructions.map((e) => e.toJson()).toList(),
     };
 
 const _$RecipeTypeEnumMap = {

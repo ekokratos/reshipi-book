@@ -16,4 +16,10 @@ class RecipesRepository {
     required RecipeCategory category,
   }) =>
       _recipesApi.getRecipies(userId: userId, category: category);
+
+  /// Saves a [recipe].
+  ///
+  /// If a [recipe] with the same id already exists, it will be replaced.
+  Future<void> saveRecipe({required Recipe recipe}) =>
+      _recipesApi.saveRecipe(recipe: recipe);
 }

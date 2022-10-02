@@ -29,18 +29,18 @@ class RecipeImageWidget extends StatelessWidget {
             },
             placeholder: (_, __) => Image.asset(
               'assets/images/default_recipe.png',
-              color: placeholderColor ?? Colors.white,
+              color: placeholderColor ?? Colors.black12,
               fit: BoxFit.contain,
             ),
             errorWidget: (_, __, ___) => Image.asset(
               'assets/images/broken_image.png',
               fit: BoxFit.contain,
-              color: placeholderColor ?? Colors.white,
+              color: placeholderColor ?? Colors.black12,
             ),
           )
         : Image.asset(
             'assets/images/default_recipe.png',
-            color: Colors.white,
+            color: placeholderColor ?? Colors.black12,
           );
   }
 }

@@ -1,41 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recipe_book/features/recipe_edit/bloc/recipe_edit_bloc.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipes_api/recipes_api.dart';
 
 class CookingInstructionsWidget extends StatelessWidget {
-  const CookingInstructionsWidget({
-    Key? key,
-    this.instructions,
-  }) : super(key: key);
-
-  final List<Instruction>? instructions;
+  const CookingInstructionsWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final sortedInstructions = instructions.sortOnStep();
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Cooking Instructions:',
-          style: Theme.of(context).textTheme.headline1,
-        ),
-        const SizedBox(height: 10),
-        if (sortedInstructions.isNotEmpty)
-          ...List.generate(
-            sortedInstructions.length,
-            (index) =>
-                CookingInstructionRow(instruction: sortedInstructions[index]),
-          )
-        else
-          Text(
-            'No Instructions added',
-            style: Theme.of(context).textTheme.headline3?.copyWith(
-                  color: Colors.grey.shade400,
+    return BlocSelector<RecipeEditBloc, RecipeEditState, List<Instruction>>(
+      selector: (state) {
+        return state.instructions.sortOnStep();
+      },
+      builder: (context, instructions) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Cooking Instructions:',
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            const SizedBox(height: 10),
+            if (instructions.isNotEmpty)
+              ...List.generate(
+                instructions.length,
+                (index) => CookingInstructionRow(
+                  instruction: instructions[index],
                 ),
-          ),
-      ],
+              )
+            else
+              Text(
+                'No Instructions added',
+                style: Theme.of(context).textTheme.headline3?.copyWith(
+                      color: Colors.grey.shade400,
+                    ),
+              ),
+          ],
+        );
+      },
     );
   }
 }

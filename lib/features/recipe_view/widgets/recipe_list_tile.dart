@@ -11,9 +11,11 @@ class RecipeListTile extends StatelessWidget {
   const RecipeListTile({
     Key? key,
     required this.recipe,
+    required this.category,
   }) : super(key: key);
 
   final Recipe recipe;
+  final RecipeCategory category;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,13 @@ class RecipeListTile extends StatelessWidget {
       splashColor: kPrimaryColor.withOpacity(0.2),
       highlightColor: kPrimaryColor.withOpacity(0.1),
       onTap: () {
-        Get.to(() => RecipeScreen(recipe: recipe));
+        Get.to(
+          () => RecipeScreen(
+            recipe: recipe,
+            isNewRecipe: false,
+            category: category,
+          ),
+        );
       },
       child: Container(
         height: 100,
@@ -47,7 +55,10 @@ class RecipeListTile extends StatelessWidget {
                 color: kPrimaryColor.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: RecipeImageWidget(imageUrl: recipe.imageUrl),
+              child: RecipeImageWidget(
+                imageUrl: recipe.imageUrl,
+                placeholderColor: Colors.white,
+              ),
             ),
             Flexible(
               child: Padding(

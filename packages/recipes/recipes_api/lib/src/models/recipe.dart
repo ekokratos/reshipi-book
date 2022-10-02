@@ -26,8 +26,8 @@ class Recipe extends Equatable {
     required this.cookingTime,
     required this.type,
     required this.category,
-    this.ingredients,
-    this.instructions,
+    required this.ingredients,
+    required this.instructions,
   }) : id = id ?? const Uuid().v4();
 
   final String id;
@@ -38,8 +38,19 @@ class Recipe extends Equatable {
   final String cookingTime;
   final RecipeType type;
   final RecipeCategory category;
-  final List<Ingredient>? ingredients;
-  final List<Instruction>? instructions;
+  final List<Ingredient> ingredients;
+  final List<Instruction> instructions;
+
+  Recipe.empty({required this.userId})
+      : id = const Uuid().v4(),
+        title = '',
+        description = '',
+        imageUrl = '',
+        cookingTime = '',
+        type = RecipeType.veg,
+        category = RecipeCategory.other,
+        ingredients = [],
+        instructions = [];
 
   Recipe copyWith({
     String? title,

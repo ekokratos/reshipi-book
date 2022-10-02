@@ -1,38 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recipe_book/features/recipe_edit/bloc/recipe_edit_bloc.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipes_api/recipes_api.dart';
 
 class IngredientsWidget extends StatelessWidget {
-  const IngredientsWidget({
-    Key? key,
-    this.ingredients,
-  }) : super(key: key);
-
-  final List<Ingredient>? ingredients;
+  const IngredientsWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Ingredients:',
-          style: Theme.of(context).textTheme.headline1,
-        ),
-        const SizedBox(height: 10),
-        if (ingredients != null && ingredients!.isNotEmpty)
-          ...List.generate(
-            ingredients!.length,
-            (index) => IngridientRow(ingredient: ingredients![index]),
-          )
-        else
-          Text(
-            'No Ingredients added',
-            style: Theme.of(context).textTheme.headline3?.copyWith(
-                  color: Colors.grey.shade400,
-                ),
-          ),
-      ],
+    return BlocSelector<RecipeEditBloc, RecipeEditState, List<Ingredient>>(
+      selector: (state) {
+        return state.ingredients;
+      },
+      builder: (context, ingredients) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Ingredients:',
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            const SizedBox(height: 10),
+            if (ingredients.isNotEmpty)
+              ...List.generate(
+                ingredients.length,
+                (index) => IngridientRow(ingredient: ingredients[index]),
+              )
+            else
+              Text(
+                'No Ingredients added',
+                style: Theme.of(context).textTheme.headline3?.copyWith(
+                      color: Colors.grey.shade400,
+                    ),
+              ),
+          ],
+        );
+      },
     );
   }
 }

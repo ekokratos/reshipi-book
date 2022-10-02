@@ -107,6 +107,13 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
               iconColor: Colors.black,
               onPressed: () {
                 Get.back();
+                // if (isNewRecipe) {
+                //   Get.back();
+                // } else {
+                //   // context
+                //   //     .read<RecipeEditBloc>()
+                //   //     .add(const RecipeEditEventGoToReadScreen());
+                // }
               },
             ),
           ),

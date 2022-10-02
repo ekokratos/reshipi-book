@@ -10,4 +10,9 @@ abstract class RecipesApi {
     required String userId,
     required RecipeCategory category,
   });
+
+  /// Saves a [recipe].
+  ///
+  /// If a [recipe] with the same id already exists, it will be replaced.
+  Future<void> saveRecipe({required Recipe recipe});
 }

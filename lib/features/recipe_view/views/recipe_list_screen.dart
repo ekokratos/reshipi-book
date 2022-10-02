@@ -47,7 +47,12 @@ class RecipeListView extends StatelessWidget {
         heroTag: 'create_new_recipe',
         backgroundColor: kPrimaryColor,
         onPressed: () {
-          Get.to(() => const RecipeScreen());
+          Get.to(
+            () => RecipeScreen(
+              isNewRecipe: true,
+              category: category,
+            ),
+          );
         },
         child: const Icon(
           Icons.add,
@@ -99,21 +104,15 @@ class RecipeListView extends StatelessWidget {
                     .copyWith(color: Colors.grey),
               ),
               const SizedBox(height: 5),
-              RefreshIndicator(
-                onRefresh: () async {
-                  context.read<RecipeViewBloc>().add(
-                        RecipeViewRecipesRequested(category: category),
-                      );
-                },
-                child: ListView.builder(
-                  itemCount: recipies.length,
-                  shrinkWrap: true,
-                  itemBuilder: ((context, index) {
-                    return RecipeListTile(
-                      recipe: recipies[index],
-                    );
-                  }),
-                ),
+              ListView.builder(
+                itemCount: recipies.length,
+                shrinkWrap: true,
+                itemBuilder: ((context, index) {
+                  return RecipeListTile(
+                    recipe: recipies[index],
+                    category: category,
+                  );
+                }),
               ),
             ],
           );
