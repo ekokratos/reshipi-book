@@ -36,6 +36,7 @@ dependencies:
   #Firebase
   firebase_core: ^1.23.0
   firebase_auth: ^3.10.0
+  firebase_storage: ^10.3.10
 
   #BLoC
   flutter_bloc: ^8.1.1

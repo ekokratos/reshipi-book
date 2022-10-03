@@ -1,13 +1,19 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:recipes_api/recipes_api.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:uuid/uuid.dart';
 
 class FirebaseRecipesApi extends RecipesApi {
-  FirebaseRecipesApi() : _db = FirebaseFirestore.instance;
+  FirebaseRecipesApi()
+      : _db = FirebaseFirestore.instance,
+        _storage = FirebaseStorage.instance;
 
   final FirebaseFirestore _db;
+  final FirebaseStorage _storage;
   final _recipeStreamController =
       BehaviorSubject<List<Recipe>>.seeded(const []);
 
@@ -45,14 +51,23 @@ class FirebaseRecipesApi extends RecipesApi {
   }
 
   @override
-  Future<void> saveRecipe({required Recipe recipe}) async {
+  Future<void> saveRecipe(
+      {required Recipe recipe, required File? imageFile}) async {
     try {
       ///Save recipe to Firestore
-      log(recipe.toJson().toString());
-      await _db
-          .collection(kRecipesCollection)
-          .doc(recipe.id)
-          .set(recipe.toJson(), SetOptions(merge: true));
+      ///
+      await Future.wait([
+        _db
+            .collection(kRecipesCollection)
+            .doc(recipe.id)
+            .set(recipe.toJson(), SetOptions(merge: true)),
+        if (imageFile != null)
+          uploadImage(
+                  file: imageFile, userId: recipe.userId, recipeId: recipe.id)
+              .then((imageUrl) {
+            recipe = recipe.copyWith(imageUrl: imageUrl);
+          })
+      ]);
 
       ///Update recipe stream with new/edited recipe
       final recipes = [..._recipeStreamController.value];
@@ -81,6 +96,47 @@ class FirebaseRecipesApi extends RecipesApi {
         recipes.removeAt(recipeIndex);
       }
       _recipeStreamController.add(recipes);
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<String> uploadImage({
+    required File file,
+    required String userId,
+    required String recipeId,
+  }) async {
+    try {
+      String downloadUrl = '';
+      TaskSnapshot snapshot =
+          await _storage.ref(userId).child(const Uuid().v4()).putFile(file);
+      if (snapshot.state == TaskState.success) {
+        downloadUrl = await snapshot.ref.getDownloadURL();
+        await _db
+            .collection(kRecipesCollection)
+            .doc(recipeId)
+            .update({'imageUrl': downloadUrl});
+      }
+      return downloadUrl;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> deleteImage(
+      {required String imageUrl, required String recipeId}) async {
+    try {
+      await Future.wait([
+        _storage.refFromURL(imageUrl).delete(),
+        _db
+            .collection(kRecipesCollection)
+            .doc(recipeId)
+            .update({'imageUrl': ''}),
+      ]);
     } catch (e) {
       log(e.toString());
       rethrow;
