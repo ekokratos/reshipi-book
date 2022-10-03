@@ -2,6 +2,8 @@ part of 'recipe_edit_bloc.dart';
 
 enum RecipeEditStatus { initial, loading, success, failure }
 
+enum RecipeDeleteStatus { initial, loading, success, failure }
+
 @immutable
 class RecipeEditState extends Equatable {
   const RecipeEditState({
@@ -11,36 +13,51 @@ class RecipeEditState extends Equatable {
     required this.ingredients,
     required this.instructions,
     required this.category,
+    this.imageFile,
+    this.deleteStatus = RecipeDeleteStatus.initial,
   });
 
   final RecipeEditStatus status;
+  final RecipeDeleteStatus deleteStatus;
   final Recipe recipe;
   final bool isNewRecipe;
   final List<Ingredient> ingredients;
   final List<Instruction> instructions;
   final RecipeCategory category;
+  final File? imageFile;
 
   RecipeEditState copyWith({
     RecipeEditStatus? status,
+    RecipeDeleteStatus? deleteStatus,
     Recipe? recipe,
     bool? isNewRecipe,
     List<Ingredient>? ingredients,
     List<Instruction>? instructions,
     RecipeCategory? category,
+    File? imageFile,
   }) {
     return RecipeEditState(
       status: status ?? this.status,
+      deleteStatus: deleteStatus ?? this.deleteStatus,
       recipe: recipe ?? this.recipe,
       isNewRecipe: isNewRecipe ?? this.isNewRecipe,
       ingredients: ingredients ?? this.ingredients,
       instructions: instructions ?? this.instructions,
       category: category ?? this.category,
+      imageFile: imageFile ?? this.imageFile,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [status, recipe, isNewRecipe, ingredients, instructions, category];
+  List<Object?> get props => [
+        status,
+        recipe,
+        isNewRecipe,
+        ingredients,
+        instructions,
+        category,
+        imageFile
+      ];
 }
 
 /*

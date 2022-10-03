@@ -52,7 +52,7 @@ class RecipeReadScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<RecipeEditBloc, RecipeEditState>(
       listener: (context, state) {
-        if (state.status == RecipeEditStatus.loading) {
+        if (state.status == RecipeDeleteStatus.loading) {
           LoadingScreen.instance().show(
             context: context,
             text: 'Deleting Recipe',
@@ -61,7 +61,7 @@ class RecipeReadScreen extends StatelessWidget {
           LoadingScreen.instance().hide();
         }
 
-        if (state.status == RecipeEditStatus.failure) {
+        if (state.status == RecipeDeleteStatus.failure) {
           Util.showSnackbar(
             msg:
                 'An error occurred while deleting the recipe. Please try again.',
@@ -118,9 +118,8 @@ class RecipeReadScreen extends StatelessWidget {
                         .headline2!
                         .copyWith(color: Colors.white),
                   ),
-                  background: RecipeImageWidget(
-                    imageUrl: state.recipe.imageUrl,
-                  ),
+                  background:
+                      RecipeImageWidget(imageUrl: state.recipe.imageUrl),
                 ),
               ),
               SliverToBoxAdapter(

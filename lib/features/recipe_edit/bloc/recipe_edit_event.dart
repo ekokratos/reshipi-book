@@ -11,8 +11,12 @@ abstract class RecipeEditEvent extends Equatable {
 ///
 ///Events: [RecipeEditSaved], [RecipeEditDeleted]
 class RecipeEditSaved extends RecipeEditEvent {
-  const RecipeEditSaved({required this.recipe});
+  const RecipeEditSaved({
+    required this.recipe,
+    this.imageFile,
+  });
   final Recipe recipe;
+  final File? imageFile;
 }
 
 class RecipeEditDeleted extends RecipeEditEvent {
@@ -50,7 +54,8 @@ class RecipeEditInstructionDeleted extends RecipeEditEvent {
 ///
 ///Events: [RecipeEditImageAdded], [RecipeEditImageEdited] and [RecipeEditImageDeleted]
 class RecipeEditImageAdded extends RecipeEditEvent {
-  const RecipeEditImageAdded();
+  const RecipeEditImageAdded({required this.imageFile});
+  final File imageFile;
 }
 
 class RecipeEditImageEdited extends RecipeEditEvent {

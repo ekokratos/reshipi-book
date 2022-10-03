@@ -1,8 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:recipe_book/features/recipe_edit/bloc/recipe_edit_bloc.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/image_delete_dialog.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/image_picker_dialog.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_image_widget.dart';
@@ -18,11 +23,11 @@ class RecipeImageEditWidget extends StatefulWidget {
 }
 
 class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
-  final String imageUrl =
-      // '';
-      'https://www.licious.in/blog/wp-content/uploads/2020/12/Fried-Chicken-Wing.jpg';
+  // final String imageUrl = '';
+  // // 'https://www.licious.in/blog/wp-content/uploads/2020/12/Fried-Chicken-Wing.jpg';
 
   late ImagePicker _imagePicker;
+  File? _pickedImage;
 
   @override
   void initState() {
@@ -34,92 +39,121 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 220,
-      child: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.bottomRight,
-        children: [
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              width: double.infinity,
-              height: 200,
-              decoration: BoxDecoration(
-                color: kPrimaryColor.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(5),
+      child: BlocBuilder<RecipeEditBloc, RecipeEditState>(
+        builder: (context, state) {
+          final imageUrl = state.recipe.imageUrl;
+
+          return Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.bottomRight,
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: double.infinity,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: _pickedImage != null
+                      ? Image.file(
+                          _pickedImage!,
+                          fit: BoxFit.cover,
+                        )
+                      : (imageUrl != null && imageUrl.isNotEmpty
+                          ? RecipeImageWidget(
+                              imageUrl: imageUrl,
+                            )
+                          : Image.asset(
+                              'assets/images/default_recipe.png',
+                              color: Colors.white.withOpacity(0.6),
+                            )),
+                ),
               ),
-              child: imageUrl.isNotEmpty
-                  ? RecipeImageWidget(
-                      imageUrl: imageUrl,
-                    )
-                  : Image.asset(
-                      'assets/images/default_recipe.png',
-                      color: Colors.white.withOpacity(0.6),
-                    ),
-            ),
-          ),
-          if (imageUrl.isEmpty)
-            Positioned(
-              right: 15,
-              child: ImageButton(
-                icon: Icons.add_a_photo_outlined,
-                iconColor: kPrimaryColor,
-                onPressed: () {},
-              ),
-            )
-          else
-            Positioned(
-              right: 15,
-              child: Row(
-                children: [
-                  ImageButton(
-                    icon: Icons.edit_outlined,
+              if (imageUrl != null && imageUrl.isEmpty && _pickedImage == null)
+                Positioned(
+                  right: 15,
+                  child: ImageButton(
+                    icon: Icons.add_a_photo_outlined,
                     iconColor: kPrimaryColor,
                     onPressed: () async {
-                      final imageSource =
-                          await showImagePickerDialog(context: context);
-                      if (imageSource != null) {
-                        XFile? image = await _imagePicker.pickImage(
-                          source: imageSource,
-                        );
-                        if (image != null) {
-                          log(image.path);
-                          log(image.name);
-                        }
-                      }
+                      final pickedImage = await _pickImage();
+                      setState(() {
+                        _pickedImage = pickedImage;
+                      });
                     },
                   ),
-                  const SizedBox(width: 10),
-                  ImageButton(
-                    icon: Icons.delete_forever_outlined,
-                    iconColor: Colors.red,
-                    onPressed: () {
-                      showImageDeleteDialog(context);
-                    },
+                )
+              else
+                Positioned(
+                  right: 15,
+                  child: Row(
+                    children: [
+                      ImageButton(
+                        icon: Icons.edit_outlined,
+                        iconColor: kPrimaryColor,
+                        onPressed: () async {
+                          final pickedImage = await _pickImage();
+                          setState(() {
+                            _pickedImage = pickedImage;
+                          });
+                        },
+                      ),
+                      const SizedBox(width: 10),
+                      ImageButton(
+                        icon: Icons.delete_forever_outlined,
+                        iconColor: Colors.red,
+                        onPressed: () async {
+                          bool? deleteImage = await showImageDeleteDialog(
+                            context: context,
+                          );
+                          if (deleteImage ?? false) {
+                            setState(() {
+                              _pickedImage = null;
+                            });
+                            context
+                                .read<RecipeEditBloc>()
+                                .add(const RecipeEditImageDeleted());
+                          }
+                        },
+                      ),
+                    ],
                   ),
-                ],
+                ),
+              Positioned(
+                top: 40,
+                left: 20,
+                child: ImageButton(
+                  icon: Icons.arrow_back,
+                  iconColor: Colors.black,
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
               ),
-            ),
-          Positioned(
-            top: 40,
-            left: 20,
-            child: ImageButton(
-              icon: Icons.arrow_back,
-              iconColor: Colors.black,
-              onPressed: () {
-                Get.back();
-                // if (isNewRecipe) {
-                //   Get.back();
-                // } else {
-                //   // context
-                //   //     .read<RecipeEditBloc>()
-                //   //     .add(const RecipeEditEventGoToReadScreen());
-                // }
-              },
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
+  }
+
+  Future<File?> _pickImage() async {
+    final imageSource = await showImagePickerDialog(context: context);
+    File? pickedImage;
+    if (imageSource != null) {
+      XFile? image = await _imagePicker.pickImage(
+        source: imageSource,
+      );
+      if (image != null) {
+        pickedImage = File(image.path);
+        context
+            .read<RecipeEditBloc>()
+            .add(RecipeEditImageAdded(imageFile: pickedImage));
+      }
+    }
+    return pickedImage;
   }
 }
 

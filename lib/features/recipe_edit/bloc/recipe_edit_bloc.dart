@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,6 +36,8 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
     on<RecipeEditInstructionDeleted>(_onInstructionDeleted);
     on<RecipeEditSaved>(_onRecipeSaved);
     on<RecipeEditDeleted>(_onRecipeDeleted);
+    on<RecipeEditImageAdded>(_onImageAdded);
+    on<RecipeEditImageDeleted>(_onImageDeleted);
   }
 
   final RecipesRepository _recipesRepository;
@@ -130,6 +134,7 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
           instructions: state.instructions,
           category: state.category,
         ),
+        imageFile: event.imageFile,
       );
 
       emit(
@@ -147,14 +152,37 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
     RecipeEditDeleted event,
     Emitter<RecipeEditState> emit,
   ) async {
-    emit(state.copyWith(status: RecipeEditStatus.loading));
+    emit(state.copyWith(deleteStatus: RecipeDeleteStatus.loading));
     try {
       await _recipesRepository.deleteRecipe(recipe: event.recipe);
 
-      emit(state.copyWith(status: RecipeEditStatus.success));
+      emit(state.copyWith(deleteStatus: RecipeDeleteStatus.success));
       Get.back();
     } catch (_) {
-      emit(state.copyWith(status: RecipeEditStatus.failure));
+      emit(state.copyWith(deleteStatus: RecipeDeleteStatus.failure));
     }
+  }
+
+  _onImageAdded(
+    RecipeEditImageAdded event,
+    Emitter<RecipeEditState> emit,
+  ) {
+    emit(state.copyWith(imageFile: event.imageFile));
+  }
+
+  _onImageDeleted(
+    RecipeEditImageDeleted event,
+    Emitter<RecipeEditState> emit,
+  ) async {
+    final recipe = state.recipe;
+    if (recipe.imageUrl?.isNotEmpty ?? false) {
+      await _recipesRepository.deleteImage(
+        imageUrl: recipe.imageUrl!,
+        recipeId: recipe.id,
+      );
+    }
+    emit(
+      state.copyWith(imageFile: null, recipe: recipe.copyWith(imageUrl: '')),
+    );
   }
 }

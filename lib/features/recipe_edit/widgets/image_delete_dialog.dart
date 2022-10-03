@@ -3,7 +3,7 @@ import 'package:recipe_book/shared/widgets/dialogs/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_book/shared/widgets/solid_button.dart';
 
-showImageDeleteDialog(BuildContext context) {
+showImageDeleteDialog({required BuildContext context}) {
   return showCustomDialog(
     context: context,
     title: 'Delete Image',
@@ -12,7 +12,9 @@ showImageDeleteDialog(BuildContext context) {
     iconColor: Colors.red,
     actions: [
       TextButton(
-        onPressed: () => Get.back(),
+        onPressed: () {
+          Get.back(result: false);
+        },
         child: Text(
           'Cancel',
           style:
@@ -22,7 +24,7 @@ showImageDeleteDialog(BuildContext context) {
       SolidButton(
         buttonColor: Colors.red,
         onPressed: () {
-          Get.back();
+          Get.back(result: true);
         },
         text: 'Delete',
         textColor: Colors.white,
