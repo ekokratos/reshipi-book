@@ -79,9 +79,14 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                     iconColor: kPrimaryColor,
                     onPressed: () async {
                       final pickedImage = await _pickImage();
-                      setState(() {
-                        _pickedImage = pickedImage;
-                      });
+                      if (pickedImage != null) {
+                        setState(() {
+                          _pickedImage = pickedImage;
+                        });
+                        context
+                            .read<RecipeEditBloc>()
+                            .add(RecipeEditImageAdded(imageFile: pickedImage));
+                      }
                     },
                   ),
                 )
@@ -95,9 +100,14 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                         iconColor: kPrimaryColor,
                         onPressed: () async {
                           final pickedImage = await _pickImage();
-                          setState(() {
-                            _pickedImage = pickedImage;
-                          });
+                          if (pickedImage != null) {
+                            setState(() {
+                              _pickedImage = pickedImage;
+                            });
+                            context.read<RecipeEditBloc>().add(
+                                  RecipeEditImageEdited(imageFile: pickedImage),
+                                );
+                          }
                         },
                       ),
                       const SizedBox(width: 10),
@@ -148,9 +158,6 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
       );
       if (image != null) {
         pickedImage = File(image.path);
-        context
-            .read<RecipeEditBloc>()
-            .add(RecipeEditImageAdded(imageFile: pickedImage));
       }
     }
     return pickedImage;

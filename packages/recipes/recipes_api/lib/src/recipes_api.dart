@@ -16,7 +16,7 @@ abstract class RecipesApi {
   /// Saves a [recipe].
   ///
   /// If a [recipe] with the same id already exists, it will be replaced.
-  Future<void> saveRecipe({
+  Future<Recipe> saveRecipe({
     required Recipe recipe,
     required File? imageFile,
   });

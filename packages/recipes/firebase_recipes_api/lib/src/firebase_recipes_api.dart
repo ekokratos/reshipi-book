@@ -51,7 +51,7 @@ class FirebaseRecipesApi extends RecipesApi {
   }
 
   @override
-  Future<void> saveRecipe(
+  Future<Recipe> saveRecipe(
       {required Recipe recipe, required File? imageFile}) async {
     try {
       ///Save recipe to Firestore
@@ -78,6 +78,8 @@ class FirebaseRecipesApi extends RecipesApi {
         recipes.add(recipe);
       }
       _recipeStreamController.add(recipes);
+
+      return recipe;
     } catch (e) {
       log(e.toString());
       rethrow;

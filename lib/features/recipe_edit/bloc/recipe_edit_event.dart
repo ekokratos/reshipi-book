@@ -59,7 +59,8 @@ class RecipeEditImageAdded extends RecipeEditEvent {
 }
 
 class RecipeEditImageEdited extends RecipeEditEvent {
-  const RecipeEditImageEdited();
+  const RecipeEditImageEdited({required this.imageFile});
+  final File imageFile;
 }
 
 class RecipeEditImageDeleted extends RecipeEditEvent {
