@@ -38,6 +38,7 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
     on<RecipeEditDeleted>(_onRecipeDeleted);
     on<RecipeEditImageAdded>(_onImageAdded);
     on<RecipeEditImageDeleted>(_onImageDeleted);
+    on<RecipeEditImageEdited>(_onImageEdited);
   }
 
   final RecipesRepository _recipesRepository;
@@ -128,7 +129,7 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
   ) async {
     emit(state.copyWith(status: RecipeEditStatus.loading));
     try {
-      await _recipesRepository.saveRecipe(
+      final savedRecipe = await _recipesRepository.saveRecipe(
         recipe: event.recipe.copyWith(
           ingredients: state.ingredients,
           instructions: state.instructions,
@@ -140,7 +141,7 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
       emit(
         state.copyWith(
           status: RecipeEditStatus.success,
-          recipe: event.recipe,
+          recipe: savedRecipe,
         ),
       );
     } catch (_) {
@@ -184,5 +185,12 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
     emit(
       state.copyWith(imageFile: null, recipe: recipe.copyWith(imageUrl: '')),
     );
+  }
+
+  _onImageEdited(
+    RecipeEditImageEdited event,
+    Emitter<RecipeEditState> emit,
+  ) async {
+    emit(state.copyWith(imageFile: event.imageFile));
   }
 }
