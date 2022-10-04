@@ -158,8 +158,13 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
     try {
       await _recipesRepository.deleteRecipe(recipe: event.recipe);
 
-      emit(state.copyWith(recipeDeleteStatus: RecipeDeleteStatus.success));
-      Get.back();
+      emit(
+        state.copyWith(
+          recipeDeleteStatus: RecipeDeleteStatus.success,
+          recipe: null,
+        ),
+      );
+      // Get.back();
     } catch (_) {
       emit(state.copyWith(recipeDeleteStatus: RecipeDeleteStatus.failure));
     }

@@ -96,7 +96,11 @@ class FirebaseRecipesApi extends RecipesApi {
   @override
   Future<void> deleteRecipe({required Recipe recipe}) async {
     try {
-      await _db.collection(kRecipesCollection).doc(recipe.id).delete();
+      await Future.wait([
+        if (recipe.imageUrl != null && recipe.imageUrl!.isNotEmpty)
+          deleteImage(imageUrl: recipe.imageUrl!, recipeId: recipe.id),
+        _db.collection(kRecipesCollection).doc(recipe.id).delete(),
+      ]);
 
       ///Remove the recipe from recipe stream
       final recipes = [..._recipeStreamController.value];
