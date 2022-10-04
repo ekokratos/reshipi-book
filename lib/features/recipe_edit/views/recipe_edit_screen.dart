@@ -46,26 +46,11 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RecipeEditBloc, RecipeEditState>(
+      listenWhen: (previous, current) {
+        return previous.status != current.status;
+      },
       listener: (context, state) {
-        if (state.status == RecipeEditStatus.loading) {
-          LoadingScreen.instance().show(
-            context: context,
-            text: 'Saving Recipe',
-          );
-        } else {
-          LoadingScreen.instance().hide();
-        }
-
-        if (state.status == RecipeEditStatus.failure) {
-          Util.showSnackbar(
-            msg: 'An error occurred while saving the recipe. Please try again.',
-            isError: true,
-          );
-        }
-
-        if (state.status == RecipeEditStatus.success) {
-          Get.back();
-        }
+        _recipeEditStatus(context: context, status: state.status);
       },
       builder: (context, state) {
         return Scaffold(
@@ -75,7 +60,7 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
               if (_formKey.currentState?.validate() ?? false) {
                 context.read<RecipeEditBloc>().add(
                       RecipeEditSaved(
-                        imageFile: state.imageFile,
+                        // imageFile: state.imageFile,
                         recipe: state.recipe.copyWith(
                           title: _titleController.text,
                           cookingTime: _timeController.text,
@@ -148,6 +133,31 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
         );
       },
     );
+  }
+
+  void _recipeEditStatus({
+    required BuildContext context,
+    required RecipeEditStatus status,
+  }) {
+    if (status == RecipeEditStatus.loading) {
+      LoadingScreen.instance().show(
+        context: context,
+        text: 'Saving Recipe',
+      );
+    } else {
+      LoadingScreen.instance().hide();
+    }
+
+    if (status == RecipeEditStatus.failure) {
+      Util.showSnackbar(
+        msg: 'An error occurred while saving the recipe. Please try again.',
+        isError: true,
+      );
+    }
+
+    if (status == RecipeEditStatus.success) {
+      Get.back();
+    }
   }
 }
 

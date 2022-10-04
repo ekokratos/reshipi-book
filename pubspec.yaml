@@ -41,6 +41,7 @@ dependencies:
   #BLoC
   flutter_bloc: ^8.1.1
   equatable: ^2.0.5
+  collection: ^1.16.0
 
 dev_dependencies:
   flutter_test:
