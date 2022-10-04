@@ -22,9 +22,17 @@ class RecipesRepository {
   /// Saves a [recipe].
   ///
   /// If a [recipe] with the same id already exists, it will be replaced.
+  /// [recipeImageEdited] indicated if recipe image is edited/deleted,
+  /// which marks the old image to be deleted from storage
   Future<Recipe> saveRecipe(
-          {required Recipe recipe, required File? imageFile}) =>
-      _recipesApi.saveRecipe(recipe: recipe, imageFile: imageFile);
+          {required Recipe recipe,
+          required File? imageFile,
+          bool recipeImageEdited = false}) =>
+      _recipesApi.saveRecipe(
+        recipe: recipe,
+        imageFile: imageFile,
+        recipeImageEdited: recipeImageEdited,
+      );
 
   /// Deletes a [recipe] and its stored image.
   Future<void> deleteRecipe({required Recipe recipe}) =>

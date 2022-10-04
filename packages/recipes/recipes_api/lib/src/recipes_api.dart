@@ -16,9 +16,12 @@ abstract class RecipesApi {
   /// Saves a [recipe].
   ///
   /// If a [recipe] with the same id already exists, it will be replaced.
+  /// [recipeImageEdited] indicated if recipe image is edited/deleted,
+  /// which marks the old image to be deleted from storage
   Future<Recipe> saveRecipe({
     required Recipe recipe,
     required File? imageFile,
+    bool recipeImageEdited = false,
   });
 
   /// Deletes a [recipe] and its stored image.

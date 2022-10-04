@@ -12,6 +12,8 @@ import 'package:recipe_book/features/recipe_edit/widgets/image_delete_dialog.dar
 import 'package:recipe_book/features/recipe_edit/widgets/image_picker_dialog.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_image_widget.dart';
 import 'package:recipe_book/shared/theme/style.dart';
+import 'package:recipe_book/shared/utility/util.dart';
+import 'package:recipe_book/shared/widgets/loading/loading_screen.dart';
 
 class RecipeImageEditWidget extends StatefulWidget {
   const RecipeImageEditWidget({
@@ -23,9 +25,6 @@ class RecipeImageEditWidget extends StatefulWidget {
 }
 
 class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
-  // final String imageUrl = '';
-  // // 'https://www.licious.in/blog/wp-content/uploads/2020/12/Fried-Chicken-Wing.jpg';
-
   late ImagePicker _imagePicker;
   File? _pickedImage;
 
@@ -39,7 +38,13 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 220,
-      child: BlocBuilder<RecipeEditBloc, RecipeEditState>(
+      child: BlocConsumer<RecipeEditBloc, RecipeEditState>(
+        listenWhen: (previous, current) {
+          return previous.imageDeleteStatus != current.imageDeleteStatus;
+        },
+        listener: (context, state) {
+          _imageDeleteStatus(context: context, status: state.imageDeleteStatus);
+        },
         builder: (context, state) {
           final imageUrl = state.recipe.imageUrl;
 
@@ -71,6 +76,8 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                             )),
                 ),
               ),
+
+              ///Image add button
               if (imageUrl != null && imageUrl.isEmpty && _pickedImage == null)
                 Positioned(
                   right: 15,
@@ -91,6 +98,8 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                   ),
                 )
               else
+
+                ///Image edit button
                 Positioned(
                   right: 15,
                   child: Row(
@@ -111,6 +120,8 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                         },
                       ),
                       const SizedBox(width: 10),
+
+                      ///Image delete button
                       ImageButton(
                         icon: Icons.delete_forever_outlined,
                         iconColor: Colors.red,
@@ -161,6 +172,31 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
       }
     }
     return pickedImage;
+  }
+
+  void _imageDeleteStatus({
+    required BuildContext context,
+    required RecipeImageDeleteStatus status,
+  }) {
+    if (status == RecipeImageDeleteStatus.loading) {
+      LoadingScreen.instance().show(
+        context: context,
+        text: 'Deleting image',
+      );
+    } else {
+      LoadingScreen.instance().hide();
+    }
+
+    if (status == RecipeImageDeleteStatus.failure) {
+      Util.showSnackbar(
+        msg: 'An error occurred while deleting the image.',
+        isError: true,
+      );
+    }
+
+    if (status == RecipeImageDeleteStatus.success) {
+      Util.showSnackbar(msg: 'Image deleted');
+    }
   }
 }
 

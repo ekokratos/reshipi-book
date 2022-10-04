@@ -135,7 +135,8 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
           instructions: state.instructions,
           category: state.category,
         ),
-        imageFile: event.imageFile,
+        imageFile: state.imageFile,
+        recipeImageEdited: state.recipeImageEdited,
       );
 
       emit(
@@ -153,14 +154,14 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
     RecipeEditDeleted event,
     Emitter<RecipeEditState> emit,
   ) async {
-    emit(state.copyWith(deleteStatus: RecipeDeleteStatus.loading));
+    emit(state.copyWith(recipeDeleteStatus: RecipeDeleteStatus.loading));
     try {
       await _recipesRepository.deleteRecipe(recipe: event.recipe);
 
-      emit(state.copyWith(deleteStatus: RecipeDeleteStatus.success));
+      emit(state.copyWith(recipeDeleteStatus: RecipeDeleteStatus.success));
       Get.back();
     } catch (_) {
-      emit(state.copyWith(deleteStatus: RecipeDeleteStatus.failure));
+      emit(state.copyWith(recipeDeleteStatus: RecipeDeleteStatus.failure));
     }
   }
 
@@ -175,22 +176,32 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
     RecipeEditImageDeleted event,
     Emitter<RecipeEditState> emit,
   ) async {
-    final recipe = state.recipe;
-    if (recipe.imageUrl?.isNotEmpty ?? false) {
-      await _recipesRepository.deleteImage(
-        imageUrl: recipe.imageUrl!,
-        recipeId: recipe.id,
+    emit(state.copyWith(imageDeleteStatus: RecipeImageDeleteStatus.loading));
+
+    try {
+      final recipe = state.recipe;
+      if (recipe.imageUrl?.isNotEmpty ?? false) {
+        await _recipesRepository.deleteImage(
+          imageUrl: recipe.imageUrl!,
+          recipeId: recipe.id,
+        );
+      }
+      emit(
+        state.copyWith(
+          imageFile: null,
+          recipe: recipe.copyWith(imageUrl: ''),
+          imageDeleteStatus: RecipeImageDeleteStatus.success,
+        ),
       );
+    } catch (_) {
+      emit(state.copyWith(imageDeleteStatus: RecipeImageDeleteStatus.failure));
     }
-    emit(
-      state.copyWith(imageFile: null, recipe: recipe.copyWith(imageUrl: '')),
-    );
   }
 
   _onImageEdited(
     RecipeEditImageEdited event,
     Emitter<RecipeEditState> emit,
   ) async {
-    emit(state.copyWith(imageFile: event.imageFile));
+    emit(state.copyWith(imageFile: event.imageFile, recipeImageEdited: true));
   }
 }

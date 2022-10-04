@@ -51,8 +51,11 @@ class FirebaseRecipesApi extends RecipesApi {
   }
 
   @override
-  Future<Recipe> saveRecipe(
-      {required Recipe recipe, required File? imageFile}) async {
+  Future<Recipe> saveRecipe({
+    required Recipe recipe,
+    required File? imageFile,
+    bool recipeImageEdited = false,
+  }) async {
     try {
       ///Save recipe to Firestore
       ///
@@ -61,6 +64,10 @@ class FirebaseRecipesApi extends RecipesApi {
             .collection(kRecipesCollection)
             .doc(recipe.id)
             .set(recipe.toJson(), SetOptions(merge: true)),
+        if (recipeImageEdited &&
+            recipe.imageUrl != null &&
+            recipe.imageUrl!.isNotEmpty)
+          deleteImage(imageUrl: recipe.imageUrl!, recipeId: recipe.id),
         if (imageFile != null)
           uploadImage(
                   file: imageFile, userId: recipe.userId, recipeId: recipe.id)
