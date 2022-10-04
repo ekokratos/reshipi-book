@@ -6,6 +6,7 @@ import 'package:recipe_book/features/recipe_edit/bloc/recipe_edit_bloc.dart';
 import 'package:recipe_book/features/recipe_edit/views/recipe_edit_screen.dart';
 import 'package:recipe_book/features/recipe_view/widgets/cooking_instructions_widget.dart';
 import 'package:recipe_book/features/recipe_view/widgets/cooking_time_widget.dart';
+import 'package:recipe_book/features/recipe_view/widgets/delete_recipe_dialog.dart';
 import 'package:recipe_book/features/recipe_view/widgets/food_indicator_widget.dart';
 import 'package:recipe_book/features/recipe_view/widgets/ingredients_widget.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_image_widget.dart';
@@ -51,8 +52,11 @@ class RecipeReadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RecipeEditBloc, RecipeEditState>(
+      // listenWhen: (previous, current) {
+      //   return current.recipeDeleteStatus != previous.recipeDeleteStatus;
+      // },
       listener: (context, state) {
-        if (state.status == RecipeDeleteStatus.loading) {
+        if (state.recipeDeleteStatus == RecipeDeleteStatus.loading) {
           LoadingScreen.instance().show(
             context: context,
             text: 'Deleting Recipe',
@@ -61,12 +65,16 @@ class RecipeReadScreen extends StatelessWidget {
           LoadingScreen.instance().hide();
         }
 
-        if (state.status == RecipeDeleteStatus.failure) {
+        if (state.recipeDeleteStatus == RecipeDeleteStatus.failure) {
           Util.showSnackbar(
             msg:
                 'An error occurred while deleting the recipe. Please try again.',
             isError: true,
           );
+        }
+        if (state.recipeDeleteStatus == RecipeDeleteStatus.success) {
+          Get.back();
+          Util.showSnackbar(msg: 'Recipe deleted');
         }
       },
       builder: (context, state) {
@@ -91,9 +99,18 @@ class RecipeReadScreen extends StatelessWidget {
               ),
               ActionButton(
                 onPressed: () {
-                  context
-                      .read<RecipeEditBloc>()
-                      .add(RecipeEditDeleted(recipe: state.recipe));
+                  // context
+                  //     .read<RecipeEditBloc>()
+                  //     .add(RecipeEditDeleted(recipe: state.recipe));
+                  showDeleteRecipeDialog(
+                    context: context,
+                    onDelete: () {
+                      context
+                          .read<RecipeEditBloc>()
+                          .add(RecipeEditDeleted(recipe: state.recipe));
+                      Get.back();
+                    },
+                  );
                 },
                 icon: const Icon(
                   Icons.delete,
