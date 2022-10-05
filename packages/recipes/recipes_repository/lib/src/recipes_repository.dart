@@ -19,6 +19,10 @@ class RecipesRepository {
   }) =>
       _recipesApi.getRecipies(userId: userId, category: category);
 
+  /// Filters the recipes with given [query]
+  void onSearch({required String query, required}) =>
+      _recipesApi.onSearch(query: query);
+
   /// Saves a [recipe].
   ///
   /// If a [recipe] with the same id already exists, it will be replaced.

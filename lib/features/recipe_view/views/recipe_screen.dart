@@ -52,9 +52,9 @@ class RecipeReadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RecipeEditBloc, RecipeEditState>(
-      // listenWhen: (previous, current) {
-      //   return current.recipeDeleteStatus != previous.recipeDeleteStatus;
-      // },
+      listenWhen: (previous, current) {
+        return current.recipeDeleteStatus != previous.recipeDeleteStatus;
+      },
       listener: (context, state) {
         if (state.recipeDeleteStatus == RecipeDeleteStatus.loading) {
           LoadingScreen.instance().show(

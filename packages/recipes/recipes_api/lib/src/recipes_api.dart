@@ -13,6 +13,9 @@ abstract class RecipesApi {
     required RecipeCategory category,
   });
 
+  /// Filters the recipes with given [query]
+  void onSearch({required String query});
+
   /// Saves a [recipe].
   ///
   /// If a [recipe] with the same id already exists, it will be replaced.

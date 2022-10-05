@@ -33,7 +33,7 @@ class RecipeListTile extends StatelessWidget {
       },
       child: Container(
         height: 100,
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
