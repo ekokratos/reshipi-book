@@ -14,7 +14,10 @@ class FirebaseRecipesApi extends RecipesApi {
 
   final FirebaseFirestore _db;
   final FirebaseStorage _storage;
+
   final _recipeStreamController =
+      BehaviorSubject<List<Recipe>>.seeded(const []);
+  final _searchRecipeStreamController =
       BehaviorSubject<List<Recipe>>.seeded(const []);
 
   final kRecipesCollection = 'recipies';
@@ -22,6 +25,20 @@ class FirebaseRecipesApi extends RecipesApi {
   @override
   Stream<List<Recipe>> get recipes =>
       _recipeStreamController.asBroadcastStream();
+
+  @override
+  void onSearch({required String query}) {
+    final recipes = [..._searchRecipeStreamController.value];
+    if (query.isNotEmpty) {
+      recipes.retainWhere(
+          (recipe) => recipe.title.toLowerCase().contains(query.toLowerCase()));
+
+      _recipeStreamController.add(recipes);
+    } else {
+      final r = [..._searchRecipeStreamController.value];
+      _recipeStreamController.add(r);
+    }
+  }
 
   @override
   Future<List<Recipe>> getRecipies({
@@ -43,6 +60,7 @@ class FirebaseRecipesApi extends RecipesApi {
         }
       });
       _recipeStreamController.add(fetchedRecipes);
+      _searchRecipeStreamController.add(fetchedRecipes);
       return fetchedRecipes;
     } catch (e) {
       log(e.toString());
@@ -85,6 +103,7 @@ class FirebaseRecipesApi extends RecipesApi {
         recipes.add(recipe);
       }
       _recipeStreamController.add(recipes);
+      _searchRecipeStreamController.add(recipes);
 
       return recipe;
     } catch (e) {
@@ -109,6 +128,7 @@ class FirebaseRecipesApi extends RecipesApi {
         recipes.removeAt(recipeIndex);
       }
       _recipeStreamController.add(recipes);
+      _searchRecipeStreamController.add(recipes);
     } catch (e) {
       log(e.toString());
       rethrow;

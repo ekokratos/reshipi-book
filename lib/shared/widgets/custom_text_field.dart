@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 
 class CustomTextField extends StatelessWidget {
-  final String? prefixText;
   final String? hintText;
   final Widget? suffixIcon;
   final Color? suffixIconColor;
@@ -20,12 +19,12 @@ class CustomTextField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final int? maxLines;
   final String? initialValue;
+  final Widget? prefixIcon;
 
   const CustomTextField({
     Key? key,
     this.keyboardType,
     this.inputFormatters,
-    this.prefixText,
     this.textAlign = TextAlign.start,
     this.controller,
     this.validator,
@@ -40,6 +39,7 @@ class CustomTextField extends StatelessWidget {
     this.suffixIconColor,
     this.maxLines = 1,
     this.initialValue,
+    this.prefixIcon,
   }) : super(key: key);
 
   @override
@@ -67,16 +67,12 @@ class CustomTextField extends StatelessWidget {
         inputFormatters: inputFormatters,
         obscureText: obscureText,
         decoration: InputDecoration(
+          prefixIcon: prefixIcon,
           fillColor: kTextFieldColor,
           filled: true,
           isDense: true,
           hintText: hintText,
           hintStyle: Theme.of(context)
-              .textTheme
-              .bodyText1!
-              .copyWith(color: kTextFieldPrefixColor),
-          prefixText: prefixText,
-          prefixStyle: Theme.of(context)
               .textTheme
               .bodyText1!
               .copyWith(color: kTextFieldPrefixColor),

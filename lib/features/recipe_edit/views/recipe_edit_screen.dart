@@ -60,7 +60,6 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
               if (_formKey.currentState?.validate() ?? false) {
                 context.read<RecipeEditBloc>().add(
                       RecipeEditSaved(
-                        // imageFile: state.imageFile,
                         recipe: state.recipe.copyWith(
                           title: _titleController.text,
                           cookingTime: _timeController.text,
