@@ -9,7 +9,9 @@ environment:
 
 dependencies:
   cloud_firestore: ^3.4.9
+  firebase_storage: ^10.3.10
   rxdart: ^0.27.5
+  uuid: ^3.0.6
   recipes_api:
     path: ../recipes_api
 

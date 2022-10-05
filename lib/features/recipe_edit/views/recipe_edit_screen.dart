@@ -45,61 +45,43 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        heroTag: 'create_new_recipe',
-        onPressed: () {
-          if (_formKey.currentState?.validate() ?? false) {
-            context.read<RecipeEditBloc>().add(
-                  RecipeEditSaved(
-                    recipe:
-                        context.read<RecipeEditBloc>().state.recipe.copyWith(
-                              title: _titleController.text,
-                              cookingTime: _timeController.text,
-                              type: _recipeType,
-                              description: _descriptionController.text,
-                              imageUrl: imageUrl,
-                            ),
-                  ),
-                );
-          }
-        },
-        backgroundColor: kPrimaryColor,
-        label: Row(
-          children: const [
-            Icon(Icons.save_as_outlined),
-            SizedBox(
-              width: 5,
+    return BlocConsumer<RecipeEditBloc, RecipeEditState>(
+      listenWhen: (previous, current) {
+        return previous.status != current.status;
+      },
+      listener: (context, state) {
+        _recipeEditStatus(context: context, status: state.status);
+      },
+      builder: (context, state) {
+        return Scaffold(
+          floatingActionButton: FloatingActionButton.extended(
+            heroTag: 'create_new_recipe',
+            onPressed: () {
+              if (_formKey.currentState?.validate() ?? false) {
+                context.read<RecipeEditBloc>().add(
+                      RecipeEditSaved(
+                        recipe: state.recipe.copyWith(
+                          title: _titleController.text,
+                          cookingTime: _timeController.text,
+                          type: _recipeType,
+                          description: _descriptionController.text,
+                        ),
+                      ),
+                    );
+              }
+            },
+            backgroundColor: kPrimaryColor,
+            label: Row(
+              children: const [
+                Icon(Icons.save_as_outlined),
+                SizedBox(
+                  width: 5,
+                ),
+                Text('Save'),
+              ],
             ),
-            Text('Save'),
-          ],
-        ),
-      ),
-      body: BlocConsumer<RecipeEditBloc, RecipeEditState>(
-        listener: (context, state) {
-          if (state.status == RecipeEditStatus.loading) {
-            LoadingScreen.instance().show(
-              context: context,
-              text: 'Saving Recipe',
-            );
-          } else {
-            LoadingScreen.instance().hide();
-          }
-
-          if (state.status == RecipeEditStatus.failure) {
-            Util.showSnackbar(
-              msg:
-                  'An error occurred while saving the recipe. Please try again.',
-              isError: true,
-            );
-          }
-
-          if (state.status == RecipeEditStatus.success) {
-            Get.back();
-          }
-        },
-        builder: (context, state) {
-          return SingleChildScrollView(
+          ),
+          body: SingleChildScrollView(
             child: Column(
               children: [
                 const RecipeImageEditWidget(),
@@ -146,10 +128,35 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
                 ),
               ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
+  }
+
+  void _recipeEditStatus({
+    required BuildContext context,
+    required RecipeEditStatus status,
+  }) {
+    if (status == RecipeEditStatus.loading) {
+      LoadingScreen.instance().show(
+        context: context,
+        text: 'Saving Recipe',
+      );
+    } else {
+      LoadingScreen.instance().hide();
+    }
+
+    if (status == RecipeEditStatus.failure) {
+      Util.showSnackbar(
+        msg: 'An error occurred while saving the recipe. Please try again.',
+        isError: true,
+      );
+    }
+
+    if (status == RecipeEditStatus.success) {
+      Get.back();
+    }
   }
 }
 

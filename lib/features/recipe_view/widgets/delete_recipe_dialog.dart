@@ -3,18 +3,19 @@ import 'package:recipe_book/shared/widgets/dialogs/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_book/shared/widgets/solid_button.dart';
 
-showImageDeleteDialog({required BuildContext context}) {
+showDeleteRecipeDialog({
+  required BuildContext context,
+  required VoidCallback? onDelete,
+}) {
   return showCustomDialog(
     context: context,
-    title: 'Delete Image',
-    content: 'Are you sure you want to delete the image?',
+    title: 'Delete Recipe',
+    content: 'Are you sure you want to delete this recipe?',
     icon: Icons.report_problem_outlined,
     iconColor: Colors.red,
     actions: [
       TextButton(
-        onPressed: () {
-          Get.back(result: false);
-        },
+        onPressed: () => Get.back(),
         child: Text(
           'Cancel',
           style:
@@ -23,10 +24,8 @@ showImageDeleteDialog({required BuildContext context}) {
       ),
       SolidButton(
         buttonColor: Colors.red,
-        onPressed: () {
-          Get.back(result: true);
-        },
-        text: 'Delete',
+        onPressed: onDelete,
+        text: 'Remove',
         textColor: Colors.white,
         padding: const EdgeInsets.all(0),
       ),

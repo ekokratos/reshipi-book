@@ -15,6 +15,8 @@ class RecipeViewBloc extends Bloc<RecipeViewEvent, RecipeViewState> {
         _authRepository = authRepository,
         super(const RecipeViewState()) {
     on<RecipeViewRecipesRequested>(_onRecipesRequested);
+    on<RecipeViewSearch>(_onSearch);
+    on<RecipeViewSearchClear>(_onSearchClear);
   }
 
   void _onRecipesRequested(
@@ -45,6 +47,24 @@ class RecipeViewBloc extends Bloc<RecipeViewEvent, RecipeViewState> {
       onError: (_, __) => state.copyWith(
         status: RecipeViewStatus.failure,
       ),
+    );
+  }
+
+  void _onSearch(
+    RecipeViewSearch event,
+    Emitter<RecipeViewState> emit,
+  ) {
+    _recipesRepository.onSearch(
+      query: event.query,
+    );
+  }
+
+  void _onSearchClear(
+    RecipeViewSearchClear event,
+    Emitter<RecipeViewState> emit,
+  ) async {
+    _recipesRepository.onSearch(
+      query: '',
     );
   }
 

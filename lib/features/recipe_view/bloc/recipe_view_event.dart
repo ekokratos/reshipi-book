@@ -14,3 +14,12 @@ class RecipeViewRecipesRequested extends RecipeViewEvent {
 
   final RecipeCategory category;
 }
+
+class RecipeViewSearch extends RecipeViewEvent {
+  const RecipeViewSearch({required this.query});
+  final String query;
+}
+
+class RecipeViewSearchClear extends RecipeViewEvent {
+  const RecipeViewSearchClear();
+}

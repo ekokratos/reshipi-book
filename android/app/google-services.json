@@ -29,6 +29,13 @@
             {
               "client_id": "967402384679-4o1p7u4eor0u6nl4q8f9vj41imherkg0.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "967402384679-02qpo78vig8o238m8vc1g36ilk3rjong.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ekokratos.recipeBook"
+              }
             }
           ]
         }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,6 +36,9 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
     on<RecipeEditInstructionDeleted>(_onInstructionDeleted);
     on<RecipeEditSaved>(_onRecipeSaved);
     on<RecipeEditDeleted>(_onRecipeDeleted);
+    on<RecipeEditImageAdded>(_onImageAdded);
+    on<RecipeEditImageDeleted>(_onImageDeleted);
+    on<RecipeEditImageEdited>(_onImageEdited);
   }
 
   final RecipesRepository _recipesRepository;
@@ -124,18 +129,20 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
   ) async {
     emit(state.copyWith(status: RecipeEditStatus.loading));
     try {
-      await _recipesRepository.saveRecipe(
+      final savedRecipe = await _recipesRepository.saveRecipe(
         recipe: event.recipe.copyWith(
           ingredients: state.ingredients,
           instructions: state.instructions,
           category: state.category,
         ),
+        imageFile: state.imageFile,
+        recipeImageEdited: state.recipeImageEdited,
       );
 
       emit(
         state.copyWith(
           status: RecipeEditStatus.success,
-          recipe: event.recipe,
+          recipe: savedRecipe,
         ),
       );
     } catch (_) {
@@ -147,14 +154,59 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
     RecipeEditDeleted event,
     Emitter<RecipeEditState> emit,
   ) async {
-    emit(state.copyWith(status: RecipeEditStatus.loading));
+    emit(state.copyWith(recipeDeleteStatus: RecipeDeleteStatus.loading));
     try {
       await _recipesRepository.deleteRecipe(recipe: event.recipe);
 
-      emit(state.copyWith(status: RecipeEditStatus.success));
-      Get.back();
+      emit(
+        state.copyWith(
+          recipeDeleteStatus: RecipeDeleteStatus.success,
+          recipe: null,
+        ),
+      );
+      // Get.back();
     } catch (_) {
-      emit(state.copyWith(status: RecipeEditStatus.failure));
+      emit(state.copyWith(recipeDeleteStatus: RecipeDeleteStatus.failure));
     }
+  }
+
+  _onImageAdded(
+    RecipeEditImageAdded event,
+    Emitter<RecipeEditState> emit,
+  ) {
+    emit(state.copyWith(imageFile: event.imageFile));
+  }
+
+  _onImageDeleted(
+    RecipeEditImageDeleted event,
+    Emitter<RecipeEditState> emit,
+  ) async {
+    emit(state.copyWith(imageDeleteStatus: RecipeImageDeleteStatus.loading));
+
+    try {
+      final recipe = state.recipe;
+      if (recipe.imageUrl?.isNotEmpty ?? false) {
+        await _recipesRepository.deleteImage(
+          imageUrl: recipe.imageUrl!,
+          recipeId: recipe.id,
+        );
+      }
+      emit(
+        state.copyWith(
+          imageFile: null,
+          recipe: recipe.copyWith(imageUrl: ''),
+          imageDeleteStatus: RecipeImageDeleteStatus.success,
+        ),
+      );
+    } catch (_) {
+      emit(state.copyWith(imageDeleteStatus: RecipeImageDeleteStatus.failure));
+    }
+  }
+
+  _onImageEdited(
+    RecipeEditImageEdited event,
+    Emitter<RecipeEditState> emit,
+  ) async {
+    emit(state.copyWith(imageFile: event.imageFile, recipeImageEdited: true));
   }
 }

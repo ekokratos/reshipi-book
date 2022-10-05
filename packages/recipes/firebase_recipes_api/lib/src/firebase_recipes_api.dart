@@ -1,14 +1,23 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:recipes_api/recipes_api.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:uuid/uuid.dart';
 
 class FirebaseRecipesApi extends RecipesApi {
-  FirebaseRecipesApi() : _db = FirebaseFirestore.instance;
+  FirebaseRecipesApi()
+      : _db = FirebaseFirestore.instance,
+        _storage = FirebaseStorage.instance;
 
   final FirebaseFirestore _db;
+  final FirebaseStorage _storage;
+
   final _recipeStreamController =
+      BehaviorSubject<List<Recipe>>.seeded(const []);
+  final _searchRecipeStreamController =
       BehaviorSubject<List<Recipe>>.seeded(const []);
 
   final kRecipesCollection = 'recipies';
@@ -16,6 +25,20 @@ class FirebaseRecipesApi extends RecipesApi {
   @override
   Stream<List<Recipe>> get recipes =>
       _recipeStreamController.asBroadcastStream();
+
+  @override
+  void onSearch({required String query}) {
+    final recipes = [..._searchRecipeStreamController.value];
+    if (query.isNotEmpty) {
+      recipes.retainWhere(
+          (recipe) => recipe.title.toLowerCase().contains(query.toLowerCase()));
+
+      _recipeStreamController.add(recipes);
+    } else {
+      final r = [..._searchRecipeStreamController.value];
+      _recipeStreamController.add(r);
+    }
+  }
 
   @override
   Future<List<Recipe>> getRecipies({
@@ -37,6 +60,7 @@ class FirebaseRecipesApi extends RecipesApi {
         }
       });
       _recipeStreamController.add(fetchedRecipes);
+      _searchRecipeStreamController.add(fetchedRecipes);
       return fetchedRecipes;
     } catch (e) {
       log(e.toString());
@@ -45,14 +69,30 @@ class FirebaseRecipesApi extends RecipesApi {
   }
 
   @override
-  Future<void> saveRecipe({required Recipe recipe}) async {
+  Future<Recipe> saveRecipe({
+    required Recipe recipe,
+    required File? imageFile,
+    bool recipeImageEdited = false,
+  }) async {
     try {
       ///Save recipe to Firestore
-      log(recipe.toJson().toString());
-      await _db
-          .collection(kRecipesCollection)
-          .doc(recipe.id)
-          .set(recipe.toJson(), SetOptions(merge: true));
+      ///
+      await Future.wait([
+        _db
+            .collection(kRecipesCollection)
+            .doc(recipe.id)
+            .set(recipe.toJson(), SetOptions(merge: true)),
+        if (recipeImageEdited &&
+            recipe.imageUrl != null &&
+            recipe.imageUrl!.isNotEmpty)
+          deleteImage(imageUrl: recipe.imageUrl!, recipeId: recipe.id),
+        if (imageFile != null)
+          uploadImage(
+                  file: imageFile, userId: recipe.userId, recipeId: recipe.id)
+              .then((imageUrl) {
+            recipe = recipe.copyWith(imageUrl: imageUrl);
+          })
+      ]);
 
       ///Update recipe stream with new/edited recipe
       final recipes = [..._recipeStreamController.value];
@@ -63,6 +103,9 @@ class FirebaseRecipesApi extends RecipesApi {
         recipes.add(recipe);
       }
       _recipeStreamController.add(recipes);
+      _searchRecipeStreamController.add(recipes);
+
+      return recipe;
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -72,7 +115,11 @@ class FirebaseRecipesApi extends RecipesApi {
   @override
   Future<void> deleteRecipe({required Recipe recipe}) async {
     try {
-      await _db.collection(kRecipesCollection).doc(recipe.id).delete();
+      await Future.wait([
+        if (recipe.imageUrl != null && recipe.imageUrl!.isNotEmpty)
+          deleteImage(imageUrl: recipe.imageUrl!, recipeId: recipe.id),
+        _db.collection(kRecipesCollection).doc(recipe.id).delete(),
+      ]);
 
       ///Remove the recipe from recipe stream
       final recipes = [..._recipeStreamController.value];
@@ -81,6 +128,48 @@ class FirebaseRecipesApi extends RecipesApi {
         recipes.removeAt(recipeIndex);
       }
       _recipeStreamController.add(recipes);
+      _searchRecipeStreamController.add(recipes);
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<String> uploadImage({
+    required File file,
+    required String userId,
+    required String recipeId,
+  }) async {
+    try {
+      String downloadUrl = '';
+      TaskSnapshot snapshot =
+          await _storage.ref(userId).child(const Uuid().v4()).putFile(file);
+      if (snapshot.state == TaskState.success) {
+        downloadUrl = await snapshot.ref.getDownloadURL();
+        await _db
+            .collection(kRecipesCollection)
+            .doc(recipeId)
+            .update({'imageUrl': downloadUrl});
+      }
+      return downloadUrl;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> deleteImage(
+      {required String imageUrl, required String recipeId}) async {
+    try {
+      await Future.wait([
+        _storage.refFromURL(imageUrl).delete(),
+        _db
+            .collection(kRecipesCollection)
+            .doc(recipeId)
+            .update({'imageUrl': ''}),
+      ]);
     } catch (e) {
       log(e.toString());
       rethrow;

@@ -8,6 +8,7 @@ import 'package:recipe_book/features/recipe_view/widgets/common_app_bar.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_list_tile.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/util.dart';
+import 'package:recipe_book/shared/widgets/custom_text_field.dart';
 import 'package:recipes_api/recipes_api.dart';
 import 'package:recipes_repository/recipes_repository.dart';
 import 'package:shimmer/shimmer.dart';
@@ -33,8 +34,9 @@ class RecipeListScreen extends StatelessWidget {
 }
 
 class RecipeListView extends StatelessWidget {
-  const RecipeListView({super.key, required this.category});
+  RecipeListView({super.key, required this.category});
   final RecipeCategory category;
+  final _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,44 +73,99 @@ class RecipeListView extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (state.recipes.isEmpty) {
-            if (state.status == RecipeViewStatus.loading) {
+          switch (state.status) {
+            case RecipeViewStatus.loading:
               return ListView(
                 children: List.generate(7, (_) => const RecipeLoadingWidget()),
               );
-            } else if (state.status != RecipeViewStatus.success) {
-              return const SizedBox();
-            } else {
-              return Center(
-                child: Text(
-                  'No Recipes found.',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1!
-                      .copyWith(color: Colors.grey.shade400),
+
+            case RecipeViewStatus.success:
+              final recipies = state.recipes;
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      CustomTextField(
+                        controller: _searchController,
+                        prefixIcon: const Icon(Icons.search, size: 24),
+                        label: 'Search',
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            _searchController.clear();
+                            context
+                                .read<RecipeViewBloc>()
+                                .add(const RecipeViewSearchClear());
+                          },
+                          child: const Icon(Icons.clear),
+                        ),
+                        onChanged: (value) {
+                          context
+                              .read<RecipeViewBloc>()
+                              .add(RecipeViewSearch(query: value));
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      if (recipies.isNotEmpty)
+                        ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: recipies.length,
+                          shrinkWrap: true,
+                          itemBuilder: ((context, index) {
+                            return RecipeListTile(
+                              recipe: recipies[index],
+                              category: category,
+                            );
+                          }),
+                        )
+                      else
+                        Center(
+                          child: Text(
+                            'No Recipes found.',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1!
+                                .copyWith(color: Colors.grey.shade400),
+                          ),
+                        )
+                    ],
+                  ),
                 ),
               );
-            }
+            case RecipeViewStatus.failure:
+              return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Oops! Something went wrong 😞',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .copyWith(color: Colors.grey.shade400),
+                    ),
+                    TextButton.icon(
+                      onPressed: () {
+                        context.read<RecipeViewBloc>().add(
+                              RecipeViewRecipesRequested(
+                                category: category,
+                              ),
+                            );
+                      },
+                      icon: const Icon(Icons.replay),
+                      label: Text(
+                        'Retry',
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                    )
+                  ],
+                ),
+              );
+            default:
+              return const SizedBox();
           }
-
-          final recipies = state.recipes;
-
-          return Column(
-            children: [
-              const SizedBox(height: 5),
-              ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: recipies.length,
-                shrinkWrap: true,
-                itemBuilder: ((context, index) {
-                  return RecipeListTile(
-                    recipe: recipies[index],
-                    category: category,
-                  );
-                }),
-              ),
-            ],
-          );
         },
       ),
     );
