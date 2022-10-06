@@ -17,8 +17,8 @@ class FirebaseRecipesApi extends RecipesApi {
 
   final _recipeStreamController =
       BehaviorSubject<List<Recipe>>.seeded(const []);
-  final _searchRecipeStreamController =
-      BehaviorSubject<List<Recipe>>.seeded(const []);
+
+  List<Recipe> searchBackupRecipes = [];
 
   final kRecipesCollection = 'recipies';
 
@@ -28,14 +28,14 @@ class FirebaseRecipesApi extends RecipesApi {
 
   @override
   void onSearch({required String query}) {
-    final recipes = [..._searchRecipeStreamController.value];
+    final recipes = [...searchBackupRecipes];
     if (query.isNotEmpty) {
       recipes.retainWhere(
           (recipe) => recipe.title.toLowerCase().contains(query.toLowerCase()));
 
       _recipeStreamController.add(recipes);
     } else {
-      final r = [..._searchRecipeStreamController.value];
+      final r = [...searchBackupRecipes];
       _recipeStreamController.add(r);
     }
   }
@@ -60,7 +60,7 @@ class FirebaseRecipesApi extends RecipesApi {
         }
       });
       _recipeStreamController.add(fetchedRecipes);
-      _searchRecipeStreamController.add(fetchedRecipes);
+      searchBackupRecipes = [...fetchedRecipes];
       return fetchedRecipes;
     } catch (e) {
       log(e.toString());
@@ -103,7 +103,7 @@ class FirebaseRecipesApi extends RecipesApi {
         recipes.add(recipe);
       }
       _recipeStreamController.add(recipes);
-      _searchRecipeStreamController.add(recipes);
+      searchBackupRecipes = [...recipes];
 
       return recipe;
     } catch (e) {
@@ -128,7 +128,7 @@ class FirebaseRecipesApi extends RecipesApi {
         recipes.removeAt(recipeIndex);
       }
       _recipeStreamController.add(recipes);
-      _searchRecipeStreamController.add(recipes);
+      searchBackupRecipes = [...recipes];
     } catch (e) {
       log(e.toString());
       rethrow;

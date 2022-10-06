@@ -4,7 +4,6 @@ import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:get/get.dart';
 import 'package:recipes_api/recipes_api.dart';
 import 'package:recipes_repository/recipes_repository.dart';
 import 'package:collection/collection.dart';
