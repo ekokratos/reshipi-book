@@ -5,6 +5,7 @@ import 'package:recipe_book/features/recipe_edit/widgets/edit_item_row.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/recipe_bottom_sheet.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/remove_item_dialog.dart';
 import 'package:recipe_book/features/recipe_view/widgets/cooking_instructions_widget.dart';
+import 'package:recipe_book/l10n/localization.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipes_api/recipes_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -97,7 +98,7 @@ class EditCookingInstructionsWidget extends StatelessWidget {
       RecipeBottomSheet(
         formKey: _formKey,
         textController: _instructionController,
-        label: 'Instruction',
+        label: Localization.of(context)!.instruction,
         onPressed: () {
           if (_formKey.currentState?.validate() ?? false) {
             final name = _instructionController.text;

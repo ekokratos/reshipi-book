@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
 import 'package:recipe_book/features/recipe_view/widgets/common_app_bar.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_category.dart';
+import 'package:recipe_book/l10n/localization.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipes_api/recipes_api.dart';
 
@@ -26,9 +27,9 @@ class CategoryScreen extends StatelessWidget {
                 text: TextSpan(
                   style: Theme.of(context).textTheme.headline1,
                   children: <TextSpan>[
-                    const TextSpan(text: 'What would you like\nto '),
+                    TextSpan(text: Localization.of(context)!.what_to_do),
                     TextSpan(
-                      text: 'prepare?',
+                      text: Localization.of(context)!.prepare,
                       style: Theme.of(context)
                           .textTheme
                           .headline1!
@@ -45,34 +46,34 @@ class CategoryScreen extends StatelessWidget {
                   crossAxisCount: 2,
                   mainAxisSpacing: 20,
                   crossAxisSpacing: 20,
-                  children: const [
+                  children: [
                     RecipeCategoryWidget(
-                      text: 'Breakfast',
+                      text: Localization.of(context)!.breakfast,
                       assetUrl: 'assets/svgs/breakfast.svg',
                       category: RecipeCategory.breakfast,
                     ),
                     RecipeCategoryWidget(
-                      text: 'Lunch/Dinner',
+                      text: Localization.of(context)!.lunch_dinner,
                       assetUrl: 'assets/svgs/meal.svg',
                       category: RecipeCategory.meal,
                     ),
                     RecipeCategoryWidget(
-                      text: 'Snack',
+                      text: Localization.of(context)!.snack,
                       assetUrl: 'assets/svgs/snack.svg',
                       category: RecipeCategory.snack,
                     ),
                     RecipeCategoryWidget(
-                      text: 'Dessert',
+                      text: Localization.of(context)!.dessert,
                       assetUrl: 'assets/svgs/dessert.svg',
                       category: RecipeCategory.dessert,
                     ),
                     RecipeCategoryWidget(
-                      text: 'Beverage',
+                      text: Localization.of(context)!.beverage,
                       assetUrl: 'assets/svgs/beverage.svg',
                       category: RecipeCategory.beverage,
                     ),
                     RecipeCategoryWidget(
-                      text: 'Others',
+                      text: Localization.of(context)!.others,
                       assetUrl: 'assets/svgs/other.svg',
                       category: RecipeCategory.other,
                     ),

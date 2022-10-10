@@ -13,6 +13,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
   #UI
   cached_network_image: ^3.2.2
   image_picker: ^0.8.5+3
@@ -42,6 +45,9 @@ dependencies:
   flutter_bloc: ^8.1.1
   equatable: ^2.0.5
   collection: ^1.16.0
+
+  #Translation
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

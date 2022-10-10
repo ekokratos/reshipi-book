@@ -5,6 +5,7 @@ import 'package:recipe_book/features/recipe_edit/widgets/edit_item_row.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/recipe_bottom_sheet.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/remove_item_dialog.dart';
 import 'package:recipe_book/features/recipe_view/widgets/ingredients_widget.dart';
+import 'package:recipe_book/l10n/localization.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipes_api/recipes_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +25,7 @@ class EditIngredientsWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Ingredients:',
+              Localization.of(context)!.ingredients,
               style: Theme.of(context).textTheme.headline1,
             ),
             const SizedBox(height: 10),
@@ -47,7 +48,7 @@ class EditIngredientsWidget extends StatelessWidget {
                     onRemove: () {
                       showRemoveItemDialog(
                         context: context,
-                        item: 'Ingredient',
+                        item: Localization.of(context)!.ingredient,
                         onRemove: () {
                           context.read<RecipeEditBloc>().add(
                                 RecipeEditIngredientDeleted(

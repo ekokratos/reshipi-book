@@ -10,6 +10,7 @@ import 'package:recipe_book/features/recipe_view/widgets/delete_recipe_dialog.da
 import 'package:recipe_book/features/recipe_view/widgets/food_indicator_widget.dart';
 import 'package:recipe_book/features/recipe_view/widgets/ingredients_widget.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_image_widget.dart';
+import 'package:recipe_book/l10n/localization.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/util.dart';
 import 'package:recipe_book/shared/widgets/expandable_fab.dart';
@@ -59,7 +60,7 @@ class RecipeReadScreen extends StatelessWidget {
         if (state.recipeDeleteStatus == RecipeDeleteStatus.loading) {
           LoadingScreen.instance().show(
             context: context,
-            text: 'Deleting Recipe',
+            text: Localization.of(context)!.recipe_deleting,
           );
         } else {
           LoadingScreen.instance().hide();
@@ -67,8 +68,7 @@ class RecipeReadScreen extends StatelessWidget {
 
         if (state.recipeDeleteStatus == RecipeDeleteStatus.failure) {
           Util.showSnackbar(
-            msg:
-                'An error occurred while deleting the recipe. Please try again.',
+            msg: Localization.of(context)!.error_occurred_delete_recipe,
             isError: true,
           );
         }
@@ -172,7 +172,7 @@ class RecipeReadScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        state.recipe.description ?? 'No description',
+                        state.recipe.description ?? Localization.of(context)!.no_description,
                         textAlign: TextAlign.justify,
                         style: Theme.of(context)
                             .textTheme

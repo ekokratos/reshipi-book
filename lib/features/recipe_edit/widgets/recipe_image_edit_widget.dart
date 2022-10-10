@@ -10,6 +10,7 @@ import 'package:recipe_book/features/recipe_edit/bloc/recipe_edit_bloc.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/image_delete_dialog.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/image_picker_dialog.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_image_widget.dart';
+import 'package:recipe_book/l10n/localization.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/util.dart';
 import 'package:recipe_book/shared/widgets/loading/loading_screen.dart';
@@ -188,7 +189,7 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
 
     if (status == RecipeImageDeleteStatus.failure) {
       Util.showSnackbar(
-        msg: 'An error occurred while deleting the image.',
+        msg: Localization.of(context)!.error_occurred_delete_image,
         isError: true,
       );
     }
