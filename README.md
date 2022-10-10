@@ -11,7 +11,7 @@ A personal recipe cookbook build with Flutter using BLoC.
 ### Auth Screens:
 
 <pre float="center">
-    <img src="https://user-images.githubusercontent.com/26033335/194843041-b1fb2723-58dc-4aab-a9ae-5707759e5338.jpg" height="500">  <img src="https://user-images.githubusercontent.com/26033335/194843046-4a13c8c8-9380-4a5f-83ca-2e1c3ff6d29d.jpg" height="500">  <img src="https://user-images.githubusercontent.com/26033335/194843051-7858cfa3-f2cf-4c7b-ae7c-3456bf92fa1c.jpg" height="500">
+    <img src="https://user-images.githubusercontent.com/26033335/194843041-b1fb2723-58dc-4aab-a9ae-5707759e5338.jpg" height="500">  <img src="https://user-images.githubusercontent.com/26033335/194843046-4a13c8c8-9380-4a5f-83ca-2e1c3ff6d29d.jpg" height="500">
     
     <img src="https://user-images.githubusercontent.com/26033335/194843051-7858cfa3-f2cf-4c7b-ae7c-3456bf92fa1c.jpg" height="500">  <img src="https://user-images.githubusercontent.com/26033335/194843055-5fad3d23-ac48-461d-8df5-12bda45fae2d.jpg" height="500">
     
