@@ -1,7 +1,7 @@
 # Reshipi book
 A personal recipe cookbook built with Flutter using BLoC.
 
-### Techonology used:
+### Technology used:
 - Flutter
 - Firebase Authentication
 - Firestore
