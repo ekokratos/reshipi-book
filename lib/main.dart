@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_recipes_api/firebase_recipes_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
 import 'package:recipe_book/features/auth/view/login_screen.dart';
@@ -14,6 +15,7 @@ import 'package:recipe_book/shared/widgets/dialogs/show_message.dart';
 import 'package:recipe_book/shared/widgets/loading/loading_screen.dart';
 import 'package:recipes_repository/recipes_repository.dart';
 import 'firebase_options.dart';
+import 'l10n/localization.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,6 +58,16 @@ class AppView extends StatelessWidget {
         title: 'Reshipi Book',
         theme: appTheme(context),
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: const [
+          ReshipiLocalizationsDelegate(),
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('de'),
+        ],
         home: const BaseNavScreen(),
       ),
     );

@@ -5,6 +5,7 @@ import 'package:recipe_book/features/recipe_edit/widgets/custom_dropdown_field.d
 import 'package:recipe_book/features/recipe_edit/widgets/edit_cooking_instructions_widget.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/edit_ingredients_widget.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/recipe_image_edit_widget.dart';
+import 'package:recipe_book/l10n/localization.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/time_formatter.dart';
 import 'package:recipe_book/shared/utility/util.dart';
@@ -72,12 +73,12 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
             },
             backgroundColor: kPrimaryColor,
             label: Row(
-              children: const [
-                Icon(Icons.save_as_outlined),
-                SizedBox(
+              children: [
+                const Icon(Icons.save_as_outlined),
+                const SizedBox(
                   width: 5,
                 ),
-                Text('Save'),
+                Text(Localization.of(context)!.save),
               ],
             ),
           ),
@@ -100,7 +101,7 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
                         ),
                         const SizedBox(height: 20),
                         CustomTextField(
-                          label: 'Category',
+                          label: Localization.of(context)!.category,
                           initialValue: state.category.value,
                           enabled: false,
                         ),
@@ -141,7 +142,7 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
     if (status == RecipeEditStatus.loading) {
       LoadingScreen.instance().show(
         context: context,
-        text: 'Saving Recipe',
+        text: Localization.of(context)!.save_recipe,
       );
     } else {
       LoadingScreen.instance().hide();
@@ -149,7 +150,7 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
 
     if (status == RecipeEditStatus.failure) {
       Util.showSnackbar(
-        msg: 'An error occurred while saving the recipe. Please try again.',
+        msg: Localization.of(context)!.error_occurred_save_recipe,
         isError: true,
       );
     }
@@ -173,8 +174,8 @@ class TitleField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomTextField(
       controller: _titleController,
-      label: 'Title',
-      hintText: 'Recipe name',
+      label: Localization.of(context)!.recipe_title,
+      hintText: Localization.of(context)!.recipe_name,
       validator: (value) => Validation.validateNotEmpty(value),
     );
   }
@@ -193,8 +194,8 @@ class DescriptionField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomTextField(
       controller: _descriptionController,
-      label: 'Description',
-      hintText: 'Type something about the recipe',
+      label: Localization.of(context)!.recipe_description,
+      hintText: Localization.of(context)!.recipe_description_text,
       maxLines: 4,
     );
   }
@@ -214,7 +215,7 @@ class CategoryField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomDropdownButton<RecipeCategory>(
       dropdownValue: category,
-      label: 'Category',
+      label: Localization.of(context)!.category,
       items: RecipeCategory.values
           .map<DropdownMenuItem<RecipeCategory>>((RecipeCategory category) {
         return DropdownMenuItem<RecipeCategory>(
@@ -247,7 +248,7 @@ class RecipeTypeField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomDropdownButton<RecipeType>(
       dropdownValue: recipeType,
-      label: 'Recipe Type',
+      label: Localization.of(context)!.recipe_type,
       items: RecipeType.values
           .map<DropdownMenuItem<RecipeType>>((RecipeType type) {
         return DropdownMenuItem<RecipeType>(
@@ -264,7 +265,7 @@ class RecipeTypeField extends StatelessWidget {
       onChanged: onChanged,
       validator: (recipeType) {
         if (recipeType == null) {
-          return 'Required';
+          return Localization.of(context)!.requ;
         }
         return null;
       },
@@ -285,7 +286,7 @@ class CookingTimeField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomTextField(
       controller: _timeController,
-      label: 'Cooking time (hh:mm)',
+      label: Localization.of(context)!.cooking_time,
       hintText: 'hh:mm',
       keyboardType: const TextInputType.numberWithOptions(decimal: false),
       inputFormatters: [TimeFormatter()],

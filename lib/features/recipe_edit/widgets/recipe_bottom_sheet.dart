@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_book/l10n/localization.dart';
 import 'package:recipe_book/shared/utility/validation.dart';
 import 'package:recipe_book/shared/widgets/custom_text_field.dart';
 import 'package:recipe_book/shared/widgets/solid_button.dart';
@@ -43,7 +44,7 @@ class RecipeBottomSheet extends StatelessWidget {
           const SizedBox(height: 15),
           SolidButton(
             onPressed: onPressed,
-            text: 'Add',
+            text: Localization.of(context)!.add,
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:recipe_book/l10n/localization.dart';
 import 'package:recipe_book/shared/widgets/dialogs/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_book/shared/widgets/solid_button.dart';
@@ -17,7 +18,7 @@ showDeleteRecipeDialog({
       TextButton(
         onPressed: () => Get.back(),
         child: Text(
-          'Cancel',
+          Localization.of(context)!.cancel,
           style:
               Theme.of(context).textTheme.button!.copyWith(color: Colors.blue),
         ),

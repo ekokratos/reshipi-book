@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
+import 'package:recipe_book/l10n/localization.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/widgets/custom_text_field.dart';
 import 'package:recipe_book/shared/widgets/solid_button.dart';
@@ -50,7 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 30),
                 CustomTextField(
                   controller: nameController,
-                  label: 'Name',
+                  label: Localization.of(context)!.name,
                   hintText: 'John Doe',
                   keyboardType: TextInputType.name,
                   validator: (value) => Validation.validateName(value),
@@ -60,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   tag: 'email',
                   child: CustomTextField(
                     controller: emailController,
-                    label: 'Email',
+                    label: Localization.of(context)!.mail,
                     hintText: 'abcd@gmail.com',
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) =>
@@ -72,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   tag: 'password',
                   child: CustomTextField(
                     controller: passwordController,
-                    label: 'Password',
+                    label: Localization.of(context)!.pw,
                     obscureText: _isPasswordVisible,
                     suffixIcon: GestureDetector(
                       onTap: () {
@@ -110,8 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  'Your password must be 8 or more characters long and contain a mix of upper and lower case letters, numbers and symbols.',
+                Text(Localization.of(context)!.pw_text,
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         color: kSecondaryTextColor,
                         fontSize: 10,
@@ -133,7 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             );
                       }
                     },
-                    text: 'Sign Up',
+                    text: Localization.of(context)!.sign_up,
                   ),
                 ),
               ],

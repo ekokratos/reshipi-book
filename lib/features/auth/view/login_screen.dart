@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
 import 'package:recipe_book/features/auth/view/forgot_password_screen.dart';
 import 'package:recipe_book/features/auth/view/sign_up_screen.dart';
+import 'package:recipe_book/l10n/localization.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/widgets/clickable_text.dart';
 import 'package:recipe_book/shared/widgets/custom_text_field.dart';
@@ -56,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   tag: 'password',
                   child: CustomTextField(
                     controller: _passwordController,
-                    label: 'Password',
+                    label: Localization.of(context)!.pw,
                     obscureText: _isPasswordVisible,
                     suffixIcon: GestureDetector(
                       onTap: () {
@@ -71,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     validator: (value) {
                       if (value?.isEmpty ?? true) {
-                        return 'Enter password';
+                        return Localization.of(context)!.pw_enter;
                       }
                       return null;
                     },
@@ -83,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Hero(
                     tag: 'forgot_password',
                     child: ClickableText(
-                      text: 'Forgot password?',
+                      text: Localization.of(context)!.pw_forgot_title,
                       onTap: () {
                         Get.to(() => ForgotPasswordScreen());
                       },
@@ -104,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                       }
                     },
-                    text: 'Login',
+                    text: Localization.of(context)!.login,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -112,11 +113,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Don\'t have an account? ',
+                      Localization.of(context)!.new_account,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     ClickableText(
-                      text: 'Sign Up',
+                      text: Localization.of(context)!.sign_up,
                       onTap: () {
                         Get.to(() => const SignUpScreen());
                       },
