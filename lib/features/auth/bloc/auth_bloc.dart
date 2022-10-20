@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/foundation.dart' show immutable;
 import 'package:get/get.dart';
-import 'package:recipe_book/main.dart';
+import 'package:recipe_book/base_screen.dart';
 import 'package:recipe_book/shared/models/dialog_message.dart';
 
 part 'auth_event.dart';
@@ -120,7 +120,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       await _authRepository.logOut();
-      Get.offAll(const BaseNavScreen());
+      Get.offAll(const BaseScreen());
       emit(const AuthStateUnauthenticated(isLoading: false));
     } on AuthException catch (e) {
       emit(
