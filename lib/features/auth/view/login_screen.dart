@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
 import 'package:recipe_book/features/auth/view/forgot_password_screen.dart';
 import 'package:recipe_book/features/auth/view/sign_up_screen.dart';
+import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/widgets/clickable_text.dart';
 import 'package:recipe_book/shared/widgets/custom_text_field.dart';
@@ -26,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -44,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   tag: 'email',
                   child: CustomTextField(
                     controller: _emailController,
-                    label: 'Email',
+                    label: l10n.email,
                     hintText: 'abcd@gmail.com',
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) =>
@@ -56,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   tag: 'password',
                   child: CustomTextField(
                     controller: _passwordController,
-                    label: 'Password',
+                    label: l10n.password,
                     obscureText: _isPasswordVisible,
                     suffixIcon: GestureDetector(
                       onTap: () {
@@ -83,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Hero(
                     tag: 'forgot_password',
                     child: ClickableText(
-                      text: 'Forgot password?',
+                      text: l10n.forgotPasswordBtn,
                       onTap: () {
                         Get.to(() => ForgotPasswordScreen());
                       },
@@ -104,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                       }
                     },
-                    text: 'Login',
+                    text: l10n.login,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -112,11 +114,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Don\'t have an account? ',
+                      l10n.noAccount,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     ClickableText(
-                      text: 'Sign Up',
+                      text: l10n.signUp,
                       onTap: () {
                         Get.to(() => const SignUpScreen());
                       },

@@ -1,0 +1,162 @@
+{
+	"@@locale": "en",
+	"email": "Email",
+	"@email": {
+		"description": "Label for Email textfield"
+	},
+	"password": "Password",
+	"@password": {
+		"description": "Label for Password textfield"
+	},
+	"name": "Name",
+	"@name": {
+		"description": "Label for Name textfield"
+	},
+	"forgotPasswordBtn": "Forgot password?",
+	"@forgotPasswordBtn": {
+		"description": "Forgot password button text"
+	},
+	"login": "Login",
+	"@login": {
+		"description": "Login button text"
+	},
+	"noAccount": "Don't have an account? ",
+	"@noAccount": {
+		"description": "No account text in Login Screen"
+	},
+	"signUp": "Sign Up",
+	"forgotPasswordAppBarTitle": "Forgot password",
+	"@forgotPasswordAppBarTitle": {
+		"description": "Title text shown in the AppBar of Forgot password screen"
+	},
+	"passwordRecovery": "Please enter your email to recover your password:",
+	"@passwordRecovery": {
+		"description": "Text shown to enter email in Forgot Password screen"
+	},
+	"resetPassword": "Reset Password",
+	"@resetPassword": {
+		"description": "Text shown on button to reset password in Forgot Password screen"
+	},
+	"passwordStrength": "Your password must be 8 or more characters long and contain a mix of upper and lower case letters, numbers and symbols.",
+	"@passwordStrength": {
+		"description": "Hint text for creating strong password in Sing Up screen"
+	},
+	"categoryAppBarTitle": "Hi, {userName}",
+	"@categoryAppBarTitle": {
+		"description": "Title text shown in the AppBar of Category Screen",
+		"placeholders": {
+			"userName": {
+				"description": "Name of the logged in user"
+			}
+		}
+	},
+	"logOut": "Log out",
+	"cancel": "Cancel",
+	"logOutConfirmation": "Are you sure you want to log out?",
+	"@logOutConfirmation": {
+		"description": "Log out dialog confirmation text"
+	},
+	"recipeListSearch": "Search",
+	"@recipeListSearch": {
+		"description": "Label for Search textfield in Recipe List Screen"
+	},
+	"recipeListNoRecipe": "No recipes found",
+	"@recipeListNoRecipe": {
+		"description": "Text shown when no recipes are found in Recipe List Screen"
+	},
+	"recipeEditTitleField": "Title",
+	"@recipeEditTitleField": {
+		"description": "Label for Title textfield in Recipe Edit Screen"
+	},
+	"recipeEditTitleHint": "Recipe name",
+	"@recipeEditTitleHint": {
+		"description": "Hint text for Title textfield in Recipe Edit Screen"
+	},
+	"recipeEditDescField": "Description",
+	"@recipeEditDescField": {
+		"description": "Label for Description textfield in Recipe Edit Screen"
+	},
+	"recipeEditDescHint": "Type something about the recipe",
+	"@recipeEditDescHint": {
+		"description": "Hint text for Description textfield in Recipe Edit Screen"
+	},
+	"recipeEditCategoryField": "Category",
+	"@recipeEditCategoryField": {
+		"description": "Label for Category textfield in Recipe Edit Screen"
+	},
+	"recipeEditRecipeTypeField": "Recipe type",
+	"@recipeEditRecipeTypeField": {
+		"description": "Label for Recipe Type textfield in Recipe Edit Screen"
+	},
+	"recipeEditTimeField": "Cooking time (hh:mm)",
+	"@recipeEditTimeField": {
+		"description": "Label for Cooking time textfield in Recipe Edit Screen"
+	},
+	"recipeEditIngredientsTitle": "Ingredients:",
+	"recipeEditInsctructionsTitle": "Cooking Instructions:",
+	"recipeEditIngredient": "Ingredient",
+	"recipeEditInsctruction": "Instruction",
+	"recipeEditSaveBtn": "Save",
+	"@recipeEditSaveBtn": {
+		"description": "Floating button text in Edit Recipe Screen"
+	},
+	"recipeEditImageDialogText": "Pick image from:",
+	"@recipeEditImageDialogText": {
+		"description": "Image picker dialog title in Edit Recipe Screen"
+	},
+	"recipeEditImageDialogGallery": "Gallery",
+	"@recipeEditImageDialogGallery": {
+		"description": "Image picker dialog Gallery button in Edit Recipe Screen"
+	},
+	"recipeEditImageDialogCamera": "Camera",
+	"@recipeEditImageDialogCamera": {
+		"description": "Image picker dialog Camera button in Edit Recipe Screen"
+	},
+	"recipeEditRemoveItemDialogTitle": "Remove {item}",
+	"@recipeEditRemoveItemDialogTitle": {
+		"description": "Remove Ingredient/Instruction dialog title in Edit Recipe Screen",
+		"placeholders": {
+			"item": {
+				"description": "Ingredient/Instruction"
+			}
+		}
+	},
+	"recipeEditRemoveItemDialogDesc": "Are you sure you want to remove the {item}?",
+	"@recipeEditRemoveItemDialogDesc": {
+		"description": "Remove Ingredient/Instruction dialog description in Edit Recipe Screen",
+		"placeholders": {
+			"item": {
+				"description": "Ingredient/Instruction"
+			}
+		}
+	},
+	"recipeEditRemoveItemDialogBtn": "Remove",
+	"recipeEditSavingDialog": "Saving Recipe",
+	"@recipeEditSavingDialog": {
+		"description": "Loading dialog text on saving recipe in Edit Recipe Screen"
+	},
+	"recipeEditSavingError": "An error occurred while saving the recipe. Please try again.",
+	"@recipeEditSavingError": {
+		"description": "Text in Snackbar showing error while saving in Edit Recipe Screen"
+	},
+	"recipeListError": "An error occurred while loading recipes. Please try refreshing.",
+	"@recipeListError": {
+		"description": "Text in Snackbar showing error while loading recipes in Recipe List Screen"
+	},
+	"recipeListFailure": "Oops! Something went wrong 😞",
+	"@recipeListFailure": {
+		"description": "Text displayed on error in Recipe List Screen"
+	},
+	"recipeReadDeleteDialog": "Deleting Recipe",
+	"@recipeReadDeleteDialog": {
+		"description": "Loading dialog text on deleting recipe in Recipe Read Screen"
+	},
+	"recipeEditDeleteError": "An error occurred while deleting the recipe. Please try again.",
+	"@recipeEditDeleteError": {
+		"description": "Text in Snackbar showing error while deleting recipe in Recipe Read Screen"
+	},
+	"recipeReadDeleteSuccess": "Recipe deleted",
+	"@recipeReadDeleteSuccess": {
+		"description": "Successful snackbar text on deleting recipe in Recipe Read Screen"
+	}
+}
