@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/features/recipe_edit/bloc/recipe_edit_bloc.dart';
-import 'package:recipe_book/features/recipe_edit/views/recipe_edit_screen.dart';
+import 'package:recipe_book/features/recipe_edit/view/recipe_edit_screen.dart';
 import 'package:recipe_book/features/recipe_view/widgets/cooking_instructions_widget.dart';
 import 'package:recipe_book/features/recipe_view/widgets/cooking_time_widget.dart';
 import 'package:recipe_book/features/recipe_view/widgets/delete_recipe_dialog.dart';
 import 'package:recipe_book/features/recipe_view/widgets/food_indicator_widget.dart';
 import 'package:recipe_book/features/recipe_view/widgets/ingredients_widget.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_image_widget.dart';
+import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/util.dart';
 import 'package:recipe_book/shared/widgets/expandable_fab.dart';
@@ -51,6 +52,7 @@ class RecipeReadScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocConsumer<RecipeEditBloc, RecipeEditState>(
       listenWhen: (previous, current) {
         return current.recipeDeleteStatus != previous.recipeDeleteStatus;
@@ -59,7 +61,7 @@ class RecipeReadScreen extends StatelessWidget {
         if (state.recipeDeleteStatus == RecipeDeleteStatus.loading) {
           LoadingScreen.instance().show(
             context: context,
-            text: 'Deleting Recipe',
+            text: l10n.recipeReadDeleteDialog,
           );
         } else {
           LoadingScreen.instance().hide();
@@ -67,14 +69,13 @@ class RecipeReadScreen extends StatelessWidget {
 
         if (state.recipeDeleteStatus == RecipeDeleteStatus.failure) {
           Util.showSnackbar(
-            msg:
-                'An error occurred while deleting the recipe. Please try again.',
+            msg: l10n.recipeEditDeleteError,
             isError: true,
           );
         }
         if (state.recipeDeleteStatus == RecipeDeleteStatus.success) {
           Get.back();
-          Util.showSnackbar(msg: 'Recipe deleted');
+          Util.showSnackbar(msg: l10n.recipeReadDeleteSuccess);
         }
       },
       builder: (context, state) {
@@ -99,9 +100,6 @@ class RecipeReadScreen extends StatelessWidget {
               ),
               ActionButton(
                 onPressed: () {
-                  // context
-                  //     .read<RecipeEditBloc>()
-                  //     .add(RecipeEditDeleted(recipe: state.recipe));
                   showDeleteRecipeDialog(
                     context: context,
                     onDelete: () {

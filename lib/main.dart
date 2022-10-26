@@ -10,6 +10,7 @@ import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
 import 'package:recipe_book/shared/theme/app_theme.dart';
 import 'package:recipes_repository/recipes_repository.dart';
 import 'firebase_options.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,6 +53,8 @@ class AppView extends StatelessWidget {
         title: 'Reshipi Book',
         theme: appTheme(context),
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: const BaseScreen(),
       ),
     );

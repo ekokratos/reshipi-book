@@ -5,6 +5,7 @@ import 'package:recipe_book/features/recipe_edit/widgets/edit_item_row.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/recipe_bottom_sheet.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/remove_item_dialog.dart';
 import 'package:recipe_book/features/recipe_view/widgets/ingredients_widget.dart';
+import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipes_api/recipes_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,7 @@ class EditIngredientsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<RecipeEditBloc, RecipeEditState>(
       builder: (context, state) {
         final ingredients = state.ingredients;
@@ -24,7 +26,7 @@ class EditIngredientsWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Ingredients:',
+              l10n.recipeEditIngredientsTitle,
               style: Theme.of(context).textTheme.headline1,
             ),
             const SizedBox(height: 10),
@@ -47,7 +49,7 @@ class EditIngredientsWidget extends StatelessWidget {
                     onRemove: () {
                       showRemoveItemDialog(
                         context: context,
-                        item: 'Ingredient',
+                        item: l10n.recipeEditIngredient,
                         onRemove: () {
                           context.read<RecipeEditBloc>().add(
                                 RecipeEditIngredientDeleted(
@@ -86,11 +88,10 @@ class EditIngredientsWidget extends StatelessWidget {
       RecipeBottomSheet(
         formKey: _formKey,
         textController: _ingredientController,
-        label: 'Ingredient',
+        label: context.l10n.recipeEditIngredient,
         onPressed: () {
           if (_formKey.currentState?.validate() ?? false) {
             final name = _ingredientController.text;
-
             context.read<RecipeEditBloc>().add(
                   RecipeEditIngredientSaved(
                     ingredient: ingredient != null

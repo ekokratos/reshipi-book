@@ -38,4 +38,33 @@ class Util {
       return '-';
     }
   }
+
+  static int passwordStrengthLevel(String password) {
+    int strength = 0;
+    RegExp lowercaseCheck = RegExp(r'[a-z]');
+    RegExp uppercaseCheck = RegExp(r'[A-Z]');
+    RegExp numberCheck = RegExp(r'[0-9]');
+    RegExp symbolCheck = RegExp(r'[!"#$%&()*+,-./:;<=>?@[\]^_`{|}~]');
+
+    if (password.isEmpty || password.length < 8) {
+      strength = 0;
+    } else {
+      if (password.length >= 8) {
+        strength++;
+      }
+      if (password.contains(lowercaseCheck)) {
+        strength++;
+      }
+      if (password.contains(uppercaseCheck)) {
+        strength++;
+      }
+      if (password.contains(numberCheck)) {
+        strength++;
+      }
+      if (password.contains(symbolCheck)) {
+        strength++;
+      }
+    }
+    return strength;
+  }
 }

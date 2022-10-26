@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
+import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/validation.dart';
 import 'package:recipe_book/shared/widgets/custom_text_field.dart';
@@ -10,12 +11,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   ForgotPasswordScreen({super.key});
-  final emailController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -24,7 +25,7 @@ class ForgotPasswordScreen extends StatelessWidget {
         title: Hero(
           tag: 'forgot_password',
           child: Text(
-            'Forgot Password',
+            l10n.forgotPasswordAppBarTitle,
             style: Theme.of(context).textTheme.headline1,
           ),
         ),
@@ -43,7 +44,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 35),
                 Text(
-                  'Please enter your email to recover your password:',
+                  l10n.passwordRecovery,
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
                 const SizedBox(height: 10),
@@ -51,7 +52,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                   tag: 'email',
                   child: CustomTextField(
                     controller: emailController,
-                    label: 'Email',
+                    label: l10n.email,
                     hintText: 'abcd@gmail.com',
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) =>
@@ -67,7 +68,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                           );
                     }
                   },
-                  text: 'Reset Password',
+                  text: l10n.resetPassword,
                 )
               ],
             ),

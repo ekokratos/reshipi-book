@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
+import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/theme/style.dart';
+import 'package:recipe_book/shared/utility/util.dart';
 import 'package:recipe_book/shared/widgets/custom_text_field.dart';
 import 'package:recipe_book/shared/widgets/solid_button.dart';
 import 'package:recipe_book/shared/utility/validation.dart';
@@ -26,6 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -35,7 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 15),
+                SizedBox(height: MediaQuery.of(context).viewPadding.top),
                 const Align(
                   alignment: Alignment.topLeft,
                   child: BackButton(color: kPrimaryColor),
@@ -50,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 30),
                 CustomTextField(
                   controller: nameController,
-                  label: 'Name',
+                  label: l10n.name,
                   hintText: 'John Doe',
                   keyboardType: TextInputType.name,
                   validator: (value) => Validation.validateName(value),
@@ -60,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   tag: 'email',
                   child: CustomTextField(
                     controller: emailController,
-                    label: 'Email',
+                    label: l10n.email,
                     hintText: 'abcd@gmail.com',
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) =>
@@ -72,7 +75,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   tag: 'password',
                   child: CustomTextField(
                     controller: passwordController,
-                    label: 'Password',
+                    label: l10n.password,
                     obscureText: _isPasswordVisible,
                     suffixIcon: GestureDetector(
                       onTap: () {
@@ -87,7 +90,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     onChanged: (value) {
                       setState(() {
-                        _passwordStrength = _passwordStrengthLevel(value);
+                        _passwordStrength = Util.passwordStrengthLevel(value);
                       });
                     },
                     validator: Validation.validatePassword,
@@ -111,7 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Your password must be 8 or more characters long and contain a mix of upper and lower case letters, numbers and symbols.',
+                  l10n.passwordStrength,
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         color: kSecondaryTextColor,
                         fontSize: 10,
@@ -133,7 +136,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             );
                       }
                     },
-                    text: 'Sign Up',
+                    text: l10n.signUp,
                   ),
                 ),
               ],
@@ -142,34 +145,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
-  }
-
-  int _passwordStrengthLevel(String password) {
-    int strength = 0;
-    RegExp lowercaseCheck = RegExp(r'[a-z]');
-    RegExp uppercaseCheck = RegExp(r'[A-Z]');
-    RegExp numberCheck = RegExp(r'[0-9]');
-    RegExp symbolCheck = RegExp(r'[!"#$%&()*+,-./:;<=>?@[\]^_`{|}~]');
-
-    if (password.isEmpty || password.length < 8) {
-      strength = 0;
-    } else {
-      if (password.length >= 8) {
-        strength++;
-      }
-      if (password.contains(lowercaseCheck)) {
-        strength++;
-      }
-      if (password.contains(uppercaseCheck)) {
-        strength++;
-      }
-      if (password.contains(numberCheck)) {
-        strength++;
-      }
-      if (password.contains(symbolCheck)) {
-        strength++;
-      }
-    }
-    return strength;
   }
 }

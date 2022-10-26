@@ -5,6 +5,7 @@ import 'package:recipe_book/features/recipe_edit/widgets/edit_item_row.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/recipe_bottom_sheet.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/remove_item_dialog.dart';
 import 'package:recipe_book/features/recipe_view/widgets/cooking_instructions_widget.dart';
+import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipes_api/recipes_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,7 @@ class EditCookingInstructionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocSelector<RecipeEditBloc, RecipeEditState, List<Instruction>>(
       selector: (state) {
         return state.instructions.sortOnStep();
@@ -26,7 +28,7 @@ class EditCookingInstructionsWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Cooking Instructions:',
+              l10n.recipeEditInsctructionsTitle,
               style: Theme.of(context).textTheme.headline1,
             ),
             const SizedBox(height: 10),
@@ -51,7 +53,7 @@ class EditCookingInstructionsWidget extends StatelessWidget {
                   onRemove: () {
                     showRemoveItemDialog(
                       context: context,
-                      item: 'Instruction',
+                      item: l10n.recipeEditInsctruction,
                       onRemove: () {
                         context.read<RecipeEditBloc>().add(
                               RecipeEditInstructionDeleted(
@@ -97,7 +99,7 @@ class EditCookingInstructionsWidget extends StatelessWidget {
       RecipeBottomSheet(
         formKey: _formKey,
         textController: _instructionController,
-        label: 'Instruction',
+        label: context.l10n.recipeEditInsctruction,
         onPressed: () {
           if (_formKey.currentState?.validate() ?? false) {
             final name = _instructionController.text;
