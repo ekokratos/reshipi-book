@@ -142,7 +142,7 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                   ),
                 ),
               Positioned(
-                top: 40,
+                top: MediaQuery.of(context).viewPadding.top,
                 left: 20,
                 child: ImageButton(
                   icon: Icons.arrow_back,

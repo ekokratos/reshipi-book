@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/recipe_view/views/recipe_list_screen.dart';
+import 'package:recipe_book/features/recipe_view/view/recipe_list_screen.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipes_api/recipes_api.dart';
 
@@ -9,12 +9,10 @@ class RecipeCategoryWidget extends StatelessWidget {
   const RecipeCategoryWidget({
     super.key,
     required this.assetUrl,
-    required this.text,
     required this.category,
   });
 
   final String assetUrl;
-  final String text;
   final RecipeCategory category;
 
   @override
@@ -48,7 +46,7 @@ class RecipeCategoryWidget extends StatelessWidget {
               height: 120,
             ),
             Text(
-              text,
+              category.value,
               style: Theme.of(context)
                   .textTheme
                   .headline3!

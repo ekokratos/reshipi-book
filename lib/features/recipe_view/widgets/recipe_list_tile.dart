@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/recipe_view/views/recipe_screen.dart';
+import 'package:recipe_book/features/recipe_view/view/recipe_screen.dart';
 import 'package:recipe_book/features/recipe_view/widgets/cooking_time_widget.dart';
 import 'package:recipe_book/features/recipe_view/widgets/food_indicator_widget.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_image_widget.dart';

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
 import 'package:recipe_book/features/auth/view/login_screen.dart';
 import 'package:recipe_book/features/auth/widgets/show_auth_error.dart';
-import 'package:recipe_book/features/recipe_view/views/category_screen.dart';
+import 'package:recipe_book/features/recipe_view/view/category_screen.dart';
 import 'package:recipe_book/shared/widgets/dialogs/show_message.dart';
 import 'package:recipe_book/shared/widgets/loading/loading_screen.dart';
 

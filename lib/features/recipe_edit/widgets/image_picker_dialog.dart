@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 
 Future<ImageSource?> showImagePickerDialog({
@@ -9,6 +10,7 @@ Future<ImageSource?> showImagePickerDialog({
   return showDialog<ImageSource>(
     context: context,
     builder: (context) {
+      final l10n = context.l10n;
       return SimpleDialog(
         titlePadding: const EdgeInsets.all(15),
         contentPadding: const EdgeInsets.only(bottom: 15, right: 15, left: 15),
@@ -16,7 +18,7 @@ Future<ImageSource?> showImagePickerDialog({
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Pick image from:',
+              l10n.recipeEditImageDialogText,
               style: Theme.of(context).textTheme.headline2,
             ),
             GestureDetector(
@@ -28,14 +30,14 @@ Future<ImageSource?> showImagePickerDialog({
         children: [
           PickerButton(
             icon: Icons.collections_outlined,
-            text: 'Gallery',
+            text: l10n.recipeEditImageDialogGallery,
             onPressed: () {
               Get.back(result: ImageSource.gallery);
             },
           ),
           PickerButton(
             icon: Icons.camera_alt_outlined,
-            text: 'Camera',
+            text: l10n.recipeEditImageDialogCamera,
             onPressed: () {
               Get.back(result: ImageSource.camera);
             },

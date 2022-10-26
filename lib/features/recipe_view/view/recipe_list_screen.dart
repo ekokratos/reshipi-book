@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/features/recipe_view/bloc/recipe_view_bloc.dart';
-import 'package:recipe_book/features/recipe_view/views/recipe_screen.dart';
+import 'package:recipe_book/features/recipe_view/view/recipe_screen.dart';
 import 'package:recipe_book/features/recipe_view/widgets/common_app_bar.dart';
 import 'package:recipe_book/features/recipe_view/widgets/recipe_list_tile.dart';
+import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/util.dart';
 import 'package:recipe_book/shared/widgets/custom_text_field.dart';
@@ -40,6 +41,7 @@ class RecipeListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: commonAppBar(
         context: context,
@@ -66,8 +68,7 @@ class RecipeListView extends StatelessWidget {
         listener: (context, state) {
           if (state.status == RecipeViewStatus.failure) {
             Util.showSnackbar(
-              msg:
-                  'An error occurred while loading recipes. Please try refreshing.',
+              msg: l10n.recipeListError,
               isError: true,
             );
           }
@@ -90,7 +91,7 @@ class RecipeListView extends StatelessWidget {
                       CustomTextField(
                         controller: _searchController,
                         prefixIcon: const Icon(Icons.search, size: 24),
-                        label: 'Search',
+                        label: l10n.recipeListSearch,
                         suffixIcon: GestureDetector(
                           onTap: () {
                             _searchController.clear();
@@ -122,7 +123,7 @@ class RecipeListView extends StatelessWidget {
                       else
                         Center(
                           child: Text(
-                            'No Recipes found.',
+                            l10n.recipeListNoRecipe,
                             style: Theme.of(context)
                                 .textTheme
                                 .headline1!
@@ -140,7 +141,7 @@ class RecipeListView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'Oops! Something went wrong 😞',
+                      l10n.recipeListFailure,
                       style: Theme.of(context)
                           .textTheme
                           .headline1!

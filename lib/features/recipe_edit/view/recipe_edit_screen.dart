@@ -5,6 +5,7 @@ import 'package:recipe_book/features/recipe_edit/widgets/custom_dropdown_field.d
 import 'package:recipe_book/features/recipe_edit/widgets/edit_cooking_instructions_widget.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/edit_ingredients_widget.dart';
 import 'package:recipe_book/features/recipe_edit/widgets/recipe_image_edit_widget.dart';
+import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/time_formatter.dart';
 import 'package:recipe_book/shared/utility/util.dart';
@@ -45,6 +46,7 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocConsumer<RecipeEditBloc, RecipeEditState>(
       listenWhen: (previous, current) {
         return previous.status != current.status;
@@ -72,12 +74,10 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
             },
             backgroundColor: kPrimaryColor,
             label: Row(
-              children: const [
-                Icon(Icons.save_as_outlined),
-                SizedBox(
-                  width: 5,
-                ),
-                Text('Save'),
+              children: [
+                const Icon(Icons.save_as_outlined),
+                const SizedBox(width: 5),
+                Text(l10n.recipeEditSaveBtn),
               ],
             ),
           ),
@@ -100,7 +100,7 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
                         ),
                         const SizedBox(height: 20),
                         CustomTextField(
-                          label: 'Category',
+                          label: l10n.recipeEditCategoryField,
                           initialValue: state.category.value,
                           enabled: false,
                         ),
@@ -138,10 +138,11 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
     required BuildContext context,
     required RecipeEditStatus status,
   }) {
+    final l10n = context.l10n;
     if (status == RecipeEditStatus.loading) {
       LoadingScreen.instance().show(
         context: context,
-        text: 'Saving Recipe',
+        text: l10n.recipeEditSavingDialog,
       );
     } else {
       LoadingScreen.instance().hide();
@@ -149,7 +150,7 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
 
     if (status == RecipeEditStatus.failure) {
       Util.showSnackbar(
-        msg: 'An error occurred while saving the recipe. Please try again.',
+        msg: l10n.recipeEditSavingError,
         isError: true,
       );
     }
@@ -171,10 +172,11 @@ class TitleField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return CustomTextField(
       controller: _titleController,
-      label: 'Title',
-      hintText: 'Recipe name',
+      label: l10n.recipeEditTitleField,
+      hintText: l10n.recipeEditTitleHint,
       validator: (value) => Validation.validateNotEmpty(value),
     );
   }
@@ -191,10 +193,11 @@ class DescriptionField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return CustomTextField(
       controller: _descriptionController,
-      label: 'Description',
-      hintText: 'Type something about the recipe',
+      label: l10n.recipeEditDescField,
+      hintText: l10n.recipeEditDescHint,
       maxLines: 4,
     );
   }
@@ -214,7 +217,7 @@ class CategoryField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomDropdownButton<RecipeCategory>(
       dropdownValue: category,
-      label: 'Category',
+      label: context.l10n.recipeEditCategoryField,
       items: RecipeCategory.values
           .map<DropdownMenuItem<RecipeCategory>>((RecipeCategory category) {
         return DropdownMenuItem<RecipeCategory>(
@@ -247,7 +250,7 @@ class RecipeTypeField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomDropdownButton<RecipeType>(
       dropdownValue: recipeType,
-      label: 'Recipe Type',
+      label: context.l10n.recipeEditRecipeTypeField,
       items: RecipeType.values
           .map<DropdownMenuItem<RecipeType>>((RecipeType type) {
         return DropdownMenuItem<RecipeType>(
@@ -285,7 +288,7 @@ class CookingTimeField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomTextField(
       controller: _timeController,
-      label: 'Cooking time (hh:mm)',
+      label: context.l10n.recipeEditTimeField,
       hintText: 'hh:mm',
       keyboardType: const TextInputType.numberWithOptions(decimal: false),
       inputFormatters: [TimeFormatter()],
