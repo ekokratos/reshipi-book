@@ -31,6 +31,8 @@ dependencies:
     path: packages/recipes/recipes_api
   recipes_repository:
     path: packages/recipes/recipes_repository
+  firebase_auth_api:
+    path: packages/auth/firebase_auth_api
   auth_api:
     path: packages/auth/auth_api
   auth_repository:

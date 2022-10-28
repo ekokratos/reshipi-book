@@ -1,5 +1,5 @@
-import 'package:auth_api/auth_api.dart';
 import 'package:auth_repository/auth_repository.dart';
+import 'package:firebase_auth_api/firebase_auth_api.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_recipes_api/firebase_recipes_api.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ class App extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
-          create: (context) => AuthRepository(authApi: AuthApi()),
+          create: (context) => AuthRepository(authApi: FirebaseAuthApi()),
         ),
         RepositoryProvider(
           create: (context) =>

@@ -122,7 +122,14 @@ class RecipeReadScreen extends StatelessWidget {
               SliverAppBar(
                 expandedHeight: 180,
                 pinned: true,
-                leading: const BackButton(color: Colors.white),
+                leading: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: kPrimaryColor.withOpacity(0.7),
+                  ),
+                  margin: const EdgeInsets.only(left: 10),
+                  child: const BackButton(color: Colors.white),
+                ),
                 backgroundColor: kPrimaryColor,
                 flexibleSpace: FlexibleSpaceBar(
                   expandedTitleScale: 1.2,
