@@ -2,7 +2,9 @@ import 'package:auth_api/auth_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAuthApi extends AuthApi {
-  FirebaseAuthApi() : _firebaseAuth = FirebaseAuth.instance;
+  FirebaseAuthApi({
+    FirebaseAuth? firebaseAuth,
+  }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
   final FirebaseAuth _firebaseAuth;
 
