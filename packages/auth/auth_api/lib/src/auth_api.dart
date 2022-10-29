@@ -3,6 +3,7 @@ import 'package:auth_api/auth_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthApi {
+  const AuthApi();
   User? get currentUser;
 
   /// Creates a new user with the provided [name], [email] and [password].
