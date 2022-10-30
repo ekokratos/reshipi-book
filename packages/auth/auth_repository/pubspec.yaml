@@ -1,5 +1,5 @@
 name: auth_repository
-description: Repository that habdles auth related requests.
+description: Repository that handles auth related requests.
 version: 0.0.1
 publish_to: none
 

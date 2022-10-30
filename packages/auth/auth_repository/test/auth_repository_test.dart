@@ -26,13 +26,10 @@ void main() {
         name: any(named: 'name'),
         email: any(named: 'email'),
         password: any(named: 'password'))).thenAnswer((_) async {});
-
     when(() => api.logInWithEmailAndPassword(
         email: any(named: 'email'),
         password: any(named: 'password'))).thenAnswer((_) async {});
-
     when(() => api.logOut()).thenAnswer((_) async {});
-
     when(() => api.resetPassword(email: any(named: 'email')))
         .thenAnswer((_) async {});
   });
