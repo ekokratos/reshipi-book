@@ -23,7 +23,7 @@ abstract class RecipesApi {
   /// which marks the old image to be deleted from storage
   Future<Recipe> saveRecipe({
     required Recipe recipe,
-    required File? imageFile,
+    File? imageFile,
     bool recipeImageEdited = false,
   });
 

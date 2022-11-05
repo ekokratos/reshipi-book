@@ -39,9 +39,9 @@ dependencies:
     path: packages/auth/auth_repository
   
   #Firebase
-  firebase_core: ^1.23.0
-  firebase_auth: ^3.10.0
-  firebase_storage: ^10.3.10
+  firebase_core: ^2.1.1
+  firebase_auth: ^4.1.0
+  firebase_storage: ^11.0.3
 
   #BLoC
   flutter_bloc: ^8.1.1
