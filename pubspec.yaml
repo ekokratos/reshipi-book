@@ -3,7 +3,7 @@ description: A personal recipe cookbook.
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.1+4
 
 environment:
   sdk: '>=2.18.0 <3.0.0'
@@ -39,7 +39,7 @@ dependencies:
     path: packages/auth/auth_repository
   
   #Firebase
-  firebase_core: ^2.1.1
+  firebase_core: ^2.2.0
   firebase_auth: ^4.1.0
   firebase_storage: ^11.0.3
 
