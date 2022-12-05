@@ -1,5 +1,5 @@
 name: recipes_repository
-description: Repository that habdles recipe related requests.
+description: Repository that handles recipe related requests.
 version: 0.0.1
 publish_to: none
 
@@ -12,6 +12,7 @@ dependencies:
   
 
 dev_dependencies:
+  flutter_test:
+    sdk: flutter
   flutter_lints: ^2.0.0
-
-
+  mocktail: ^0.3.0

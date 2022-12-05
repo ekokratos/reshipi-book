@@ -1,5 +1,5 @@
-name: auth_repository
-description: Repository that handles auth related requests.
+name: firebase_auth_api
+description: Implementation of AuthApi using Firebase 
 version: 0.0.1
 publish_to: none
 
@@ -7,6 +7,7 @@ environment:
   sdk: '>=2.18.0 <3.0.0'
 
 dependencies:
+  firebase_core: ^2.2.0
   firebase_auth: ^4.1.0
   auth_api:
     path: ../auth_api
@@ -16,3 +17,5 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^2.0.0
   mocktail: ^0.3.0
+  plugin_platform_interface: ^2.1.2
+

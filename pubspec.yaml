@@ -3,7 +3,7 @@ description: A personal recipe cookbook.
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.1+4
 
 environment:
   sdk: '>=2.18.0 <3.0.0'
@@ -31,15 +31,17 @@ dependencies:
     path: packages/recipes/recipes_api
   recipes_repository:
     path: packages/recipes/recipes_repository
+  firebase_auth_api:
+    path: packages/auth/firebase_auth_api
   auth_api:
     path: packages/auth/auth_api
   auth_repository:
     path: packages/auth/auth_repository
   
   #Firebase
-  firebase_core: ^1.23.0
-  firebase_auth: ^3.10.0
-  firebase_storage: ^10.3.10
+  firebase_core: ^2.2.0
+  firebase_auth: ^4.1.0
+  firebase_storage: ^11.0.3
 
   #BLoC
   flutter_bloc: ^8.1.1

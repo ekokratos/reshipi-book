@@ -71,7 +71,7 @@ class FirebaseRecipesApi extends RecipesApi {
   @override
   Future<Recipe> saveRecipe({
     required Recipe recipe,
-    required File? imageFile,
+    File? imageFile,
     bool recipeImageEdited = false,
   }) async {
     try {
