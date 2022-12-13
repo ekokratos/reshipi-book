@@ -110,6 +110,10 @@ class RecipeListView extends StatelessWidget {
                       const SizedBox(height: 20),
                       if (recipies.isNotEmpty)
                         ListView.builder(
+                          prototypeItem: RecipeListTile(
+                            recipe: recipies.first,
+                            category: category,
+                          ),
                           physics: const BouncingScrollPhysics(),
                           itemCount: recipies.length,
                           shrinkWrap: true,
