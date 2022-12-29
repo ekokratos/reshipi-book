@@ -51,7 +51,7 @@ class AppView extends StatelessWidget {
         authRepository: context.read<AuthRepository>(),
       )..add(const AuthEventInitialize()),
       child: GetMaterialApp(
-        // builder: (context, child) => AccessibilityTools(child: child),
+        builder: (context, child) => AccessibilityTools(child: child),
         title: 'Reshipi Book',
         theme: appTheme(context),
         debugShowCheckedModeBanner: false,
