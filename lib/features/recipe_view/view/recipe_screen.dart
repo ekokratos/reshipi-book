@@ -94,6 +94,7 @@ class RecipeReadScreen extends StatelessWidget {
                   );
                 },
                 icon: const Icon(
+                  semanticLabel: 'Edit recipe',
                   Icons.edit,
                   color: Colors.blueAccent,
                 ),
@@ -111,6 +112,7 @@ class RecipeReadScreen extends StatelessWidget {
                   );
                 },
                 icon: const Icon(
+                  semanticLabel: 'Delete recipe',
                   Icons.delete,
                   color: Colors.red,
                 ),

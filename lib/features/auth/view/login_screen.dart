@@ -61,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     label: l10n.password,
                     obscureText: _isPasswordVisible,
                     suffixIcon: GestureDetector(
+                      excludeFromSemantics: true,
                       onTap: () {
                         setState(() {
                           _isPasswordVisible = !_isPasswordVisible;
@@ -79,7 +80,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                 ),
-                const SizedBox(height: 15),
                 Align(
                   alignment: Alignment.topRight,
                   child: Hero(
@@ -109,7 +109,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     text: l10n.login,
                   ),
                 ),
-                const SizedBox(height: 10),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

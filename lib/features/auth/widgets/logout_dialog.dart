@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 showLogOutDialog(BuildContext context) {
   final l10n = context.l10n;
   return showCustomDialog(
+    semanticLabel: 'Log out dialog',
     context: context,
     title: l10n.logOut,
     content: l10n.logOutConfirmation,

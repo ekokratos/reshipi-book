@@ -81,6 +81,7 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                 Positioned(
                   right: 15,
                   child: ImageButton(
+                    semanticLabel: 'Pick image',
                     icon: Icons.add_a_photo_outlined,
                     iconColor: kPrimaryColor,
                     onPressed: () async {
@@ -104,6 +105,7 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                   child: Row(
                     children: [
                       ImageButton(
+                        semanticLabel: 'Edit image',
                         icon: Icons.edit_outlined,
                         iconColor: kPrimaryColor,
                         onPressed: () async {
@@ -122,6 +124,7 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
 
                       ///Image delete button
                       ImageButton(
+                        semanticLabel: 'Delete image',
                         icon: Icons.delete_forever_outlined,
                         iconColor: Colors.red,
                         onPressed: () async {
@@ -145,6 +148,7 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                 top: MediaQuery.of(context).viewPadding.top,
                 left: 20,
                 child: ImageButton(
+                  semanticLabel: 'Back',
                   icon: Icons.arrow_back,
                   iconColor: Colors.black,
                   onPressed: () {
@@ -205,11 +209,13 @@ class ImageButton extends StatelessWidget {
     required this.icon,
     required this.iconColor,
     this.onPressed,
+    required this.semanticLabel,
   }) : super(key: key);
 
   final IconData icon;
   final Color iconColor;
   final VoidCallback? onPressed;
+  final String semanticLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -229,6 +235,7 @@ class ImageButton extends StatelessWidget {
       child: IconButton(
         icon: Icon(
           icon,
+          semanticLabel: semanticLabel,
           color: iconColor,
           size: 26,
         ),

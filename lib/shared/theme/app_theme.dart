@@ -65,26 +65,6 @@ ThemeData appTheme(BuildContext context) {
         fontWeight: FontWeight.w700,
         color: Colors.white,
       ),
-
-      // /// Caution/Overline
-      // /// Weight : ExtraBold
-      // /// Size   : 10
-      // overline: TextStyle(
-      //   fontFamily: "Mulish",
-      //   fontSize: 10.sp,
-      //   fontWeight: FontWeight.w800,
-      //   color: kPrimaryTextColor,
-      // ),
-
-      // ///
-      // /// Weight : Semibold
-      // /// Size   : 10
-      // subtitle1: TextStyle(
-      //   fontFamily: "Mulish",
-      //   fontSize: 10.sp,
-      //   fontWeight: FontWeight.w600,
-      //   color: kSecondaryTextColor,
-      // ),
     ),
   );
 }
