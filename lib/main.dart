@@ -1,3 +1,4 @@
+import 'package:accessibility_tools/accessibility_tools.dart';
 import 'package:auth_repository/auth_repository.dart';
 import 'package:firebase_auth_api/firebase_auth_api.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -50,6 +51,7 @@ class AppView extends StatelessWidget {
         authRepository: context.read<AuthRepository>(),
       )..add(const AuthEventInitialize()),
       child: GetMaterialApp(
+        // builder: (context, child) => AccessibilityTools(child: child),
         title: 'Reshipi Book',
         theme: appTheme(context),
         debugShowCheckedModeBanner: false,

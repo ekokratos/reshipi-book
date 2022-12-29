@@ -9,6 +9,7 @@ showMessage({
   required DialogMessage dialogMessage,
 }) {
   return showCustomDialog(
+    semanticLabel: 'Information dialog',
     context: context,
     title: dialogMessage.title,
     content: dialogMessage.message,

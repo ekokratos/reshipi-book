@@ -61,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     label: l10n.password,
                     obscureText: _isPasswordVisible,
                     suffixIcon: GestureDetector(
+                      excludeFromSemantics: true,
                       onTap: () {
                         setState(() {
                           _isPasswordVisible = !_isPasswordVisible;

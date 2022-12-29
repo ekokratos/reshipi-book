@@ -72,6 +72,7 @@ class EditIngredientsWidget extends StatelessWidget {
                   showIngredientBottomSheet(context);
                 },
                 child: const Icon(
+                  semanticLabel: 'Add new ingredient',
                   Icons.add,
                   color: kPrimaryColor,
                 ),

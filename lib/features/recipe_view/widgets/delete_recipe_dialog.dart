@@ -8,6 +8,7 @@ showDeleteRecipeDialog({
   required VoidCallback? onDelete,
 }) {
   return showCustomDialog(
+    semanticLabel: 'Delete recipe dialog',
     context: context,
     title: 'Delete Recipe',
     content: 'Are you sure you want to delete this recipe?',
