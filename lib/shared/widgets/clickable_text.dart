@@ -21,11 +21,15 @@ class ClickableText extends StatelessWidget {
         splashColor: kPrimaryColor.withOpacity(0.2),
         highlightColor: kPrimaryColor.withOpacity(0.1),
         onTap: onTap,
-        child: Text(
-          text,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                color: color ?? kPrimaryColor,
-              ),
+        borderRadius: BorderRadius.circular(5),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+          child: Text(
+            text,
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: color ?? kPrimaryColor,
+                ),
+          ),
         ),
       ),
     );

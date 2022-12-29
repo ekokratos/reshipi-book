@@ -79,6 +79,7 @@ class EditCookingInstructionsWidget extends StatelessWidget {
                   );
                 },
                 child: const Icon(
+                  semanticLabel: 'Add new cooking instruction',
                   Icons.add,
                   color: kPrimaryColor,
                 ),

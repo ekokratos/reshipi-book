@@ -86,6 +86,7 @@ class _ExpandableFabState extends State<ExpandableFab>
             child: const Padding(
               padding: EdgeInsets.all(10.0),
               child: Icon(
+                semanticLabel: 'Close',
                 Icons.close,
                 color: kPrimaryColor,
               ),
@@ -135,6 +136,7 @@ class _ExpandableFabState extends State<ExpandableFab>
             backgroundColor: Colors.white,
             onPressed: _toggle,
             child: const Icon(
+              semanticLabel: 'Modify recipe',
               Icons.edit,
               color: Colors.green,
             ),

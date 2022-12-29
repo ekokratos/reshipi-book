@@ -11,6 +11,7 @@ showRemoveItemDialog({
 }) {
   final l10n = context.l10n;
   return showCustomDialog(
+    semanticLabel: 'Remove $item dialog',
     context: context,
     title: l10n.recipeEditRemoveItemDialogTitle(item),
     content: l10n.recipeEditRemoveItemDialogDesc(item),

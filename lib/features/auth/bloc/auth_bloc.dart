@@ -120,7 +120,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       await _authRepository.logOut();
-      Get.offAll(const BaseScreen());
+      Get.offAll(() => const BaseScreen());
       emit(const AuthStateUnauthenticated(isLoading: false));
     } on AuthException catch (e) {
       emit(

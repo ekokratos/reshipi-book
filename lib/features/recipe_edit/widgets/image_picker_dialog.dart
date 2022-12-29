@@ -12,6 +12,7 @@ Future<ImageSource?> showImagePickerDialog({
     builder: (context) {
       final l10n = context.l10n;
       return SimpleDialog(
+        semanticLabel: 'Pick image dialog',
         titlePadding: const EdgeInsets.all(15),
         contentPadding: const EdgeInsets.only(bottom: 15, right: 15, left: 15),
         title: Row(
@@ -23,7 +24,10 @@ Future<ImageSource?> showImagePickerDialog({
             ),
             GestureDetector(
               onTap: () => Get.back(),
-              child: const Icon(Icons.close),
+              child: const Icon(
+                semanticLabel: 'Close dialog',
+                Icons.close,
+              ),
             )
           ],
         ),

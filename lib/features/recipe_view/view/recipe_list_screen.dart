@@ -59,6 +59,7 @@ class RecipeListView extends StatelessWidget {
           );
         },
         child: const Icon(
+          semanticLabel: 'Add new recipe',
           Icons.add,
           size: 28,
         ),
@@ -90,7 +91,10 @@ class RecipeListView extends StatelessWidget {
                       const SizedBox(height: 20),
                       CustomTextField(
                         controller: _searchController,
-                        prefixIcon: const Icon(Icons.search, size: 24),
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          size: 24,
+                        ),
                         label: l10n.recipeListSearch,
                         suffixIcon: GestureDetector(
                           onTap: () {
@@ -99,7 +103,10 @@ class RecipeListView extends StatelessWidget {
                                 .read<RecipeViewBloc>()
                                 .add(const RecipeViewSearchClear());
                           },
-                          child: const Icon(Icons.clear),
+                          child: const Icon(
+                            semanticLabel: 'click to clear search box',
+                            Icons.clear,
+                          ),
                         ),
                         onChanged: (value) {
                           context

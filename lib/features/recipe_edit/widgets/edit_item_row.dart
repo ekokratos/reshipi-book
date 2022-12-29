@@ -17,7 +17,6 @@ class EditItemRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Flexible(
           child: item,
@@ -26,10 +25,9 @@ class EditItemRow extends StatelessWidget {
           children: [
             IconButton(
               alignment: Alignment.topCenter,
-              padding: EdgeInsets.zero,
-              visualDensity: VisualDensity.compact,
               onPressed: onEdit,
               icon: const Icon(
+                semanticLabel: 'Edit',
                 Icons.edit,
                 color: kTextFieldPrefixColor,
                 size: 22,
@@ -37,10 +35,9 @@ class EditItemRow extends StatelessWidget {
             ),
             IconButton(
               alignment: Alignment.topCenter,
-              padding: EdgeInsets.zero,
-              visualDensity: VisualDensity.compact,
               onPressed: onRemove,
               icon: const Icon(
+                semanticLabel: 'Remove',
                 Icons.close,
                 color: Colors.red,
               ),

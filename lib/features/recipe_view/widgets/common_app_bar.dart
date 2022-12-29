@@ -18,6 +18,7 @@ AppBar commonAppBar({required BuildContext context, required String title}) {
           showLogOutDialog(context);
         },
         icon: const Icon(
+          semanticLabel: 'Logout',
           Icons.logout,
         ),
       )

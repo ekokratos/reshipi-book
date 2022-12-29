@@ -5,6 +5,7 @@ import 'package:recipe_book/shared/widgets/solid_button.dart';
 
 showImageDeleteDialog({required BuildContext context}) {
   return showCustomDialog(
+    semanticLabel: 'Delete image dialog',
     context: context,
     title: 'Delete Image',
     content: 'Are you sure you want to delete the image?',

@@ -9,6 +9,7 @@ showAuthError({
   required BuildContext context,
 }) {
   return showCustomDialog(
+    semanticLabel: 'Authentication error dialog',
     context: context,
     title: authException.title,
     content: authException.message,

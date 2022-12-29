@@ -5,6 +5,7 @@ showCustomDialog({
   required String title,
   required String content,
   required List<Widget>? actions,
+  required String semanticLabel,
   IconData? icon,
   Color? iconColor,
 }) {
@@ -12,6 +13,7 @@ showCustomDialog({
     context: context,
     builder: (context) {
       return AlertDialog(
+        semanticLabel: semanticLabel,
         title: Row(
           children: [
             if (icon != null)
