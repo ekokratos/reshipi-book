@@ -8,13 +8,13 @@ class SolidButton extends StatelessWidget {
   final Color? buttonColor;
   final EdgeInsetsGeometry? padding;
   const SolidButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.text,
     this.textColor,
     this.buttonColor,
     this.padding,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class SolidButton extends StatelessWidget {
         text,
         style: Theme.of(context)
             .textTheme
-            .button!
+            .labelLarge!
             .copyWith(color: textColor ?? Colors.white),
       ),
     );

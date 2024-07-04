@@ -20,7 +20,7 @@ class FirebaseRecipesApi extends RecipesApi {
 
   List<Recipe> searchBackupRecipes = [];
 
-  final kRecipesCollection = 'recipies';
+  final _kRecipesCollection = 'recipies';
 
   @override
   Stream<List<Recipe>> get recipes =>
@@ -49,7 +49,7 @@ class FirebaseRecipesApi extends RecipesApi {
 
     try {
       await _db
-          .collection(kRecipesCollection)
+          .collection(_kRecipesCollection)
           .where('userId', isEqualTo: userId)
           .where('category', isEqualTo: category.name)
           .get()
@@ -79,7 +79,7 @@ class FirebaseRecipesApi extends RecipesApi {
       ///
       await Future.wait([
         _db
-            .collection(kRecipesCollection)
+            .collection(_kRecipesCollection)
             .doc(recipe.id)
             .set(recipe.toJson(), SetOptions(merge: true)),
         if (recipeImageEdited &&
@@ -118,7 +118,7 @@ class FirebaseRecipesApi extends RecipesApi {
       await Future.wait([
         if (recipe.imageUrl != null && recipe.imageUrl!.isNotEmpty)
           deleteImage(imageUrl: recipe.imageUrl!, recipeId: recipe.id),
-        _db.collection(kRecipesCollection).doc(recipe.id).delete(),
+        _db.collection(_kRecipesCollection).doc(recipe.id).delete(),
       ]);
 
       ///Remove the recipe from recipe stream
@@ -148,7 +148,7 @@ class FirebaseRecipesApi extends RecipesApi {
       if (snapshot.state == TaskState.success) {
         downloadUrl = await snapshot.ref.getDownloadURL();
         await _db
-            .collection(kRecipesCollection)
+            .collection(_kRecipesCollection)
             .doc(recipeId)
             .update({'imageUrl': downloadUrl});
       }
@@ -166,7 +166,7 @@ class FirebaseRecipesApi extends RecipesApi {
       await Future.wait([
         _storage.refFromURL(imageUrl).delete(),
         _db
-            .collection(kRecipesCollection)
+            .collection(_kRecipesCollection)
             .doc(recipeId)
             .update({'imageUrl': ''}),
       ]);

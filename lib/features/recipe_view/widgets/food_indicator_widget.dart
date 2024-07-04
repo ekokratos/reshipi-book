@@ -3,9 +3,9 @@ import 'package:recipes_api/recipes_api.dart';
 
 class FoodIndicatorWidget extends StatelessWidget {
   const FoodIndicatorWidget({
-    Key? key,
+    super.key,
     required this.recipeType,
-  }) : super(key: key);
+  });
 
   final RecipeType recipeType;
 
@@ -19,7 +19,7 @@ class FoodIndicatorWidget extends StatelessWidget {
         const SizedBox(width: 5),
         Text(
           recipeType.value,
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
       ],
     );
@@ -28,9 +28,9 @@ class FoodIndicatorWidget extends StatelessWidget {
 
 class FoodIndicatorIcon extends StatelessWidget {
   const FoodIndicatorIcon({
-    Key? key,
+    super.key,
     required this.color,
-  }) : super(key: key);
+  });
 
   final Color color;
 

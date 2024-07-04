@@ -137,10 +137,10 @@ class RecipeListView extends StatelessWidget {
                             l10n.recipeListNoRecipe,
                             style: Theme.of(context)
                                 .textTheme
-                                .headline1!
-                                .copyWith(color: Colors.grey.shade400),
+                                .displayLarge
+                                ?.copyWith(color: Colors.grey.shade400),
                           ),
-                        )
+                        ),
                     ],
                   ),
                 ),
@@ -155,8 +155,8 @@ class RecipeListView extends StatelessWidget {
                       l10n.recipeListFailure,
                       style: Theme.of(context)
                           .textTheme
-                          .headline1!
-                          .copyWith(color: Colors.grey.shade400),
+                          .displayLarge
+                          ?.copyWith(color: Colors.grey.shade400),
                     ),
                     TextButton.icon(
                       onPressed: () {
@@ -169,9 +169,9 @@ class RecipeListView extends StatelessWidget {
                       icon: const Icon(Icons.replay),
                       label: Text(
                         'Retry',
-                        style: Theme.of(context).textTheme.headline2,
+                        style: Theme.of(context).textTheme.displayMedium,
                       ),
-                    )
+                    ),
                   ],
                 ),
               );
@@ -186,8 +186,8 @@ class RecipeListView extends StatelessWidget {
 
 class RecipeLoadingWidget extends StatelessWidget {
   const RecipeLoadingWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

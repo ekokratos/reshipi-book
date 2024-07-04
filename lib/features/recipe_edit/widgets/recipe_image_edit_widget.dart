@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -16,8 +14,8 @@ import 'package:recipe_book/shared/widgets/loading/loading_screen.dart';
 
 class RecipeImageEditWidget extends StatefulWidget {
   const RecipeImageEditWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<RecipeImageEditWidget> createState() => _RecipeImageEditWidgetState();
@@ -90,9 +88,11 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                         setState(() {
                           _pickedImage = pickedImage;
                         });
-                        context
-                            .read<RecipeEditBloc>()
-                            .add(RecipeEditImageAdded(imageFile: pickedImage));
+                        if (context.mounted) {
+                          context.read<RecipeEditBloc>().add(
+                                RecipeEditImageAdded(imageFile: pickedImage),
+                              );
+                        }
                       }
                     },
                   ),
@@ -114,9 +114,13 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                             setState(() {
                               _pickedImage = pickedImage;
                             });
-                            context.read<RecipeEditBloc>().add(
-                                  RecipeEditImageEdited(imageFile: pickedImage),
-                                );
+                            if (context.mounted) {
+                              context.read<RecipeEditBloc>().add(
+                                    RecipeEditImageEdited(
+                                      imageFile: pickedImage,
+                                    ),
+                                  );
+                            }
                           }
                         },
                       ),
@@ -135,9 +139,11 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                             setState(() {
                               _pickedImage = null;
                             });
-                            context
-                                .read<RecipeEditBloc>()
-                                .add(const RecipeEditImageDeleted());
+                            if (context.mounted) {
+                              context
+                                  .read<RecipeEditBloc>()
+                                  .add(const RecipeEditImageDeleted());
+                            }
                           }
                         },
                       ),
@@ -205,12 +211,12 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
 
 class ImageButton extends StatelessWidget {
   const ImageButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.iconColor,
     this.onPressed,
     required this.semanticLabel,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final Color iconColor;

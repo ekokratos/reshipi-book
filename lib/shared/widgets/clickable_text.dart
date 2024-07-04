@@ -7,11 +7,11 @@ class ClickableText extends StatelessWidget {
   final Color? color;
 
   const ClickableText({
-    Key? key,
+    super.key,
     required this.text,
     required this.onTap,
     this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class ClickableText extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
           child: Text(
             text,
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: color ?? kPrimaryColor,
                 ),
           ),

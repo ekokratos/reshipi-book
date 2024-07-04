@@ -24,16 +24,12 @@ abstract class AuthState extends Equatable {
 
 class AuthStateAuthenticated extends AuthState {
   const AuthStateAuthenticated({
-    required User user,
-    required bool isLoading,
-    AuthException? authException,
-    DialogMessage? dialogMessage,
+    required User super.user,
+    required super.isLoading,
+    super.authException,
+    super.dialogMessage,
   }) : super(
-          user: user,
-          isLoading: isLoading,
-          authException: authException,
           status: AuthStatus.authenticated,
-          dialogMessage: dialogMessage,
         );
 
   @override
@@ -42,13 +38,10 @@ class AuthStateAuthenticated extends AuthState {
 
 class AuthStateUnauthenticated extends AuthState {
   const AuthStateUnauthenticated({
-    required bool isLoading,
-    AuthException? authException,
-    DialogMessage? dialogMessage,
+    required super.isLoading,
+    super.authException,
+    super.dialogMessage,
   }) : super(
-          isLoading: isLoading,
-          authException: authException,
-          dialogMessage: dialogMessage,
           status: AuthStatus.unauthenticated,
         );
 }

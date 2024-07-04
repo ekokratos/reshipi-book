@@ -27,13 +27,13 @@ showCustomDialog({
               ),
             Text(
               title,
-              style: Theme.of(context).textTheme.headline3,
+              style: Theme.of(context).textTheme.displaySmall,
             ),
           ],
         ),
         content: Text(
           content,
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
         actions: actions,
       );

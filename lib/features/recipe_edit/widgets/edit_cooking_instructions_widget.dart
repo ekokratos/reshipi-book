@@ -11,7 +11,7 @@ import 'package:recipes_api/recipes_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EditCookingInstructionsWidget extends StatelessWidget {
-  EditCookingInstructionsWidget({Key? key}) : super(key: key);
+  EditCookingInstructionsWidget({super.key});
 
   final _instructionController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -29,7 +29,7 @@ class EditCookingInstructionsWidget extends StatelessWidget {
           children: [
             Text(
               l10n.recipeEditInsctructionsTitle,
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.displayLarge,
             ),
             const SizedBox(height: 10),
             if (instructions.isNotEmpty)

@@ -4,9 +4,9 @@ import 'package:recipe_book/shared/utility/util.dart';
 
 class CookingTimeWidget extends StatelessWidget {
   const CookingTimeWidget({
-    Key? key,
+    super.key,
     required this.time,
-  }) : super(key: key);
+  });
 
   final String time;
 
@@ -22,7 +22,7 @@ class CookingTimeWidget extends StatelessWidget {
         const SizedBox(width: 5),
         Text(
           Util.formatCookingTime(time),
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
       ],
     );

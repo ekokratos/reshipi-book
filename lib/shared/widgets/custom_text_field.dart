@@ -22,7 +22,7 @@ class CustomTextField extends StatelessWidget {
   final Widget? prefixIcon;
 
   const CustomTextField({
-    Key? key,
+    super.key,
     this.keyboardType,
     this.inputFormatters,
     this.textAlign = TextAlign.start,
@@ -40,7 +40,7 @@ class CustomTextField extends StatelessWidget {
     this.maxLines = 1,
     this.initialValue,
     this.prefixIcon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class CustomTextField extends StatelessWidget {
         maxLines: maxLines,
         style: Theme.of(context)
             .textTheme
-            .bodyText1!
+            .bodyLarge!
             .copyWith(fontWeight: FontWeight.w500),
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
@@ -74,16 +74,16 @@ class CustomTextField extends StatelessWidget {
           hintText: hintText,
           hintStyle: Theme.of(context)
               .textTheme
-              .bodyText1!
+              .bodyLarge!
               .copyWith(color: kTextFieldPrefixColor),
           suffixIcon: suffixIcon,
           suffixIconColor: suffixIconColor ?? kTextFieldPrefixColor,
           floatingLabelAlignment: FloatingLabelAlignment.start,
-          floatingLabelStyle: Theme.of(context).textTheme.headline3,
+          floatingLabelStyle: Theme.of(context).textTheme.displaySmall,
           labelText: label,
           labelStyle: Theme.of(context)
               .textTheme
-              .bodyText1!
+              .bodyLarge!
               .copyWith(color: kPrimaryTextColor, fontWeight: FontWeight.w600),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade200, width: 0.5),

@@ -114,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Text(
                       l10n.noAccount,
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     ClickableText(
                       text: l10n.signUp,

@@ -163,10 +163,9 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
 
 class TitleField extends StatelessWidget {
   const TitleField({
-    Key? key,
+    super.key,
     required TextEditingController titleController,
-  })  : _titleController = titleController,
-        super(key: key);
+  }) : _titleController = titleController;
 
   final TextEditingController _titleController;
 
@@ -184,10 +183,9 @@ class TitleField extends StatelessWidget {
 
 class DescriptionField extends StatelessWidget {
   const DescriptionField({
-    Key? key,
+    super.key,
     required TextEditingController descriptionController,
-  })  : _descriptionController = descriptionController,
-        super(key: key);
+  }) : _descriptionController = descriptionController;
 
   final TextEditingController _descriptionController;
 
@@ -205,10 +203,10 @@ class DescriptionField extends StatelessWidget {
 
 class CategoryField extends StatelessWidget {
   const CategoryField({
-    Key? key,
+    super.key,
     required this.category,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final RecipeCategory? category;
   final Function(RecipeCategory?) onChanged;
@@ -226,7 +224,7 @@ class CategoryField extends StatelessWidget {
             category.value,
             style: Theme.of(context)
                 .textTheme
-                .bodyText1!
+                .bodyLarge!
                 .copyWith(fontWeight: FontWeight.w500),
           ),
         );
@@ -238,10 +236,10 @@ class CategoryField extends StatelessWidget {
 
 class RecipeTypeField extends StatelessWidget {
   const RecipeTypeField({
-    Key? key,
+    super.key,
     required this.recipeType,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final RecipeType? recipeType;
   final Function(RecipeType?) onChanged;
@@ -259,7 +257,7 @@ class RecipeTypeField extends StatelessWidget {
             type.value,
             style: Theme.of(context)
                 .textTheme
-                .bodyText1!
+                .bodyLarge!
                 .copyWith(fontWeight: FontWeight.w500),
           ),
         );
@@ -277,10 +275,9 @@ class RecipeTypeField extends StatelessWidget {
 
 class CookingTimeField extends StatelessWidget {
   const CookingTimeField({
-    Key? key,
+    super.key,
     required TextEditingController timeController,
-  })  : _timeController = timeController,
-        super(key: key);
+  }) : _timeController = timeController;
 
   final TextEditingController _timeController;
 

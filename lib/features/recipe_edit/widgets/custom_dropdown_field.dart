@@ -9,13 +9,13 @@ class CustomDropdownButton<T> extends StatelessWidget {
   final FormFieldValidator<T>? validator;
 
   const CustomDropdownButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.items,
     required this.onChanged,
     required this.dropdownValue,
     this.validator,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +27,11 @@ class CustomDropdownButton<T> extends StatelessWidget {
         isDense: true,
         filled: true,
         floatingLabelAlignment: FloatingLabelAlignment.start,
-        floatingLabelStyle: Theme.of(context).textTheme.headline3,
+        floatingLabelStyle: Theme.of(context).textTheme.displaySmall,
         labelText: label,
         labelStyle: Theme.of(context)
             .textTheme
-            .bodyText1!
+            .bodyLarge!
             .copyWith(color: kPrimaryTextColor, fontWeight: FontWeight.w600),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey.shade200, width: 0.5),

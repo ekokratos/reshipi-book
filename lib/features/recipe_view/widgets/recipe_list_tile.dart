@@ -9,10 +9,10 @@ import 'package:recipes_api/recipes_api.dart';
 
 class RecipeListTile extends StatelessWidget {
   const RecipeListTile({
-    Key? key,
+    super.key,
     required this.recipe,
     required this.category,
-  }) : super(key: key);
+  });
 
   final Recipe recipe;
   final RecipeCategory category;
@@ -69,7 +69,7 @@ class RecipeListTile extends StatelessWidget {
                   children: [
                     Text(
                       recipe.title,
-                      style: Theme.of(context).textTheme.headline3,
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,7 +77,7 @@ class RecipeListTile extends StatelessWidget {
                         CookingTimeWidget(time: recipe.cookingTime),
                         FoodIndicatorWidget(recipeType: recipe.type),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),

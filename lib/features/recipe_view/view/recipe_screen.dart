@@ -47,8 +47,8 @@ class RecipeScreen extends StatelessWidget {
 
 class RecipeReadScreen extends StatelessWidget {
   const RecipeReadScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -139,8 +139,8 @@ class RecipeReadScreen extends StatelessWidget {
                     state.recipe.title,
                     style: Theme.of(context)
                         .textTheme
-                        .headline2!
-                        .copyWith(color: Colors.white),
+                        .displayMedium
+                        ?.copyWith(color: Colors.white),
                   ),
                   background:
                       RecipeImageWidget(imageUrl: state.recipe.imageUrl),
@@ -171,7 +171,7 @@ class RecipeReadScreen extends StatelessWidget {
                               const SizedBox(width: 5),
                               Text(
                                 state.recipe.category.value,
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -183,8 +183,8 @@ class RecipeReadScreen extends StatelessWidget {
                         textAlign: TextAlign.justify,
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText2!
-                            .copyWith(fontStyle: FontStyle.italic),
+                            .bodyMedium
+                            ?.copyWith(fontStyle: FontStyle.italic),
                       ),
                       const SizedBox(height: 20),
                       const IngredientsWidget(),

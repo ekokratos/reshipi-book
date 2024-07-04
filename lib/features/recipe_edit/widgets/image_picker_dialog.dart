@@ -20,7 +20,7 @@ Future<ImageSource?> showImagePickerDialog({
           children: [
             Text(
               l10n.recipeEditImageDialogText,
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
             ),
             GestureDetector(
               onTap: () => Get.back(),
@@ -28,7 +28,7 @@ Future<ImageSource?> showImagePickerDialog({
                 semanticLabel: 'Close dialog',
                 Icons.close,
               ),
-            )
+            ),
           ],
         ),
         children: [
@@ -45,7 +45,7 @@ Future<ImageSource?> showImagePickerDialog({
             onPressed: () {
               Get.back(result: ImageSource.camera);
             },
-          )
+          ),
         ],
       );
     },
@@ -56,11 +56,11 @@ Future<ImageSource?> showImagePickerDialog({
 
 class PickerButton extends StatelessWidget {
   const PickerButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.icon,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final String text;
   final IconData icon;
@@ -72,14 +72,14 @@ class PickerButton extends StatelessWidget {
       onPressed: onPressed,
       style: ButtonStyle(
         backgroundColor:
-            MaterialStateProperty.resolveWith((states) => kPrimaryColor),
+            WidgetStateProperty.resolveWith((states) => kPrimaryColor),
       ),
       icon: Icon(
         icon,
       ),
       label: Text(
         text,
-        style: Theme.of(context).textTheme.button,
+        style: Theme.of(context).textTheme.labelLarge,
       ),
     );
   }

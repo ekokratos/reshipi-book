@@ -3,19 +3,18 @@ description: Interface and models for an API providing access to recipes.
 version: 0.0.1
 
 environment:
-  sdk: '>=2.18.0 <3.0.0'
+  sdk: '>=3.4.3 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  uuid: ^3.0.6
-  json_annotation: ^4.7.0
+  uuid: ^4.4.0
+  json_annotation: ^4.9.0
   equatable: ^2.0.5
   
 dev_dependencies:
-  flutter_lints: ^2.0.0
-  json_serializable: ^6.4.0
-  build_runner: ^2.2.1
-  flutter_bloc: ^8.1.1
+  flutter_lints: ^4.0.0
+  json_serializable: ^6.8.0
+  build_runner: ^2.4.11
 
  
