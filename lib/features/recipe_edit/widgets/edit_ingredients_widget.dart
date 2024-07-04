@@ -11,7 +11,7 @@ import 'package:recipes_api/recipes_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EditIngredientsWidget extends StatelessWidget {
-  EditIngredientsWidget({Key? key}) : super(key: key);
+  EditIngredientsWidget({super.key});
 
   final _ingredientController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -27,7 +27,7 @@ class EditIngredientsWidget extends StatelessWidget {
           children: [
             Text(
               l10n.recipeEditIngredientsTitle,
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.displayLarge,
             ),
             const SizedBox(height: 10),
             if (ingredients.isNotEmpty)

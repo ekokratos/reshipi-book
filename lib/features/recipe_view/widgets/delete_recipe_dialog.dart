@@ -19,8 +19,10 @@ showDeleteRecipeDialog({
         onPressed: () => Get.back(),
         child: Text(
           'Cancel',
-          style:
-              Theme.of(context).textTheme.button!.copyWith(color: Colors.blue),
+          style: Theme.of(context)
+              .textTheme
+              .labelLarge
+              ?.copyWith(color: Colors.blue),
         ),
       ),
       SolidButton(

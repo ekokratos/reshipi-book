@@ -116,7 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 8),
                 Text(
                   l10n.passwordStrength,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: kSecondaryTextColor,
                         fontSize: 10,
                         fontWeight: FontWeight.w600,

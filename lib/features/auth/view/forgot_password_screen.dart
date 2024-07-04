@@ -26,7 +26,7 @@ class ForgotPasswordScreen extends StatelessWidget {
           tag: 'forgot_password',
           child: Text(
             l10n.forgotPasswordAppBarTitle,
-            style: Theme.of(context).textTheme.headline1,
+            style: Theme.of(context).textTheme.displayLarge,
           ),
         ),
       ),
@@ -45,7 +45,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 const SizedBox(height: 35),
                 Text(
                   l10n.passwordRecovery,
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 10),
                 Hero(
@@ -69,7 +69,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     }
                   },
                   text: l10n.resetPassword,
-                )
+                ),
               ],
             ),
           ),

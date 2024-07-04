@@ -6,7 +6,7 @@ publish_to: 'none'
 version: 1.0.1+4
 
 environment:
-  sdk: '>=2.18.0 <3.0.0'
+  sdk: '>=3.4.3 <4.0.0'
 
 
 dependencies:
@@ -14,15 +14,15 @@ dependencies:
     sdk: flutter
 
   #UI
-  cached_network_image: ^3.2.2
-  image_picker: ^0.8.5+3
-  shimmer: ^2.0.0
-  flutter_svg: ^1.1.5
+  cached_network_image: ^3.3.1
+  image_picker: ^1.1.2
+  shimmer: ^3.0.0
+  flutter_svg: ^2.0.10+1
   cupertino_icons: ^1.0.2
   get: ^4.6.5
   flutter_localizations:
     sdk: flutter
-  intl: ^0.17.0
+  intl: ^0.19.0
     
   #Local packages
   firebase_recipes_api:
@@ -39,21 +39,21 @@ dependencies:
     path: packages/auth/auth_repository
   
   #Firebase
-  firebase_core: ^2.2.0
-  firebase_auth: ^4.1.0
-  firebase_storage: ^11.0.3
+  firebase_core: ^3.1.1
+  firebase_auth: ^5.1.1
+  firebase_storage: ^12.1.0
 
   #BLoC
-  flutter_bloc: ^8.1.1
+  flutter_bloc: ^8.1.6
   equatable: ^2.0.5
-  collection: ^1.16.0
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
-  accessibility_tools: ^0.1.0
+  flutter_lints: ^4.0.0
+  accessibility_tools: ^2.2.1
 
 flutter:
   uses-material-design: true

@@ -18,8 +18,10 @@ showLogOutDialog(BuildContext context) {
         onPressed: () => Get.back(),
         child: Text(
           l10n.cancel,
-          style:
-              Theme.of(context).textTheme.button!.copyWith(color: Colors.blue),
+          style: Theme.of(context)
+              .textTheme
+              .labelLarge!
+              .copyWith(color: Colors.blue),
         ),
       ),
       SolidButton(

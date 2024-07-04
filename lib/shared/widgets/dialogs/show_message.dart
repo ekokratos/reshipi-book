@@ -22,10 +22,10 @@ showMessage({
           'Ok',
           style: Theme.of(context)
               .textTheme
-              .button!
+              .labelLarge!
               .copyWith(color: kPrimaryColor),
         ),
-      )
+      ),
     ],
   );
 }

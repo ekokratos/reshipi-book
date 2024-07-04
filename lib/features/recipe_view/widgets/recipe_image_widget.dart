@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class RecipeImageWidget extends StatelessWidget {
   const RecipeImageWidget({
-    Key? key,
+    super.key,
     this.imageUrl = '',
     this.placeholderColor,
-  }) : super(key: key);
+  });
 
   final String? imageUrl;
   final Color? placeholderColor;

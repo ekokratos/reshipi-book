@@ -49,8 +49,8 @@ class RecipeCategoryWidget extends StatelessWidget {
               category.value,
               style: Theme.of(context)
                   .textTheme
-                  .headline3!
-                  .copyWith(letterSpacing: 0.5),
+                  .displaySmall
+                  ?.copyWith(letterSpacing: 0.5),
             ),
           ],
         ),

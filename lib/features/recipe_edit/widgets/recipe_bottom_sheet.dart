@@ -5,12 +5,12 @@ import 'package:recipe_book/shared/widgets/solid_button.dart';
 
 class RecipeBottomSheet extends StatelessWidget {
   const RecipeBottomSheet({
-    Key? key,
+    super.key,
     required this.label,
     this.onPressed,
     required this.textController,
     required this.formKey,
-  }) : super(key: key);
+  });
 
   final String label;
   final VoidCallback? onPressed;

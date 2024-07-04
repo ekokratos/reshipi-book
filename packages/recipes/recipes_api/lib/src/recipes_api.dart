@@ -37,7 +37,7 @@ abstract class RecipesApi {
     required String recipeId,
   });
 
-  /// Deletes the image at [imageUrl] path.
+  /// Deletes the image at [imageUrl] path for [recipeId].
   Future<void> deleteImage(
       {required String imageUrl, required String recipeId});
 }

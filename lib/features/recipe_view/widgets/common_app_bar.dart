@@ -6,7 +6,7 @@ AppBar commonAppBar({required BuildContext context, required String title}) {
   return AppBar(
     title: Text(
       title,
-      style: Theme.of(context).textTheme.headline2,
+      style: Theme.of(context).textTheme.displayMedium,
     ),
     backgroundColor: Colors.white,
     foregroundColor: kPrimaryTextColor,
@@ -21,7 +21,7 @@ AppBar commonAppBar({required BuildContext context, required String title}) {
           semanticLabel: 'Logout',
           Icons.logout,
         ),
-      )
+      ),
     ],
   );
 }

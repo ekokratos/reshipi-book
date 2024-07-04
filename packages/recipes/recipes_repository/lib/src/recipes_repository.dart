@@ -54,7 +54,7 @@ class RecipesRepository {
         recipeId: recipeId,
       );
 
-  /// Uploads recipe image [file] for the current user with [userId].
+  /// Deletes the image at [imageUrl] path for [recipeId].
   Future<void> deleteImage(
           {required String imageUrl, required String recipeId}) =>
       _recipesApi.deleteImage(imageUrl: imageUrl, recipeId: recipeId);

@@ -3,11 +3,11 @@ import 'package:recipe_book/shared/theme/style.dart';
 
 class EditItemRow extends StatelessWidget {
   const EditItemRow({
-    Key? key,
+    super.key,
     this.onEdit,
     this.onRemove,
     required this.item,
-  }) : super(key: key);
+  });
 
   final VoidCallback? onEdit;
   final VoidCallback? onRemove;
@@ -41,7 +41,7 @@ class EditItemRow extends StatelessWidget {
                 Icons.close,
                 color: Colors.red,
               ),
-            )
+            ),
           ],
         ),
       ],

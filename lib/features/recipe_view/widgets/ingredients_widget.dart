@@ -5,7 +5,7 @@ import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipes_api/recipes_api.dart';
 
 class IngredientsWidget extends StatelessWidget {
-  const IngredientsWidget({Key? key}) : super(key: key);
+  const IngredientsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class IngredientsWidget extends StatelessWidget {
           children: [
             Text(
               'Ingredients:',
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.displayLarge,
             ),
             const SizedBox(height: 10),
             if (ingredients.isNotEmpty)
@@ -30,7 +30,7 @@ class IngredientsWidget extends StatelessWidget {
             else
               Text(
                 'No Ingredients added',
-                style: Theme.of(context).textTheme.headline3?.copyWith(
+                style: Theme.of(context).textTheme.displaySmall?.copyWith(
                       color: Colors.grey.shade400,
                     ),
               ),
@@ -43,9 +43,9 @@ class IngredientsWidget extends StatelessWidget {
 
 class IngridientRow extends StatelessWidget {
   const IngridientRow({
-    Key? key,
+    super.key,
     required this.ingredient,
-  }) : super(key: key);
+  });
 
   final Ingredient ingredient;
 
@@ -68,9 +68,9 @@ class IngridientRow extends StatelessWidget {
           Flexible(
             child: Text(
               ingredient.name,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
-          )
+          ),
         ],
       ),
     );

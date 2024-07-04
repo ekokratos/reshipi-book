@@ -68,6 +68,6 @@ class RecipeEditState extends Equatable {
         category,
         imageFile,
         imageDeleteStatus,
-        recipeDeleteStatus
+        recipeDeleteStatus,
       ];
 }
