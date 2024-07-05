@@ -62,8 +62,8 @@ class CookingInstructionRow extends StatelessWidget {
             instruction.stepNumber.toString(),
             style: Theme.of(context)
                 .textTheme
-                .displayLarge!
-                .copyWith(color: kSecondaryTextColor),
+                .displayLarge
+                ?.copyWith(color: kSecondaryTextColor),
           ),
           const SizedBox(width: 10),
           Flexible(

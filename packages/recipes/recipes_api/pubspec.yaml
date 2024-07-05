@@ -3,7 +3,7 @@ description: Interface and models for an API providing access to recipes.
 version: 0.0.1
 
 environment:
-  sdk: '>=3.4.3 <4.0.0'
+  sdk: '>=3.3.3 <4.0.0'
 
 dependencies:
   flutter:

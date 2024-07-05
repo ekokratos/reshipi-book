@@ -9,8 +9,8 @@ import 'package:recipe_book/shared/widgets/custom_text_field.dart';
 import 'package:recipe_book/shared/widgets/solid_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
-  ForgotPasswordScreen({super.key});
+class PasswordResetScreen extends StatelessWidget {
+  PasswordResetScreen({super.key});
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
 

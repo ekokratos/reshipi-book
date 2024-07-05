@@ -14,7 +14,7 @@ abstract class AuthState extends Equatable {
     required this.isLoading,
     this.authException,
     required this.status,
-    this.user,
+    this.user = User.empty,
     this.dialogMessage,
   });
 

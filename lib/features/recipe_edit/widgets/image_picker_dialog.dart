@@ -72,7 +72,7 @@ class PickerButton extends StatelessWidget {
       onPressed: onPressed,
       style: ButtonStyle(
         backgroundColor:
-            WidgetStateProperty.resolveWith((states) => kPrimaryColor),
+            MaterialStateProperty.resolveWith((states) => kPrimaryColor),
       ),
       icon: Icon(
         icon,

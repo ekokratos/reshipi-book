@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
-import 'package:recipe_book/features/auth/view/login_screen.dart';
+import 'package:recipe_book/features/login/view/login_screen.dart';
 import 'package:recipe_book/features/auth/widgets/show_auth_error.dart';
 import 'package:recipe_book/features/recipe_view/view/category_screen.dart';
+import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/widgets/dialogs/show_message.dart';
 import 'package:recipe_book/shared/widgets/loading/loading_screen.dart';
 
@@ -17,7 +18,7 @@ class BaseScreen extends StatelessWidget {
         if (appState.isLoading) {
           LoadingScreen.instance().show(
             context: context,
-            text: 'Loading...',
+            text: context.l10n.loading,
           );
         } else {
           LoadingScreen.instance().hide();

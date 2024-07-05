@@ -23,7 +23,7 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
           RecipeEditState(
             isNewRecipe: isNewRecipe,
             recipe: recipe ??
-                Recipe.empty(userId: authRepository.currentUser?.uid ?? ''),
+                Recipe.empty(userId: authRepository.currentUser?.id ?? ''),
             ingredients: [...recipe?.ingredients ?? []],
             instructions: [...recipe?.instructions ?? []],
             category: category,

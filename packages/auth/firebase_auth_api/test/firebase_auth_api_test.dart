@@ -1,4 +1,5 @@
-import 'package:auth_api/auth_api.dart';
+import 'package:auth_api/auth_api.dart' as auth_api;
+// import 'package:auth_api/auth_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_api/firebase_auth_api.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,7 +11,9 @@ import 'package:firebase_core_platform_interface/firebase_core_platform_interfac
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
-class MockUser extends Mock implements User {}
+class MockUser extends Mock implements auth_api.User {}
+
+class MockFirebaseUser extends Mock implements User {}
 
 class MockUserCredential extends Mock implements UserCredential {}
 
@@ -56,8 +59,9 @@ void main() {
 
   group('currentUser', () {
     test('returns logged in user', () {
-      final user = MockUser();
-      when(() => firebaseAuth.currentUser).thenAnswer((_) => user);
+      final User firebaseUser = MockFirebaseUser();
+      final auth_api.User user = MockUser();
+      when(() => firebaseAuth.currentUser).thenAnswer((_) => firebaseUser);
       expect(sut.currentUser, user);
     });
 
@@ -69,7 +73,7 @@ void main() {
 
   group('signUp', () {
     final credentials = MockUserCredential();
-    final User mockUser = MockUser();
+    final User mockFirebaseUser = MockFirebaseUser();
 
     setUp(() {
       when(
@@ -79,8 +83,9 @@ void main() {
         ),
       ).thenAnswer((_) async => credentials);
 
-      when(() => credentials.user).thenReturn(mockUser);
-      when(() => mockUser.updateDisplayName(any())).thenAnswer((_) async {});
+      when(() => credentials.user).thenReturn(mockFirebaseUser);
+      when(() => mockFirebaseUser.updateDisplayName(any()))
+          .thenAnswer((_) async {});
     });
 
     test('calls createUserWithEmailAndPassword', () async {
@@ -110,7 +115,7 @@ void main() {
       ).thenThrow(FirebaseAuthException(code: ''));
       expect(
         sut.signUp(email: email, password: password, name: name),
-        throwsA(isA<AuthException>()),
+        throwsA(isA<auth_api.AuthException>()),
       );
     });
   });
@@ -157,7 +162,7 @@ void main() {
           email: email,
           password: password,
         ),
-        throwsA(isA<AuthException>()),
+        throwsA(isA<auth_api.AuthException>()),
       );
     });
   });
@@ -179,7 +184,7 @@ void main() {
       when(() => firebaseAuth.signOut()).thenThrow(Exception());
       expect(
         sut.logOut(),
-        throwsA(isA<LogOutFailure>()),
+        throwsA(isA<auth_api.LogOutFailure>()),
       );
     });
   });
@@ -220,7 +225,7 @@ void main() {
 
       expect(
         sut.resetPassword(email: email),
-        throwsA(isA<AuthException>()),
+        throwsA(isA<auth_api.AuthException>()),
       );
     });
   });

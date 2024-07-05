@@ -12,8 +12,8 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = context
-        .select((AuthBloc bloc) => bloc.state.user?.displayName ?? 'Chef');
+    final name =
+        context.select((AuthBloc bloc) => bloc.state.user?.name ?? 'Chef');
     final l10n = context.l10n;
     return Scaffold(
       appBar:

@@ -26,7 +26,7 @@ class ClickableText extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
           child: Text(
             text,
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: color ?? kPrimaryColor,
                 ),
           ),

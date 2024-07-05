@@ -66,5 +66,19 @@ ThemeData appTheme(BuildContext context) {
         color: Colors.white,
       ),
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.disabled)) return Colors.grey;
+          return kPrimaryColor;
+        }),
+        shape: MaterialStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+        ),
+        padding: const MaterialStatePropertyAll(
+          EdgeInsets.symmetric(vertical: 12),
+        ),
+      ),
+    ),
   );
 }

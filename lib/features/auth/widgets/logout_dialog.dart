@@ -20,8 +20,8 @@ showLogOutDialog(BuildContext context) {
           l10n.cancel,
           style: Theme.of(context)
               .textTheme
-              .labelLarge!
-              .copyWith(color: Colors.blue),
+              .labelLarge
+              ?.copyWith(color: Colors.blue),
         ),
       ),
       SolidButton(

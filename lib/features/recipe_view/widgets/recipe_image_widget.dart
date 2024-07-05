@@ -13,7 +13,7 @@ class RecipeImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return imageUrl!.isNotEmpty
+    return imageUrl != null && imageUrl!.isNotEmpty
         ? CachedNetworkImage(
             imageUrl: imageUrl ?? '',
             imageBuilder: (_, imageProvider) {

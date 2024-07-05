@@ -27,7 +27,7 @@ class RecipeViewBloc extends Bloc<RecipeViewEvent, RecipeViewState> {
 
     try {
       await _recipesRepository.getRecipies(
-        userId: _authRepository.currentUser!.uid,
+        userId: _authRepository.currentUser!.id,
         category: event.category,
       );
     } catch (e) {

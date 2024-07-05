@@ -37,6 +37,12 @@ class AuthEventSignUp implements AuthEvent {
   });
 }
 
-class AuthEventInitialize implements AuthEvent {
-  const AuthEventInitialize();
+// class AuthEventInitialize implements AuthEvent {
+//   const AuthEventInitialize();
+// }
+
+final class _AuthEventUserChanged extends AuthEvent {
+  const _AuthEventUserChanged(this.user);
+
+  final User user;
 }

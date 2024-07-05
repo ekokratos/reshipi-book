@@ -31,8 +31,8 @@ class CustomDropdownButton<T> extends StatelessWidget {
         labelText: label,
         labelStyle: Theme.of(context)
             .textTheme
-            .bodyLarge!
-            .copyWith(color: kPrimaryTextColor, fontWeight: FontWeight.w600),
+            .bodyLarge
+            ?.copyWith(color: kPrimaryTextColor, fontWeight: FontWeight.w600),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey.shade200, width: 0.5),
           borderRadius: BorderRadius.circular(20),

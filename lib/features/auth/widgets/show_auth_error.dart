@@ -22,8 +22,8 @@ showAuthError({
           'Ok',
           style: Theme.of(context)
               .textTheme
-              .labelLarge!
-              .copyWith(color: kPrimaryColor),
+              .labelLarge
+              ?.copyWith(color: kPrimaryColor),
         ),
       ),
     ],

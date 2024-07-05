@@ -224,8 +224,8 @@ class CategoryField extends StatelessWidget {
             category.value,
             style: Theme.of(context)
                 .textTheme
-                .bodyLarge!
-                .copyWith(fontWeight: FontWeight.w500),
+                .bodyLarge
+                ?.copyWith(fontWeight: FontWeight.w500),
           ),
         );
       }).toList(),
@@ -257,8 +257,8 @@ class RecipeTypeField extends StatelessWidget {
             type.value,
             style: Theme.of(context)
                 .textTheme
-                .bodyLarge!
-                .copyWith(fontWeight: FontWeight.w500),
+                .bodyLarge
+                ?.copyWith(fontWeight: FontWeight.w500),
           ),
         );
       }).toList(),
