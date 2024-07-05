@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-showCustomDialog({
+Future<T?> showCustomDialog<T>({
   required BuildContext context,
   required String title,
   required String content,
@@ -8,8 +8,8 @@ showCustomDialog({
   required String semanticLabel,
   IconData? icon,
   Color? iconColor,
-}) {
-  return showDialog(
+}) async {
+  return await showDialog<T>(
     context: context,
     builder: (context) {
       return AlertDialog(

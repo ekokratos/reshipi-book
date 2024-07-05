@@ -4,11 +4,11 @@ import 'package:recipe_book/shared/models/dialog_message.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/widgets/dialogs/custom_dialog.dart';
 
-showMessage({
+Future showMessage({
   required BuildContext context,
   required DialogMessage dialogMessage,
-}) {
-  return showCustomDialog(
+}) async {
+  return await showCustomDialog(
     semanticLabel: 'Information dialog',
     context: context,
     title: dialogMessage.title,

@@ -77,7 +77,11 @@ class LoginView extends StatelessWidget {
                     child: ClickableText(
                       text: l10n.forgotPasswordBtn,
                       onTap: () {
-                        Get.to(() => PasswordResetScreen());
+                        Get.to(
+                          () => PasswordResetScreen(
+                            email: context.read<LoginBloc>().state.email,
+                          ),
+                        );
                       },
                     ),
                   ),
@@ -177,6 +181,7 @@ class _EmailInput extends StatelessWidget {
         return Hero(
           tag: 'email',
           child: CustomTextField(
+            initialValue: state.email.value,
             label: context.l10n.email,
             hintText: 'abcd@gmail.com',
             keyboardType: TextInputType.emailAddress,
