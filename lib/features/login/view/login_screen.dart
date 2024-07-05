@@ -47,10 +47,9 @@ class LoginView extends StatelessWidget {
           LoadingScreen.instance().hide();
         }
 
-        final authError = state.authException;
-        if (state.status.isFailure && authError != null) {
+        if (state.status.isFailure) {
           showAuthError(
-            authException: authError,
+            authException: state.authException,
             context: context,
           );
         }
@@ -80,6 +79,7 @@ class LoginView extends StatelessWidget {
                         Get.to(
                           () => PasswordResetScreen(
                             email: context.read<LoginBloc>().state.email,
+                            loginBloc: context.read<LoginBloc>(),
                           ),
                         );
                       },
@@ -160,7 +160,10 @@ class _PasswordInput extends StatelessWidget {
                 color: kTextFieldPrefixColor,
               ),
             ),
-            errorText: state.password.displayError?.text(),
+            errorText:
+                state.password.displayError == PasswordValidationError.empty
+                    ? 'Enter password'
+                    : null,
             onChanged: (value) =>
                 context.read<LoginBloc>().add(LoginPasswordChanged(value)),
           ),

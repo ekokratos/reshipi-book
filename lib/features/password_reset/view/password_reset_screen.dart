@@ -5,6 +5,7 @@ import 'package:form_input/form_input.dart';
 import 'package:formz/formz.dart';
 import 'package:get/get.dart';
 import 'package:recipe_book/features/auth/widgets/show_auth_error.dart';
+import 'package:recipe_book/features/login/bloc/login_bloc.dart';
 import 'package:recipe_book/features/password_reset/bloc/password_reset_bloc.dart';
 import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/models/dialog_message.dart';
@@ -16,17 +17,29 @@ import 'package:recipe_book/shared/widgets/solid_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PasswordResetScreen extends StatelessWidget {
-  const PasswordResetScreen({super.key, required this.email});
+  const PasswordResetScreen({
+    super.key,
+    required this.email,
+    required this.loginBloc,
+  });
 
   final Email email;
+  final LoginBloc loginBloc;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PasswordResetBloc(
-        email: email,
-        authRepository: context.read<AuthRepository>(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => PasswordResetBloc(
+            email: email,
+            authRepository: context.read<AuthRepository>(),
+          ),
+        ),
+        BlocProvider.value(
+          value: loginBloc,
+        ),
+      ],
       child: const PasswordResetView(),
     );
   }
@@ -50,10 +63,9 @@ class PasswordResetView extends StatelessWidget {
           LoadingScreen.instance().hide();
         }
 
-        final authError = state.authException;
-        if (state.status.isFailure && authError != null) {
+        if (state.status.isFailure) {
           showAuthError(
-            authException: authError,
+            authException: state.authException,
             context: context,
           );
         }
@@ -148,9 +160,13 @@ class _EmailInput extends StatelessWidget {
             hintText: 'abcd@gmail.com',
             keyboardType: TextInputType.emailAddress,
             errorText: state.email.displayError?.text(),
-            onChanged: (value) => context
-                .read<PasswordResetBloc>()
-                .add(PasswordResetEmailChanged(value)),
+            onChanged: (value) {
+              context
+                  .read<PasswordResetBloc>()
+                  .add(PasswordResetEmailChanged(value));
+
+              context.read<LoginBloc>().add(LoginEmailChanged(value));
+            },
           ),
         );
       },

@@ -5,24 +5,8 @@ abstract class AuthEvent {
   const AuthEvent();
 }
 
-@immutable
-class AuthEventLogIn implements AuthEvent {
-  final String email;
-  final String password;
-
-  const AuthEventLogIn({
-    required this.email,
-    required this.password,
-  });
-}
-
 class AuthEventLogOut implements AuthEvent {
   const AuthEventLogOut();
-}
-
-class AuthEventPasswordReset implements AuthEvent {
-  final String email;
-  const AuthEventPasswordReset({required this.email});
 }
 
 class AuthEventSignUp implements AuthEvent {
@@ -36,10 +20,6 @@ class AuthEventSignUp implements AuthEvent {
     required this.password,
   });
 }
-
-// class AuthEventInitialize implements AuthEvent {
-//   const AuthEventInitialize();
-// }
 
 final class _AuthEventUserChanged extends AuthEvent {
   const _AuthEventUserChanged(this.user);

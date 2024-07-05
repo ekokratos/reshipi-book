@@ -5,14 +5,14 @@ import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/widgets/dialogs/custom_dialog.dart';
 
 showAuthError({
-  required AuthException authException,
+  required AuthException? authException,
   required BuildContext context,
 }) {
   return showCustomDialog(
     semanticLabel: 'Authentication error dialog',
     context: context,
-    title: authException.title,
-    content: authException.message,
+    title: authException?.title ?? 'Snap!',
+    content: authException?.message ?? 'Oops, Something went wrong.',
     icon: Icons.error_outline,
     iconColor: Colors.red,
     actions: [
