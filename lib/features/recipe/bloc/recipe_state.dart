@@ -1,27 +1,28 @@
-part of 'recipe_edit_bloc.dart';
+part of 'recipe_bloc.dart';
 
-enum RecipeEditStatus { initial, loading, success, failure }
+enum RecipeStatus { initial, loading, success, failure }
 
 enum RecipeDeleteStatus { initial, loading, success, failure }
 
 enum RecipeImageDeleteStatus { initial, loading, success, failure }
 
 @immutable
-class RecipeEditState extends Equatable {
-  const RecipeEditState({
-    this.status = RecipeEditStatus.initial,
+class RecipeState extends Equatable {
+  const RecipeState({
+    this.status = RecipeStatus.initial,
     required this.recipe,
     required this.isNewRecipe,
     required this.ingredients,
     required this.instructions,
     required this.category,
+    required this.recipeType,
     this.imageFile,
     this.recipeDeleteStatus = RecipeDeleteStatus.initial,
     this.recipeImageEdited = false,
     this.imageDeleteStatus = RecipeImageDeleteStatus.initial,
   });
 
-  final RecipeEditStatus status;
+  final RecipeStatus status;
   final RecipeDeleteStatus recipeDeleteStatus;
   final Recipe recipe;
   final bool isNewRecipe;
@@ -31,9 +32,10 @@ class RecipeEditState extends Equatable {
   final File? imageFile;
   final bool recipeImageEdited;
   final RecipeImageDeleteStatus imageDeleteStatus;
+  final RecipeType recipeType;
 
-  RecipeEditState copyWith({
-    RecipeEditStatus? status,
+  RecipeState copyWith({
+    RecipeStatus? status,
     RecipeDeleteStatus? recipeDeleteStatus,
     Recipe? recipe,
     bool? isNewRecipe,
@@ -43,8 +45,9 @@ class RecipeEditState extends Equatable {
     File? imageFile,
     bool? recipeImageEdited,
     RecipeImageDeleteStatus? imageDeleteStatus,
+    RecipeType? recipeType,
   }) {
-    return RecipeEditState(
+    return RecipeState(
       status: status ?? this.status,
       recipeDeleteStatus: recipeDeleteStatus ?? this.recipeDeleteStatus,
       recipe: recipe ?? this.recipe,
@@ -55,6 +58,7 @@ class RecipeEditState extends Equatable {
       imageFile: imageFile ?? this.imageFile,
       recipeImageEdited: recipeImageEdited ?? this.recipeImageEdited,
       imageDeleteStatus: imageDeleteStatus ?? this.imageDeleteStatus,
+      recipeType: recipeType ?? this.recipeType,
     );
   }
 

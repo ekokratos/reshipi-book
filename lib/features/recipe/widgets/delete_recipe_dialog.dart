@@ -30,7 +30,7 @@ showDeleteRecipeDialog({
         onPressed: onDelete,
         text: 'Remove',
         textColor: Colors.white,
-        padding: const EdgeInsets.all(0),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
       ),
     ],
   );

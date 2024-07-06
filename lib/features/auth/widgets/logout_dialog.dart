@@ -30,7 +30,7 @@ showLogOutDialog(BuildContext context) {
           Get.back();
         },
         text: l10n.logOut,
-        padding: const EdgeInsets.all(0),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
       ),
     ],
   );

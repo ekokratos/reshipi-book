@@ -75,10 +75,11 @@ ThemeData appTheme(BuildContext context) {
         shape: MaterialStatePropertyAll(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
         ),
-        padding: const MaterialStatePropertyAll(
-          EdgeInsets.symmetric(vertical: 12),
-        ),
+        padding: const MaterialStatePropertyAll(EdgeInsets.all(12)),
+        foregroundColor: const MaterialStatePropertyAll(Colors.white),
       ),
     ),
+    floatingActionButtonTheme:
+        const FloatingActionButtonThemeData(foregroundColor: Colors.white),
   );
 }

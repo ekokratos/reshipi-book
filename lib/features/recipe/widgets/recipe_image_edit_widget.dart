@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:recipe_book/features/recipe_edit/bloc/recipe_edit_bloc.dart';
-import 'package:recipe_book/features/recipe_edit/widgets/image_delete_dialog.dart';
-import 'package:recipe_book/features/recipe_edit/widgets/image_picker_dialog.dart';
-import 'package:recipe_book/features/recipe_view/widgets/recipe_image_widget.dart';
+import 'package:recipe_book/features/recipe/bloc/recipe_bloc.dart';
+import 'package:recipe_book/features/recipe/widgets/image_delete_dialog.dart';
+import 'package:recipe_book/features/recipe/widgets/image_picker_dialog.dart';
+import 'package:recipe_book/features/recipe/widgets/recipe_image_widget.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/util.dart';
 import 'package:recipe_book/shared/widgets/loading/loading_screen.dart';
@@ -35,7 +35,7 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 220,
-      child: BlocConsumer<RecipeEditBloc, RecipeEditState>(
+      child: BlocConsumer<RecipeBloc, RecipeState>(
         listenWhen: (previous, current) {
           return previous.imageDeleteStatus != current.imageDeleteStatus;
         },
@@ -89,8 +89,8 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                           _pickedImage = pickedImage;
                         });
                         if (context.mounted) {
-                          context.read<RecipeEditBloc>().add(
-                                RecipeEditImageAdded(imageFile: pickedImage),
+                          context.read<RecipeBloc>().add(
+                                RecipeImageAdded(imageFile: pickedImage),
                               );
                         }
                       }
@@ -115,8 +115,8 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                               _pickedImage = pickedImage;
                             });
                             if (context.mounted) {
-                              context.read<RecipeEditBloc>().add(
-                                    RecipeEditImageEdited(
+                              context.read<RecipeBloc>().add(
+                                    RecipeImageEdited(
                                       imageFile: pickedImage,
                                     ),
                                   );
@@ -141,8 +141,8 @@ class _RecipeImageEditWidgetState extends State<RecipeImageEditWidget> {
                             });
                             if (context.mounted) {
                               context
-                                  .read<RecipeEditBloc>()
-                                  .add(const RecipeEditImageDeleted());
+                                  .read<RecipeBloc>()
+                                  .add(const RecipeImageDeleted());
                             }
                           }
                         },

@@ -8,11 +8,11 @@ import 'package:recipes_api/recipes_api.dart';
 import 'package:recipes_repository/recipes_repository.dart';
 import 'package:collection/collection.dart';
 
-part 'recipe_edit_event.dart';
-part 'recipe_edit_state.dart';
+part 'recipe_event.dart';
+part 'recipe_state.dart';
 
-class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
-  RecipeEditBloc({
+class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
+  RecipeBloc({
     required RecipesRepository recipesRepository,
     required AuthRepository authRepository,
     required bool isNewRecipe,
@@ -20,31 +20,40 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
     required RecipeCategory category,
   })  : _recipesRepository = recipesRepository,
         super(
-          RecipeEditState(
+          RecipeState(
             isNewRecipe: isNewRecipe,
             recipe: recipe ??
                 Recipe.empty(userId: authRepository.currentUser?.id ?? ''),
             ingredients: [...recipe?.ingredients ?? []],
             instructions: [...recipe?.instructions ?? []],
             category: category,
+            recipeType: recipe?.type ?? RecipeType.veg,
           ),
         ) {
-    on<RecipeEditIngredientSaved>(_onIngredientSaved);
-    on<RecipeEditIngredientDeleted>(_onIngredientDeleted);
-    on<RecipeEditInstructionSaved>(_onInstructionSaved);
-    on<RecipeEditInstructionDeleted>(_onInstructionDeleted);
-    on<RecipeEditSaved>(_onRecipeSaved);
-    on<RecipeEditDeleted>(_onRecipeDeleted);
-    on<RecipeEditImageAdded>(_onImageAdded);
-    on<RecipeEditImageDeleted>(_onImageDeleted);
-    on<RecipeEditImageEdited>(_onImageEdited);
+    on<RecipeIngredientSaved>(_onIngredientSaved);
+    on<RecipeIngredientDeleted>(_onIngredientDeleted);
+    on<RecipeInstructionSaved>(_onInstructionSaved);
+    on<RecipeInstructionDeleted>(_onInstructionDeleted);
+    on<RecipeSaved>(_onRecipeSaved);
+    on<RecipeDeleted>(_onRecipeDeleted);
+    on<RecipeImageAdded>(_onImageAdded);
+    on<RecipeImageDeleted>(_onImageDeleted);
+    on<RecipeImageEdited>(_onImageEdited);
+    on<RecipeTypeChanged>(_onRecipeTypeChanged);
   }
 
   final RecipesRepository _recipesRepository;
 
+  void _onRecipeTypeChanged(
+    RecipeTypeChanged event,
+    Emitter<RecipeState> emit,
+  ) {
+    emit(state.copyWith(recipeType: event.recipeType));
+  }
+
   void _onIngredientSaved(
-    RecipeEditIngredientSaved event,
-    Emitter<RecipeEditState> emit,
+    RecipeIngredientSaved event,
+    Emitter<RecipeState> emit,
   ) {
     final ingredients = List<Ingredient>.from(state.ingredients);
     final ingredient = event.ingredient;
@@ -62,8 +71,8 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
   }
 
   void _onIngredientDeleted(
-    RecipeEditIngredientDeleted event,
-    Emitter<RecipeEditState> emit,
+    RecipeIngredientDeleted event,
+    Emitter<RecipeState> emit,
   ) {
     final ingredients = List<Ingredient>.from(state.ingredients);
     final ingredient = event.ingredient;
@@ -78,8 +87,8 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
   }
 
   void _onInstructionSaved(
-    RecipeEditInstructionSaved event,
-    Emitter<RecipeEditState> emit,
+    RecipeInstructionSaved event,
+    Emitter<RecipeState> emit,
   ) {
     final instructions = List<Instruction>.from(state.instructions);
     final instruction = event.instruction;
@@ -97,8 +106,8 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
   }
 
   void _onInstructionDeleted(
-    RecipeEditInstructionDeleted event,
-    Emitter<RecipeEditState> emit,
+    RecipeInstructionDeleted event,
+    Emitter<RecipeState> emit,
   ) {
     final instructions = List<Instruction>.from(state.instructions);
     final instruction = event.instruction;
@@ -123,10 +132,10 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
   }
 
   _onRecipeSaved(
-    RecipeEditSaved event,
-    Emitter<RecipeEditState> emit,
+    RecipeSaved event,
+    Emitter<RecipeState> emit,
   ) async {
-    emit(state.copyWith(status: RecipeEditStatus.loading));
+    emit(state.copyWith(status: RecipeStatus.loading));
     try {
       final savedRecipe = await _recipesRepository.saveRecipe(
         recipe: event.recipe.copyWith(
@@ -140,18 +149,18 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
 
       emit(
         state.copyWith(
-          status: RecipeEditStatus.success,
+          status: RecipeStatus.success,
           recipe: savedRecipe,
         ),
       );
     } catch (_) {
-      emit(state.copyWith(status: RecipeEditStatus.failure));
+      emit(state.copyWith(status: RecipeStatus.failure));
     }
   }
 
   _onRecipeDeleted(
-    RecipeEditDeleted event,
-    Emitter<RecipeEditState> emit,
+    RecipeDeleted event,
+    Emitter<RecipeState> emit,
   ) async {
     emit(state.copyWith(recipeDeleteStatus: RecipeDeleteStatus.loading));
     try {
@@ -163,22 +172,21 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
           recipe: null,
         ),
       );
-      // Get.back();
     } catch (_) {
       emit(state.copyWith(recipeDeleteStatus: RecipeDeleteStatus.failure));
     }
   }
 
   _onImageAdded(
-    RecipeEditImageAdded event,
-    Emitter<RecipeEditState> emit,
+    RecipeImageAdded event,
+    Emitter<RecipeState> emit,
   ) {
     emit(state.copyWith(imageFile: event.imageFile));
   }
 
   _onImageDeleted(
-    RecipeEditImageDeleted event,
-    Emitter<RecipeEditState> emit,
+    RecipeImageDeleted event,
+    Emitter<RecipeState> emit,
   ) async {
     emit(state.copyWith(imageDeleteStatus: RecipeImageDeleteStatus.loading));
 
@@ -203,8 +211,8 @@ class RecipeEditBloc extends Bloc<RecipeEditEvent, RecipeEditState> {
   }
 
   _onImageEdited(
-    RecipeEditImageEdited event,
-    Emitter<RecipeEditState> emit,
+    RecipeImageEdited event,
+    Emitter<RecipeState> emit,
   ) async {
     emit(state.copyWith(imageFile: event.imageFile, recipeImageEdited: true));
   }

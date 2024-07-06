@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/recipe_edit/bloc/recipe_edit_bloc.dart';
-import 'package:recipe_book/features/recipe_edit/widgets/edit_item_row.dart';
-import 'package:recipe_book/features/recipe_edit/widgets/recipe_bottom_sheet.dart';
-import 'package:recipe_book/features/recipe_edit/widgets/remove_item_dialog.dart';
-import 'package:recipe_book/features/recipe_view/widgets/cooking_instructions_widget.dart';
+import 'package:recipe_book/features/recipe/bloc/recipe_bloc.dart';
+import 'package:recipe_book/features/recipe/widgets/edit_item_row.dart';
+import 'package:recipe_book/features/recipe/widgets/recipe_bottom_sheet.dart';
+import 'package:recipe_book/features/recipe/widgets/remove_item_dialog.dart';
+import 'package:recipe_book/features/recipe/widgets/cooking_instructions_widget.dart';
 import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipes_api/recipes_api.dart';
@@ -19,7 +19,7 @@ class EditCookingInstructionsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return BlocSelector<RecipeEditBloc, RecipeEditState, List<Instruction>>(
+    return BlocSelector<RecipeBloc, RecipeState, List<Instruction>>(
       selector: (state) {
         return state.instructions.sortOnStep();
       },
@@ -55,8 +55,8 @@ class EditCookingInstructionsWidget extends StatelessWidget {
                       context: context,
                       item: l10n.recipeEditInsctruction,
                       onRemove: () {
-                        context.read<RecipeEditBloc>().add(
-                              RecipeEditInstructionDeleted(
+                        context.read<RecipeBloc>().add(
+                              RecipeInstructionDeleted(
                                 instruction: instruction,
                               ),
                             );
@@ -104,8 +104,8 @@ class EditCookingInstructionsWidget extends StatelessWidget {
         onPressed: () {
           if (_formKey.currentState?.validate() ?? false) {
             final name = _instructionController.text;
-            context.read<RecipeEditBloc>().add(
-                  RecipeEditInstructionSaved(
+            context.read<RecipeBloc>().add(
+                  RecipeInstructionSaved(
                     instruction: instruction != null
                         ? instruction.copyWith(name: name)
                         : Instruction(

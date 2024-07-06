@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/recipe_edit/bloc/recipe_edit_bloc.dart';
-import 'package:recipe_book/features/recipe_edit/widgets/edit_item_row.dart';
-import 'package:recipe_book/features/recipe_edit/widgets/recipe_bottom_sheet.dart';
-import 'package:recipe_book/features/recipe_edit/widgets/remove_item_dialog.dart';
-import 'package:recipe_book/features/recipe_view/widgets/ingredients_widget.dart';
+import 'package:recipe_book/features/recipe/bloc/recipe_bloc.dart';
+import 'package:recipe_book/features/recipe/widgets/edit_item_row.dart';
+import 'package:recipe_book/features/recipe/widgets/recipe_bottom_sheet.dart';
+import 'package:recipe_book/features/recipe/widgets/remove_item_dialog.dart';
+import 'package:recipe_book/features/recipe/widgets/ingredients_widget.dart';
 import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipes_api/recipes_api.dart';
@@ -19,7 +19,7 @@ class EditIngredientsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return BlocBuilder<RecipeEditBloc, RecipeEditState>(
+    return BlocBuilder<RecipeBloc, RecipeState>(
       builder: (context, state) {
         final ingredients = state.ingredients;
         return Column(
@@ -51,8 +51,8 @@ class EditIngredientsWidget extends StatelessWidget {
                         context: context,
                         item: l10n.recipeEditIngredient,
                         onRemove: () {
-                          context.read<RecipeEditBloc>().add(
-                                RecipeEditIngredientDeleted(
+                          context.read<RecipeBloc>().add(
+                                RecipeIngredientDeleted(
                                   ingredient: ingredient,
                                 ),
                               );
@@ -93,8 +93,8 @@ class EditIngredientsWidget extends StatelessWidget {
         onPressed: () {
           if (_formKey.currentState?.validate() ?? false) {
             final name = _ingredientController.text;
-            context.read<RecipeEditBloc>().add(
-                  RecipeEditIngredientSaved(
+            context.read<RecipeBloc>().add(
+                  RecipeIngredientSaved(
                     ingredient: ingredient != null
                         ? ingredient.copyWith(name: name)
                         : Ingredient(name: name),

@@ -2,10 +2,10 @@ import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/recipe_view/bloc/recipe_view_bloc.dart';
-import 'package:recipe_book/features/recipe_view/view/recipe_screen.dart';
-import 'package:recipe_book/features/recipe_view/widgets/common_app_bar.dart';
-import 'package:recipe_book/features/recipe_view/widgets/recipe_list_tile.dart';
+import 'package:recipe_book/features/recipe_listing/bloc/recipe_listing_bloc.dart';
+import 'package:recipe_book/features/recipe/view/recipe_screen.dart';
+import 'package:recipe_book/shared/widgets/common_app_bar.dart';
+import 'package:recipe_book/features/recipe_listing/widgets/recipe_list_tile.dart';
 import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/util.dart';
@@ -21,11 +21,11 @@ class RecipeListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RecipeViewBloc(
+      create: (context) => RecipeListingBloc(
         recipesRepository: context.read<RecipesRepository>(),
         authRepository: context.read<AuthRepository>(),
       )..add(
-          RecipeViewRecipesRequested(
+          RecipeListingRecipesRequested(
             category: category,
           ),
         ),
@@ -64,10 +64,10 @@ class RecipeListView extends StatelessWidget {
           size: 28,
         ),
       ),
-      body: BlocConsumer<RecipeViewBloc, RecipeViewState>(
+      body: BlocConsumer<RecipeListingBloc, RecipeListingState>(
         listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) {
-          if (state.status == RecipeViewStatus.failure) {
+          if (state.status == RecipeListingStatus.failure) {
             Util.showSnackbar(
               msg: l10n.recipeListError,
               isError: true,
@@ -76,12 +76,12 @@ class RecipeListView extends StatelessWidget {
         },
         builder: (context, state) {
           switch (state.status) {
-            case RecipeViewStatus.loading:
+            case RecipeListingStatus.loading:
               return ListView(
                 children: List.generate(7, (_) => const RecipeLoadingWidget()),
               );
 
-            case RecipeViewStatus.success:
+            case RecipeListingStatus.success:
               final recipies = state.recipes;
               return SingleChildScrollView(
                 child: Padding(
@@ -89,31 +89,33 @@ class RecipeListView extends StatelessWidget {
                   child: Column(
                     children: [
                       const SizedBox(height: 20),
-                      CustomTextField(
-                        controller: _searchController,
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          size: 24,
-                        ),
-                        label: l10n.recipeListSearch,
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            _searchController.clear();
-                            context
-                                .read<RecipeViewBloc>()
-                                .add(const RecipeViewSearchClear());
-                          },
-                          child: const Icon(
-                            semanticLabel: 'click to clear search box',
-                            Icons.clear,
+                      if (recipies.isNotEmpty ||
+                          _searchController.text.isNotEmpty)
+                        CustomTextField(
+                          controller: _searchController,
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            size: 24,
                           ),
+                          label: l10n.recipeListSearch,
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              _searchController.clear();
+                              context
+                                  .read<RecipeListingBloc>()
+                                  .add(const RecipeListingSearchClear());
+                            },
+                            child: const Icon(
+                              semanticLabel: 'click to clear search box',
+                              Icons.clear,
+                            ),
+                          ),
+                          onChanged: (value) {
+                            context
+                                .read<RecipeListingBloc>()
+                                .add(RecipeListingSearch(query: value));
+                          },
                         ),
-                        onChanged: (value) {
-                          context
-                              .read<RecipeViewBloc>()
-                              .add(RecipeViewSearch(query: value));
-                        },
-                      ),
                       const SizedBox(height: 20),
                       if (recipies.isNotEmpty)
                         ListView.builder(
@@ -145,7 +147,7 @@ class RecipeListView extends StatelessWidget {
                   ),
                 ),
               );
-            case RecipeViewStatus.failure:
+            case RecipeListingStatus.failure:
               return Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -160,8 +162,8 @@ class RecipeListView extends StatelessWidget {
                     ),
                     TextButton.icon(
                       onPressed: () {
-                        context.read<RecipeViewBloc>().add(
-                              RecipeViewRecipesRequested(
+                        context.read<RecipeListingBloc>().add(
+                              RecipeListingRecipesRequested(
                                 category: category,
                               ),
                             );

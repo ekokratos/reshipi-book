@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recipe_book/features/recipe_edit/bloc/recipe_edit_bloc.dart';
+import 'package:recipe_book/features/recipe/bloc/recipe_bloc.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipes_api/recipes_api.dart';
 
@@ -9,7 +9,7 @@ class CookingInstructionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<RecipeEditBloc, RecipeEditState, List<Instruction>>(
+    return BlocSelector<RecipeBloc, RecipeState, List<Instruction>>(
       selector: (state) {
         return state.instructions.sortOnStep();
       },

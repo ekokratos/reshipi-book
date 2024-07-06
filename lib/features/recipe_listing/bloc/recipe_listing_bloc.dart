@@ -4,26 +4,26 @@ import 'package:equatable/equatable.dart';
 import 'package:recipes_api/recipes_api.dart';
 import 'package:recipes_repository/recipes_repository.dart';
 
-part 'recipe_view_event.dart';
-part 'recipe_view_state.dart';
+part 'recipe_listing_event.dart';
+part 'recipe_listing_state.dart';
 
-class RecipeViewBloc extends Bloc<RecipeViewEvent, RecipeViewState> {
-  RecipeViewBloc({
+class RecipeListingBloc extends Bloc<RecipeListingEvent, RecipeListingState> {
+  RecipeListingBloc({
     required RecipesRepository recipesRepository,
     required AuthRepository authRepository,
   })  : _recipesRepository = recipesRepository,
         _authRepository = authRepository,
-        super(const RecipeViewState()) {
-    on<RecipeViewRecipesRequested>(_onRecipesRequested);
-    on<RecipeViewSearch>(_onSearch);
-    on<RecipeViewSearchClear>(_onSearchClear);
+        super(const RecipeListingState()) {
+    on<RecipeListingRecipesRequested>(_onRecipesRequested);
+    on<RecipeListingSearch>(_onSearch);
+    on<RecipeListingSearchClear>(_onSearchClear);
   }
 
   void _onRecipesRequested(
-    RecipeViewRecipesRequested event,
-    Emitter<RecipeViewState> emit,
+    RecipeListingRecipesRequested event,
+    Emitter<RecipeListingState> emit,
   ) async {
-    emit(state.copyWith(status: RecipeViewStatus.loading));
+    emit(state.copyWith(status: RecipeListingStatus.loading));
 
     try {
       await _recipesRepository.getRecipies(
@@ -33,7 +33,7 @@ class RecipeViewBloc extends Bloc<RecipeViewEvent, RecipeViewState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: RecipeViewStatus.failure,
+          status: RecipeListingStatus.failure,
         ),
       );
     }
@@ -41,18 +41,18 @@ class RecipeViewBloc extends Bloc<RecipeViewEvent, RecipeViewState> {
     await emit.forEach<List<Recipe>>(
       _recipesRepository.recipes,
       onData: (recipes) => state.copyWith(
-        status: RecipeViewStatus.success,
+        status: RecipeListingStatus.success,
         recipes: recipes,
       ),
       onError: (_, __) => state.copyWith(
-        status: RecipeViewStatus.failure,
+        status: RecipeListingStatus.failure,
       ),
     );
   }
 
   void _onSearch(
-    RecipeViewSearch event,
-    Emitter<RecipeViewState> emit,
+    RecipeListingSearch event,
+    Emitter<RecipeListingState> emit,
   ) {
     _recipesRepository.onSearch(
       query: event.query,
@@ -60,8 +60,8 @@ class RecipeViewBloc extends Bloc<RecipeViewEvent, RecipeViewState> {
   }
 
   void _onSearchClear(
-    RecipeViewSearchClear event,
-    Emitter<RecipeViewState> emit,
+    RecipeListingSearchClear event,
+    Emitter<RecipeListingState> emit,
   ) async {
     _recipesRepository.onSearch(
       query: '',

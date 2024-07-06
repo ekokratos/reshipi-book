@@ -18,14 +18,13 @@ class SolidButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
-      child: Text(
-        text,
-        style: Theme.of(context)
-            .textTheme
-            .labelLarge
-            ?.copyWith(color: textColor ?? Colors.white),
+      style: ButtonStyle(
+        padding: MaterialStatePropertyAll(padding),
+        foregroundColor: MaterialStatePropertyAll(textColor),
+        backgroundColor: MaterialStatePropertyAll(buttonColor),
       ),
+      onPressed: onPressed,
+      child: Text(text),
     );
   }
 }

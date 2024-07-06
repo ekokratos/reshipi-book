@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/recipe_edit/bloc/recipe_edit_bloc.dart';
-import 'package:recipe_book/features/recipe_edit/widgets/custom_dropdown_field.dart';
-import 'package:recipe_book/features/recipe_edit/widgets/edit_cooking_instructions_widget.dart';
-import 'package:recipe_book/features/recipe_edit/widgets/edit_ingredients_widget.dart';
-import 'package:recipe_book/features/recipe_edit/widgets/recipe_image_edit_widget.dart';
+import 'package:recipe_book/features/recipe/bloc/recipe_bloc.dart';
+import 'package:recipe_book/features/recipe/widgets/custom_dropdown_field.dart';
+import 'package:recipe_book/features/recipe/widgets/edit_cooking_instructions_widget.dart';
+import 'package:recipe_book/features/recipe/widgets/edit_ingredients_widget.dart';
+import 'package:recipe_book/features/recipe/widgets/recipe_image_edit_widget.dart';
 import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/time_formatter.dart';
@@ -30,7 +30,6 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
   late TextEditingController _descriptionController;
   late TextEditingController _timeController;
 
-  late RecipeType _recipeType;
   late String imageUrl;
 
   @override
@@ -40,14 +39,13 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
     _descriptionController =
         TextEditingController(text: widget.recipe?.description);
     _timeController = TextEditingController(text: widget.recipe?.cookingTime);
-    _recipeType = widget.recipe?.type ?? RecipeType.veg;
     imageUrl = widget.recipe?.imageUrl ?? '';
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return BlocConsumer<RecipeEditBloc, RecipeEditState>(
+    return BlocConsumer<RecipeBloc, RecipeState>(
       listenWhen: (previous, current) {
         return previous.status != current.status;
       },
@@ -60,12 +58,12 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
             heroTag: 'create_new_recipe',
             onPressed: () {
               if (_formKey.currentState?.validate() ?? false) {
-                context.read<RecipeEditBloc>().add(
-                      RecipeEditSaved(
+                context.read<RecipeBloc>().add(
+                      RecipeSaved(
                         recipe: state.recipe.copyWith(
                           title: _titleController.text,
                           cookingTime: _timeController.text,
-                          type: _recipeType,
+                          type: state.recipeType,
                           description: _descriptionController.text,
                         ),
                       ),
@@ -105,14 +103,20 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
                           enabled: false,
                         ),
                         const SizedBox(height: 20),
-                        RecipeTypeField(
-                          recipeType: _recipeType,
-                          onChanged: (RecipeType? newType) {
-                            if (newType != null) {
-                              setState(() {
-                                _recipeType = newType;
-                              });
-                            }
+                        Builder(
+                          builder: (context) {
+                            return RecipeTypeField(
+                              recipeType: context.select(
+                                (RecipeBloc value) => value.state.recipeType,
+                              ),
+                              onChanged: (RecipeType? newType) {
+                                if (newType != null) {
+                                  context.read<RecipeBloc>().add(
+                                        RecipeTypeChanged(recipeType: newType),
+                                      );
+                                }
+                              },
+                            );
                           },
                         ),
                         const SizedBox(height: 20),
@@ -136,10 +140,10 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
 
   void _recipeEditStatus({
     required BuildContext context,
-    required RecipeEditStatus status,
+    required RecipeStatus status,
   }) {
     final l10n = context.l10n;
-    if (status == RecipeEditStatus.loading) {
+    if (status == RecipeStatus.loading) {
       LoadingScreen.instance().show(
         context: context,
         text: l10n.recipeEditSavingDialog,
@@ -148,14 +152,14 @@ class _RecipeEditScreenState extends State<RecipeEditScreen> {
       LoadingScreen.instance().hide();
     }
 
-    if (status == RecipeEditStatus.failure) {
+    if (status == RecipeStatus.failure) {
       Util.showSnackbar(
         msg: l10n.recipeEditSavingError,
         isError: true,
       );
     }
 
-    if (status == RecipeEditStatus.success) {
+    if (status == RecipeStatus.success) {
       Get.back();
     }
   }

@@ -2,14 +2,14 @@ import 'package:auth_repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:recipe_book/features/recipe_edit/bloc/recipe_edit_bloc.dart';
-import 'package:recipe_book/features/recipe_edit/view/recipe_edit_screen.dart';
-import 'package:recipe_book/features/recipe_view/widgets/cooking_instructions_widget.dart';
-import 'package:recipe_book/features/recipe_view/widgets/cooking_time_widget.dart';
-import 'package:recipe_book/features/recipe_view/widgets/delete_recipe_dialog.dart';
-import 'package:recipe_book/features/recipe_view/widgets/food_indicator_widget.dart';
-import 'package:recipe_book/features/recipe_view/widgets/ingredients_widget.dart';
-import 'package:recipe_book/features/recipe_view/widgets/recipe_image_widget.dart';
+import 'package:recipe_book/features/recipe/bloc/recipe_bloc.dart';
+import 'package:recipe_book/features/recipe/view/recipe_edit_screen.dart';
+import 'package:recipe_book/features/recipe/widgets/cooking_instructions_widget.dart';
+import 'package:recipe_book/features/recipe/widgets/cooking_time_widget.dart';
+import 'package:recipe_book/features/recipe/widgets/delete_recipe_dialog.dart';
+import 'package:recipe_book/features/recipe/widgets/food_indicator_widget.dart';
+import 'package:recipe_book/features/recipe/widgets/ingredients_widget.dart';
+import 'package:recipe_book/features/recipe/widgets/recipe_image_widget.dart';
 import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/theme/style.dart';
 import 'package:recipe_book/shared/utility/util.dart';
@@ -33,7 +33,7 @@ class RecipeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RecipeEditBloc(
+      create: (context) => RecipeBloc(
         recipesRepository: context.read<RecipesRepository>(),
         authRepository: context.read<AuthRepository>(),
         recipe: recipe,
@@ -53,7 +53,7 @@ class RecipeReadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return BlocConsumer<RecipeEditBloc, RecipeEditState>(
+    return BlocConsumer<RecipeBloc, RecipeState>(
       listenWhen: (previous, current) {
         return current.recipeDeleteStatus != previous.recipeDeleteStatus;
       },
@@ -86,7 +86,7 @@ class RecipeReadScreen extends StatelessWidget {
                 onPressed: () {
                   Get.to(
                     () => BlocProvider.value(
-                      value: context.read<RecipeEditBloc>(),
+                      value: context.read<RecipeBloc>(),
                       child: RecipeEditScreen(
                         recipe: state.recipe,
                       ),
@@ -105,8 +105,8 @@ class RecipeReadScreen extends StatelessWidget {
                     context: context,
                     onDelete: () {
                       context
-                          .read<RecipeEditBloc>()
-                          .add(RecipeEditDeleted(recipe: state.recipe));
+                          .read<RecipeBloc>()
+                          .add(RecipeDeleted(recipe: state.recipe));
                       Get.back();
                     },
                   );
