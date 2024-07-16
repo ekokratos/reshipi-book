@@ -1,6 +1,5 @@
 import 'package:auth_api/auth_api.dart';
 import 'package:auth_repository/auth_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

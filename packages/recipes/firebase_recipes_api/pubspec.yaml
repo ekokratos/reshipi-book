@@ -4,16 +4,16 @@ version: 0.0.1
 publish_to: none
 
 environment:
-  sdk: '>=2.18.0 <3.0.0'
+  sdk: '>=3.3.3 <4.0.0'
 
 dependencies:
-  cloud_firestore: ^4.0.5
-  firebase_storage: ^11.0.3
-  rxdart: ^0.27.5
-  uuid: ^3.0.6
+  cloud_firestore: ^5.0.2
+  firebase_storage: ^12.1.0
+  rxdart: ^0.27.0
+  uuid: ^4.4.0
   recipes_api:
     path: ../recipes_api
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
   

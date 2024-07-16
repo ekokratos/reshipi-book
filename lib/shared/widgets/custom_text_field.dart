@@ -20,9 +20,10 @@ class CustomTextField extends StatelessWidget {
   final int? maxLines;
   final String? initialValue;
   final Widget? prefixIcon;
+  final String? errorText;
 
   const CustomTextField({
-    Key? key,
+    super.key,
     this.keyboardType,
     this.inputFormatters,
     this.textAlign = TextAlign.start,
@@ -40,7 +41,8 @@ class CustomTextField extends StatelessWidget {
     this.maxLines = 1,
     this.initialValue,
     this.prefixIcon,
-  }) : super(key: key);
+    this.errorText,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +63,13 @@ class CustomTextField extends StatelessWidget {
         maxLines: maxLines,
         style: Theme.of(context)
             .textTheme
-            .bodyText1!
-            .copyWith(fontWeight: FontWeight.w500),
+            .bodyLarge
+            ?.copyWith(fontWeight: FontWeight.w500),
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
         obscureText: obscureText,
         decoration: InputDecoration(
+          errorText: errorText,
           prefixIcon: prefixIcon,
           fillColor: kTextFieldColor,
           filled: true,
@@ -74,17 +77,17 @@ class CustomTextField extends StatelessWidget {
           hintText: hintText,
           hintStyle: Theme.of(context)
               .textTheme
-              .bodyText1!
-              .copyWith(color: kTextFieldPrefixColor),
+              .bodyLarge
+              ?.copyWith(color: kTextFieldPrefixColor),
           suffixIcon: suffixIcon,
           suffixIconColor: suffixIconColor ?? kTextFieldPrefixColor,
           floatingLabelAlignment: FloatingLabelAlignment.start,
-          floatingLabelStyle: Theme.of(context).textTheme.headline3,
+          floatingLabelStyle: Theme.of(context).textTheme.displaySmall,
           labelText: label,
           labelStyle: Theme.of(context)
               .textTheme
-              .bodyText1!
-              .copyWith(color: kPrimaryTextColor, fontWeight: FontWeight.w600),
+              .bodyLarge
+              ?.copyWith(color: kPrimaryTextColor, fontWeight: FontWeight.w600),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade200, width: 0.5),
             borderRadius: BorderRadius.circular(20),
@@ -110,23 +113,3 @@ class CustomTextField extends StatelessWidget {
     );
   }
 }
-
-
-          // prefixIcon: SizedBox(
-          //   width: 110,
-          //   child: Padding(
-          //     padding: const EdgeInsets.only(left: 15),
-          //     child: Row(
-          //       mainAxisSize: MainAxisSize.min,
-          //       children: [
-          //         Text(
-          //           label,
-          //           style: Theme.of(context)
-          //               .textTheme
-          //               .bodyText1!
-          //               .copyWith(color: kPrimaryTextColor),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),

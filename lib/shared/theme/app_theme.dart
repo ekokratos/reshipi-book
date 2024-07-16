@@ -13,7 +13,7 @@ ThemeData appTheme(BuildContext context) {
     textTheme: const TextTheme(
       /// Weight : Bold
       /// Size   : 20
-      headline1: TextStyle(
+      displayLarge: TextStyle(
         fontFamily: 'OpenSans',
         fontSize: 20,
         fontWeight: FontWeight.w700,
@@ -22,7 +22,7 @@ ThemeData appTheme(BuildContext context) {
 
       /// Weight : Bold
       /// Size   : 18
-      headline2: TextStyle(
+      displayMedium: TextStyle(
         fontFamily: 'OpenSans',
         fontSize: 18,
         fontWeight: FontWeight.w700,
@@ -31,7 +31,7 @@ ThemeData appTheme(BuildContext context) {
 
       /// Weight : Bold
       /// Size   : 16
-      headline3: TextStyle(
+      displaySmall: TextStyle(
         fontFamily: 'OpenSans',
         fontSize: 16,
         fontWeight: FontWeight.w700,
@@ -40,7 +40,7 @@ ThemeData appTheme(BuildContext context) {
 
       /// Weight : Regular
       /// Size   : 14
-      bodyText1: TextStyle(
+      bodyLarge: TextStyle(
         fontFamily: 'OpenSans',
         fontSize: 14,
         fontWeight: FontWeight.w400,
@@ -49,7 +49,7 @@ ThemeData appTheme(BuildContext context) {
 
       /// Weight : Regular
       /// Size   : 12
-      bodyText2: TextStyle(
+      bodyMedium: TextStyle(
         fontFamily: 'OpenSans',
         fontSize: 12,
         fontWeight: FontWeight.w400,
@@ -59,12 +59,27 @@ ThemeData appTheme(BuildContext context) {
       /// Button Text
       /// Weight : Bold
       /// Size   : 14
-      button: TextStyle(
+      labelLarge: TextStyle(
         fontFamily: 'OpenSans',
         fontSize: 14,
         fontWeight: FontWeight.w700,
         color: Colors.white,
       ),
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.disabled)) return Colors.grey;
+          return kPrimaryColor;
+        }),
+        shape: MaterialStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+        ),
+        padding: const MaterialStatePropertyAll(EdgeInsets.all(12)),
+        foregroundColor: const MaterialStatePropertyAll(Colors.white),
+      ),
+    ),
+    floatingActionButtonTheme:
+        const FloatingActionButtonThemeData(foregroundColor: Colors.white),
   );
 }

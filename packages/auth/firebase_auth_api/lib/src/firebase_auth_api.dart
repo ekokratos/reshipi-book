@@ -1,7 +1,7 @@
-import 'package:auth_api/auth_api.dart';
+import 'package:auth_api/auth_api.dart' as auth_api;
 import 'package:firebase_auth/firebase_auth.dart';
 
-class FirebaseAuthApi extends AuthApi {
+class FirebaseAuthApi extends auth_api.AuthApi {
   FirebaseAuthApi({
     FirebaseAuth? firebaseAuth,
   }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
@@ -9,7 +9,17 @@ class FirebaseAuthApi extends AuthApi {
   final FirebaseAuth _firebaseAuth;
 
   @override
-  User? get currentUser => _firebaseAuth.currentUser;
+  auth_api.User get currentUser =>
+      _firebaseAuth.currentUser?.toUser ?? auth_api.User.empty;
+
+  @override
+  Stream<auth_api.User> get user {
+    return _firebaseAuth.authStateChanges().map((firebaseUser) {
+      final user =
+          firebaseUser == null ? auth_api.User.empty : firebaseUser.toUser;
+      return user;
+    });
+  }
 
   @override
   Future<void> signUp({
@@ -26,7 +36,7 @@ class FirebaseAuthApi extends AuthApi {
         await credentials.user?.updateDisplayName(name);
       }
     } on FirebaseAuthException catch (e) {
-      throw AuthException.from(e);
+      throw auth_api.AuthException.from(e);
     }
   }
 
@@ -41,7 +51,7 @@ class FirebaseAuthApi extends AuthApi {
         password: password,
       );
     } on FirebaseAuthException catch (e) {
-      throw AuthException.from(e);
+      throw auth_api.AuthException.from(e);
     }
   }
 
@@ -50,7 +60,7 @@ class FirebaseAuthApi extends AuthApi {
     try {
       await _firebaseAuth.signOut();
     } catch (_) {
-      throw LogOutFailure();
+      throw auth_api.LogOutFailure();
     }
   }
 
@@ -59,7 +69,15 @@ class FirebaseAuthApi extends AuthApi {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
-      throw AuthException.from(e);
+      throw auth_api.AuthException.from(e);
     }
+  }
+}
+
+extension on User {
+  /// Maps a [User] into a [auth_api.User].
+  auth_api.User get toUser {
+    return auth_api.User(
+        id: uid, email: email, name: displayName, photo: photoURL);
   }
 }

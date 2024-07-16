@@ -1,5 +1,4 @@
 import 'package:auth_api/auth_api.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepository {
   const AuthRepository({
@@ -8,8 +7,14 @@ class AuthRepository {
 
   final AuthApi _authApi;
 
-  /// Provides [User] if authenticated.
+  /// Provides [User] if authenticated, [User.empty] if not authenticated.
   User? get currentUser => _authApi.currentUser;
+
+  /// Stream of [User] which will emit the current user when
+  /// the authentication state changes.
+  ///
+  /// Emits [User.empty] if the user is not authenticated.
+  Stream<User> get user => _authApi.user;
 
   /// Creates a new user with the provided [name], [email] and [password].
   ///

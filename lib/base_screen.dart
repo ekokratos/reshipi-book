@@ -1,44 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe_book/features/auth/bloc/auth_bloc.dart';
-import 'package:recipe_book/features/auth/view/login_screen.dart';
 import 'package:recipe_book/features/auth/widgets/show_auth_error.dart';
-import 'package:recipe_book/features/recipe_view/view/category_screen.dart';
-import 'package:recipe_book/shared/widgets/dialogs/show_message.dart';
+import 'package:recipe_book/features/login/view/login_screen.dart';
+import 'package:recipe_book/features/category/view/category_screen.dart';
+import 'package:recipe_book/l10n/l10n.dart';
 import 'package:recipe_book/shared/widgets/loading/loading_screen.dart';
 
 class BaseScreen extends StatelessWidget {
-  const BaseScreen({Key? key}) : super(key: key);
+  const BaseScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
-      listener: (context, appState) {
-        if (appState.isLoading) {
+      listenWhen: (previous, current) =>
+          previous.status != current.status ||
+          previous.isLoading != current.isLoading,
+      listener: (context, state) {
+        if (state.isLoading) {
           LoadingScreen.instance().show(
             context: context,
-            text: 'Loading...',
+            text: context.l10n.loading,
           );
         } else {
           LoadingScreen.instance().hide();
         }
 
-        final authError = appState.authException;
-        if (authError != null) {
+        if (state.authException != null) {
           showAuthError(
-            authException: authError,
+            authException: state.authException,
             context: context,
-          );
-        }
-
-        final dialogMessage = appState.dialogMessage;
-        if (dialogMessage != null) {
-          showMessage(
-            context: context,
-            dialogMessage: dialogMessage,
           );
         }
       },
+      buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, appState) {
         switch (appState.status) {
           case AuthStatus.authenticated:

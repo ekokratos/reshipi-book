@@ -135,4 +135,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recipeReadDeleteSuccess => 'Recipe deleted';
+
+  @override
+  String get loading => 'Loading..';
 }

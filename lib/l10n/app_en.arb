@@ -158,5 +158,6 @@
 	"recipeReadDeleteSuccess": "Recipe deleted",
 	"@recipeReadDeleteSuccess": {
 		"description": "Successful snackbar text on deleting recipe in Recipe Read Screen"
-	}
+	},
+    "loading": "Loading.."
 }
