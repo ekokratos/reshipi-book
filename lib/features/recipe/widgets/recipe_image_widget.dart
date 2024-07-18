@@ -15,6 +15,8 @@ class RecipeImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return imageUrl != null && imageUrl!.isNotEmpty
         ? CachedNetworkImage(
+            maxWidthDiskCache: 280,
+            maxHeightDiskCache: 280,
             imageUrl: imageUrl ?? '',
             imageBuilder: (_, imageProvider) {
               return Container(

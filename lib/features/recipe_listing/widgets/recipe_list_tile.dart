@@ -19,33 +19,33 @@ class RecipeListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: kPrimaryColor.withOpacity(0.2),
-      highlightColor: kPrimaryColor.withOpacity(0.1),
-      onTap: () {
-        Get.to(
-          () => RecipeScreen(
-            recipe: recipe,
-            isNewRecipe: false,
-            category: category,
+    return Container(
+      height: 100,
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            offset: const Offset(0.5, 1),
+            spreadRadius: 1,
+            blurRadius: 2,
           ),
-        );
-      },
-      child: Container(
-        height: 100,
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(5),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade300,
-              offset: const Offset(0.5, 1),
-              spreadRadius: 1,
-              blurRadius: 2,
+        ],
+      ),
+      child: InkWell(
+        splashColor: kPrimaryColor.withOpacity(0.2),
+        highlightColor: kPrimaryColor.withOpacity(0.1),
+        onTap: () {
+          Get.to(
+            () => RecipeScreen(
+              recipe: recipe,
+              isNewRecipe: false,
+              category: category,
             ),
-          ],
-        ),
+          );
+        },
         child: Row(
           children: [
             Container(

@@ -98,18 +98,20 @@ class RecipeListView extends StatelessWidget {
                             size: 24,
                           ),
                           label: l10n.recipeListSearch,
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              _searchController.clear();
-                              context
-                                  .read<RecipeListingBloc>()
-                                  .add(const RecipeListingSearchClear());
-                            },
-                            child: const Icon(
-                              semanticLabel: 'click to clear search box',
-                              Icons.clear,
-                            ),
-                          ),
+                          suffixIcon: _searchController.text.isNotEmpty
+                              ? GestureDetector(
+                                  onTap: () {
+                                    _searchController.clear();
+                                    context
+                                        .read<RecipeListingBloc>()
+                                        .add(const RecipeListingSearchClear());
+                                  },
+                                  child: const Icon(
+                                    semanticLabel: 'click to clear search box',
+                                    Icons.clear,
+                                  ),
+                                )
+                              : null,
                           onChanged: (value) {
                             context
                                 .read<RecipeListingBloc>()
